@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Solicitud de Materiales</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="config.js"></script>
+
+  <style>
+    :root{
+      --primary:#2563eb;
+      --primary-dark:#1d4ed8;
+      --text:#0f172a;
+      --muted:#64748b;
+      --border:#d7dee8;
+      --danger:#ef4444;
+      --success:#16a34a;
+      --card:rgba(255,255,255,.9);
+      --shadow:0 24px 70px rgba(15,23,42,.18);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Segoe UI',Arial,sans-serif;
+      background:
+        radial-gradient(circle at 18% 18%,rgba(37,99,235,.18),transparent 28%),
+        radial-gradient(circle at 82% 12%,rgba(14,165,233,.16),transparent 30%),
+        linear-gradient(135deg,#f7f9fc 0%,#e8eef5 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      color:var(--text);
+    }
+
+    .page-shell{
+      width:min(980px,100%);
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+    }
+
+    .hero-panel{
+      min-height:560px;
+      border-radius:26px;
+      padding:34px;
+      background:
+        linear-gradient(145deg,rgba(37,99,235,.94),rgba(15,23,42,.94)),
+        radial-gradient(circle at top right,rgba(255,255,255,.22),transparent 36%);
+      color:white;
+      box-shadow:var(--shadow);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.2);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .hero-panel h1{
+      margin:26px 0 12px;
+      font-size:42px;
+      line-height:1.04;
+    }
+
+    .hero-panel p{
+      color:rgba(255,255,255,.82);
+      font-size:15px;
+      line-height:1.6;
+      max-width:420px;
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .mini-card{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    .mini-card i{font-size:18px;margin-bottom:10px}
+    .mini-card strong{display:block;font-size:14px}
+    .mini-card span{font-size:11px;color:rgba(255,255,255,.72)}
+
+    .login-card{
+      min-height:560px;
+      border-radius:26px;
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.75);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .logo-box{
+      width:118px;
+      height:96px;
+      border-radius:22px;
+      background:white;
+      border:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 18px;
+      box-shadow:0 10px 28px rgba(15,23,42,.10);
+    }
+
+    .logo-box img{width:82px}
+
+    .login-title{text-align:center;margin-bottom:24px}
+    .login-title h2{margin:0;font-size:21px}
+    .login-title p{margin:7px 0 0;font-size:13px;color:var(--muted)}
+
+    .form-group{margin-bottom:15px}
+
+    label{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      font-size:12px;
+      font-weight:800;
+      color:#334155;
+      margin-bottom:7px;
+    }
+
+    .field-wrap{position:relative}
+
+    .field-icon{
+      position:absolute;
+      left:13px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#64748b;
+      pointer-events:none;
+    }
+
+    select,input{
+      width:100%;
+      height:46px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:white;
+      color:var(--text);
+      padding:0 42px 0 38px;
+      font-size:14px;
+      outline:none;
+    }
+
+    select:focus,input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(37,99,235,.13);
+    }
+
+    .eye-btn{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      height:32px;
+      width:32px;
+      border:none;
+      border-radius:10px;
+      background:transparent;
+      color:#475569;
+      cursor:pointer;
+    }
+
+    .eye-btn:hover{background:#e2e8f0;color:var(--primary)}
+
+    .status-box{
+      min-height:38px;
+      margin:7px 0 14px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:#f8fafc;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .status-box.success{background:#ecfdf5;border-color:#bbf7d0;color:#166534}
+    .status-box.warning{background:#fffbeb;border-color:#fde68a;color:#92400e}
+    .status-box.error{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+
+    .btn-login{
+      width:100%;
+      height:48px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--primary),#0ea5e9);
+      color:white;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      box-shadow:0 14px 28px rgba(37,99,235,.26);
+    }
+
+    .btn-login:hover{transform:translateY(-1px)}
+    .btn-login:disabled{opacity:.7;cursor:not-allowed}
+
+    .footer-note{
+      margin-top:16px;
+      text-align:center;
+      font-size:11px;
+      color:#94a3b8;
+    }
+
+    @media(max-width:840px){
+      .page-shell{grid-template-columns:1fr}
+      .hero-panel{display:none}
+      .login-card{min-height:auto}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+
+    <section class="hero-panel">
+      <div>
+        <div class="hero-badge">
+          <i class="fas fa-boxes-stacked"></i> APP MATERIALES
+        </div>
+
+        <h1>Solicitud de materiales</h1>
+
+        <p>
+          Control de solicitudes de postes, transformadores y materiales,
+          con seguimiento por estado, circuito, requisa y auditoría.
+        </p>
+      </div>
+
+      <div class="hero-stats">
+        <div class="mini-card">
+          <i class="fas fa-tree"></i>
+          <strong>Postes</strong>
+          <span>Control por circuito</span>
+        </div>
+
+        <div class="mini-card">
+          <i class="fas fa-bolt"></i>
+          <strong>Transformadores</strong>
+          <span>Consumo validado</span>
+        </div>
+
+        <div class="mini-card">
+          <i class="fas fa-chart-column"></i>
+          <strong>Dashboards</strong>
+          <span>Resumen operativo</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-card">
+      <div class="logo-box">
+        <img src="https://raw.githubusercontent.com/zelaya27/IMAGENES_AZ/main/UTCD%20Vertical.png" alt="Logo UTCD">
+      </div>
+
+      <div class="login-title">
+        <h2>Iniciar sesión</h2>
+        <p>Selecciona sector, usuario y contraseña</p>
+      </div>
+
+      <div class="form-group">
+        <label for="sectorSelect">
+          <i class="fas fa-location-dot"></i> Sector
+        </label>
+        <div class="field-wrap">
+          <i class="fas fa-map-location-dot field-icon"></i>
+          <select id="sectorSelect" onchange="filtrarUsuariosPorSector()">
+            <option value="">Cargando sectores...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="userSelect">
+          <i class="fas fa-user"></i> Usuario
+        </label>
+        <div class="field-wrap">
+          <i class="fas fa-user-check field-icon"></i>
+          <select id="userSelect">
+            <option value="">Seleccione primero un sector</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pass">
+          <i class="fas fa-lock"></i> Contraseña
+        </label>
+        <div class="field-wrap">
+          <i class="fas fa-key field-icon"></i>
+          <input type="password" id="pass" placeholder="Ingresa tu contraseña" onkeydown="if(event.key==='Enter') iniciarSesion()">
+          <button type="button" class="eye-btn" onclick="togglePassword()">
+            <i class="fas fa-eye" id="eyeIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="status-box" id="estadoLogin">
+        <i class="fas fa-circle-info"></i>
+        <span>Cargando usuarios...</span>
+      </div>
+
+      <button class="btn-login" id="btnLogin" onclick="iniciarSesion()">
+        <i class="fas fa-right-to-bracket"></i>
+        <span>INICIAR SESIÓN</span>
+      </button>
+
+      <div class="footer-note">
+        SOLICITUD DE MATERIALES · UTCD
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let usuariosLogin = [];
+
+    window.onload = function () {
+      cargarUsuariosLogin();
+    };
+
+    function normalizarTexto(valor) {
+      return (valor || "").toString().trim().toUpperCase();
+    }
+
+    function setEstado(mensaje, tipo = "info", icono = "fa-circle-info") {
+      const box = document.getElementById("estadoLogin");
+      box.className = "status-box";
+      if (tipo !== "info") box.classList.add(tipo);
+      box.innerHTML = `<i class="fas ${icono}"></i><span>${mensaje}</span>`;
+    }
+
+    function togglePassword() {
+      const input = document.getElementById("pass");
+      const icon = document.getElementById("eyeIcon");
+      const mostrar = input.type === "password";
+
+      input.type = mostrar ? "text" : "password";
+      icon.className = mostrar ? "fas fa-eye-slash" : "fas fa-eye";
+    }
+
+    async function cargarUsuariosLogin() {
+      try {
+        if (CONFIG.MODO_PRUEBA) {
+          usuariosLogin = CONFIG.USUARIOS_PRUEBA;
+        } else {
+          const res = await fetch(CONFIG.ENDPOINTS.USUARIOS);
+          const data = await res.json();
+          usuariosLogin = data.usuarios || [];
+        }
+
+        poblarSectores();
+        setEstado("Selecciona un sector validado para cargar usuarios.", "info", "fa-circle-info");
+
+      } catch (error) {
+        console.error(error);
+        setEstado("Error cargando usuarios.", "error", "fa-triangle-exclamation");
+      }
+    }
+
+    function poblarSectores() {
+      const sectorSelect = document.getElementById("sectorSelect");
+
+      sectorSelect.innerHTML = `<option value="">Seleccione sector...</option>`;
+
+      const sectores = [...new Set(
+        usuariosLogin.map(u => u.sector).filter(Boolean)
+      )].sort();
+
+      sectores.forEach(sector => {
+        const opt = document.createElement("option");
+        opt.value = sector;
+        opt.textContent = sector;
+        sectorSelect.appendChild(opt);
+      });
+    }
+
+    function filtrarUsuariosPorSector() {
+      const sector = document.getElementById("sectorSelect").value;
+      const userSelect = document.getElementById("userSelect");
+
+      userSelect.innerHTML = "";
+
+      if (!sector) {
+        userSelect.innerHTML = `<option value="">Seleccione primero un sector</option>`;
+        setEstado("Selecciona un sector.", "info", "fa-circle-info");
+        return;
+      }
+
+      const usuarios = usuariosLogin.filter(u =>
+        normalizarTexto(u.sector) === normalizarTexto(sector)
+      );
+
+      userSelect.innerHTML = `<option value="">Seleccione usuario...</option>`;
+
+      usuarios.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u.usuario;
+        opt.textContent = u.usuario;
+        userSelect.appendChild(opt);
+      });
+
+      setEstado(`${usuarios.length} usuario(s) validado(s) para ${sector}.`, "success", "fa-check-circle");
+    }
+
+    async function iniciarSesion() {
+      const sector = document.getElementById("sectorSelect").value.trim();
+      const usuario = document.getElementById("userSelect").value.trim();
+      const pass = document.getElementById("pass").value;
+      const btn = document.getElementById("btnLogin");
+
+      if (!sector) {
+        setEstado("Debes seleccionar un sector.", "warning", "fa-circle-exclamation");
+        return;
+      }
+
+      if (!usuario) {
+        setEstado("Debes seleccionar un usuario.", "warning", "fa-circle-exclamation");
+        return;
+      }
+
+      if (!pass) {
+        setEstado("Ingresa la contraseña.", "warning", "fa-circle-exclamation");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>VALIDANDO</span>`;
+
+      try {
+        let acceso = false;
+        let usuarioData = null;
+
+        if (CONFIG.MODO_PRUEBA) {
+          usuarioData = usuariosLogin.find(u =>
+            normalizarTexto(u.usuario) === normalizarTexto(usuario) &&
+            normalizarTexto(u.password) === normalizarTexto(pass) &&
+            normalizarTexto(u.sector) === normalizarTexto(sector)
+          );
+
+          acceso = !!usuarioData;
+
+        } else {
+          const res = await fetch(CONFIG.ENDPOINTS.LOGIN, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ usuario, password: pass, sector })
+          });
+
+          const data = await res.json();
+          acceso = data.acceso;
+          usuarioData = data.usuarioData;
+        }
+
+        if (!acceso) {
+          setEstado("Usuario, contraseña o sector incorrecto.", "error", "fa-triangle-exclamation");
+          return;
+        }
+
+        sessionStorage.setItem("usuario", usuarioData.usuario);
+        sessionStorage.setItem("sector", usuarioData.sector);
+        sessionStorage.setItem("tipo_usuario", usuarioData.tipo_usuario);
+        sessionStorage.setItem("id_tipous", usuarioData.id_tipous);
+
+        setEstado("Acceso validado. Entrando al panel...", "success", "fa-check-circle");
+
+        window.location.href = "dashboard.html";
+
+      } catch (error) {
+        console.error(error);
+        setEstado("Error de conexión.", "error", "fa-triangle-exclamation");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-right-to-bracket"></i><span>INICIAR SESIÓN</span>`;
+      }
+    }
+  </script>
+</body>
+</html>
