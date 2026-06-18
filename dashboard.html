@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel - Solicitud de Materiales</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="dashboard.css">
+
+  <script src="config.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo-wrap">
+        <img src="https://raw.githubusercontent.com/zelaya27/IMAGENES_AZ/main/UTCD%20Vertical.png" alt="Logo UTCD">
+      </div>
+      <h2>PANEL DE SOLICITUD DE MATERIALES</h2>
+    </div>
+
+    <div class="user-info">
+      <span class="info-item"><i class="fas fa-user-circle"></i> <span id="nombreUsuario">Usuario</span></span>
+      <span class="info-item"><i class="fas fa-map-marker-alt"></i> <span id="nombreSector">Sector</span></span>
+      <button class="btn-sync" onclick="sincronizarDatos()"><i class="fas fa-rotate"></i> Sinc</button>
+      <button class="btn-logout" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="top-panel">
+      <button class="btn-top btn-nueva" onclick="abrirModalSolicitud()">
+        <i class="fas fa-plus"></i> Nueva Solicitud
+      </button>
+
+      <button class="btn-top btn-dashboard" onclick="abrirModalDashboard()">
+        <i class="fas fa-chart-column"></i> Dashboards
+      </button>
+
+      <div class="estado-card solicitado">
+        <span><i class="fas fa-circle"></i> Solicitado:</span>
+        <strong id="countSolicitado">0</strong>
+      </div>
+
+      <div class="estado-card requisado">
+        <span><i class="fas fa-circle"></i> Requisado:</span>
+        <strong id="countRequisado">0</strong>
+      </div>
+
+      <div class="estado-card consumido">
+        <span><i class="fas fa-circle"></i> Consumido:</span>
+        <strong id="countConsumido">0</strong>
+      </div>
+    </section>
+
+    <section class="filters-card">
+      <div class="filters-row">
+        <div class="filter-group">
+          <label>Mostrar</label>
+          <select id="filtroMostrar" onchange="renderizarTabla()">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="ALL">Todos</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>ITEM</label>
+          <input id="filtroItem" type="number" placeholder="20260617001" oninput="renderizarTabla()">
+        </div>
+
+        <div class="filter-group">
+          <label>Reporte</label>
+          <input id="filtroReporte" type="number" placeholder="3917965" oninput="renderizarTabla()">
+        </div>
+
+        <div class="filter-group">
+          <label>Circuito</label>
+          <select id="filtroCircuito" onchange="renderizarTabla()">
+            <option value="ALL">Todos</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Evento</label>
+          <input id="filtroEvento" type="number" placeholder="14243" oninput="renderizarTabla()">
+        </div>
+
+        <div class="filter-group">
+          <label>Tipo Evento</label>
+          <select id="filtroTipoEvento" onchange="renderizarTabla()">
+            <option value="ALL">Todos</option>
+            <option value="INCIDENCIA">INCIDENCIA</option>
+            <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+            <option value="OPERACIÓN">OPERACIÓN</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Requisa</label>
+          <input id="filtroRequisa" type="number" placeholder="2865" oninput="renderizarTabla()">
+        </div>
+      </div>
+
+      <div class="filters-row">
+        <div class="filter-group">
+          <label>Estado</label>
+          <select id="filtroEstado" onchange="renderizarTabla()">
+            <option value="ALL">Todos</option>
+            <option value="SOLICITADO">SOLICITADO</option>
+            <option value="REQUISADO">REQUISADO</option>
+            <option value="CONSUMIDO">CONSUMIDO</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Gestionado por</label>
+          <select id="filtroGestionado" onchange="renderizarTabla()">
+            <option value="ALL">Todos</option>
+          </select>
+        </div>
+
+        <div class="filter-group search-wide">
+          <label>Buscar Dirección / Observaciones</label>
+          <input id="filtroBuscar" type="text" placeholder="PALMIRA, CATACAMAS, POSTE..." oninput="renderizarTabla()">
+        </div>
+
+        <button class="btn-limpiar" onclick="limpiarFiltros()">
+          <i class="fas fa-times-circle"></i> Limpiar
+        </button>
+      </div>
+    </section>
+
+    <section class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>ITEM</th>
+            <th>ESTADO</th>
+            <th>FECHA CAMBIO</th>
+            <th>CIRCUITO</th>
+            <th>PINTADO APOYO</th>
+            <th>DIRECCIÓN</th>
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody id="tablaBody">
+          <tr>
+            <td colspan="7" class="text-center">Cargando información...</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- MODAL SOLICITUD -->
+  <div id="modalSolicitud" class="modal-overlay">
+    <div class="modal modal-xl">
+      <div class="modal-header">
+        <h3><i class="fas fa-boxes-stacked"></i> Solicitud de Material</h3>
+        <button class="modal-close" onclick="cerrarModalSolicitud()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="modoSolicitud" value="NUEVO">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>ITEM</label>
+            <input id="item" type="text" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Gestionado por</label>
+            <select id="gestionadoPor"></select>
+          </div>
+
+          <div class="form-group">
+            <label>Estado</label>
+            <select id="estado">
+              <option value="SOLICITADO">SOLICITADO</option>
+              <option value="REQUISADO">REQUISADO</option>
+              <option value="CONSUMIDO">CONSUMIDO</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Fecha Solicitud</label>
+            <input id="fechaSolicitud" type="text" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Fecha Cambio</label>
+            <input id="fechaCambio" type="date">
+          </div>
+
+          <div class="form-group">
+            <label>Reporte</label>
+            <input id="reporte" type="number" maxlength="7">
+          </div>
+
+          <div class="form-group">
+            <label>Circuito</label>
+            <select id="circuito"></select>
+          </div>
+
+          <div class="form-group span-2">
+            <label>Sitio / Dirección</label>
+            <input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS">
+          </div>
+
+          <div class="form-group">
+            <label>Código Solicitado</label>
+            <input id="codigoSolicitado" type="number" placeholder="Buscar código">
+          </div>
+
+          <div class="form-group span-2">
+            <label>Nombre Solicitado</label>
+            <select id="nombreSolicitado"></select>
+          </div>
+
+          <div class="form-group">
+            <label>Cantidad Solicitada</label>
+            <input id="cantidadSolicitada" type="number" min="1" max="999">
+          </div>
+
+          <div class="form-group span-2">
+            <label>Material Dañado</label>
+            <select id="materialDanado"></select>
+          </div>
+
+          <div class="form-group">
+            <label>Pintado Apoyo</label>
+            <input id="pintadoApoyo" type="number">
+          </div>
+
+          <div class="form-group">
+            <label>Estructura</label>
+            <input id="estructura" type="text" placeholder="B-II-4">
+          </div>
+
+          <div class="form-group">
+            <label>UTM X,Y</label>
+            <input id="utm" type="text" disabled>
+          </div>
+
+          <div class="form-group span-3">
+            <label>Observaciones</label>
+            <textarea id="observaciones" rows="3" placeholder="CAMBIO DE POSTE..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Evento</label>
+            <select id="tipoEvento">
+              <option value="INCIDENCIA">INCIDENCIA</option>
+              <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+              <option value="OPERACIÓN">OPERACIÓN</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Evento</label>
+            <input id="evento" type="number">
+          </div>
+
+          <div class="form-group">
+            <label>Serie</label>
+            <input id="serie" type="text">
+          </div>
+
+          <div class="form-group">
+            <label>Requisa</label>
+            <input id="requisa" type="number">
+          </div>
+
+          <div class="form-group">
+            <label>Cuadrilla</label>
+            <select id="cuadrilla"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancelar" onclick="cerrarModalSolicitud()">Cancelar</button>
+        <button class="btn-guardar" onclick="guardarSolicitud()">
+          <i class="fas fa-save"></i> Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL AUDITORIA -->
+  <div id="modalAuditoria" class="modal-overlay">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h3><i class="fas fa-magnifying-glass-chart"></i> Auditoría</h3>
+        <button class="modal-close" onclick="cerrarModalAuditoria()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="auditoriaItem">
+
+        <div class="form-group">
+          <label>Resultado Auditoría</label>
+          <select id="auditado" onchange="controlarObservacionesAuditoria()">
+            <option value="SIN ERRORES">SIN ERRORES</option>
+            <option value="CON ERRORES">CON ERRORES</option>
+          </select>
+        </div>
+
+        <div class="audit-box" id="boxObservacionesAuditoria">
+          <label class="check-title">Observaciones</label>
+
+          <label class="check-item">
+            <input type="checkbox" value="MÓDULO" class="obs-auditoria"> MÓDULO
+          </label>
+
+          <label class="check-item">
+            <input type="checkbox" value="REQUISA" class="obs-auditoria"> REQUISA
+          </label>
+
+          <label class="check-item">
+            <input type="checkbox" value="GPS" class="obs-auditoria"> GPS
+          </label>
+
+          <label class="check-item">
+            <input type="checkbox" value="ESTADO" class="obs-auditoria"> ESTADO
+          </label>
+
+          <label class="check-item">
+            <input type="checkbox" value="ENERGIS" class="obs-auditoria"> ENERGIS
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancelar" onclick="cerrarModalAuditoria()">Cancelar</button>
+        <button class="btn-guardar" onclick="guardarAuditoria()">
+          <i class="fas fa-save"></i> Guardar Auditoría
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DASHBOARD -->
+  <div id="modalDashboard" class="modal-overlay">
+    <div class="modal modal-dashboard">
+      <div class="modal-header">
+        <h3><i class="fas fa-chart-column"></i> Dashboards</h3>
+        <button class="modal-close" onclick="cerrarModalDashboard()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="dashboard-tabs">
+        <button class="dash-tab active" onclick="mostrarDashboard('postes')">Postes consumidos</button>
+        <button class="dash-tab" onclick="mostrarDashboard('transformadores')">Transformadores consumidos</button>
+        <button class="dash-tab" onclick="mostrarDashboard('postesCircuito')">Postes por circuito</button>
+        <button class="dash-tab" onclick="mostrarDashboard('transformadoresCircuito')">Transformadores por circuito</button>
+        <button class="dash-tab" onclick="mostrarDashboard('gestionado')">Gestionado por</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="dashboardTitulo" class="dashboard-title">Postes consumidos</div>
+        <div id="dashboardContenido" class="dashboard-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
