@@ -649,8 +649,13 @@ function renderizarTablaDashboard(resumen) {
 function seleccionarMaterialPorNombre() {
   const nombre = getValue("nombreSolicitado");
   const mat = materiales.find(m => m.descripcion === nombre);
-  if (!mat) return;
+  if (!mat) {
+    setValue("codigoSolicitado", "");
+    mostrarSerieSegunMaterial();
+    return;
+  }
   setValue("codigoSolicitado", mat.codigo);
+  mostrarSerieSegunMaterial();
 }
 
 function seleccionarMaterialPorCodigo() {
