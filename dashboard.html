@@ -161,135 +161,172 @@
 
   </main>
 
-  <!-- MODAL SOLICITUD -->
+  <!-- MODAL SOLICITUD INDUSTRIAL ENEE -->
   <div id="modalSolicitud" class="modal-overlay">
-    <div class="modal modal-xl">
-      <div class="modal-header">
-        <h3><i class="fas fa-boxes-stacked"></i> Solicitud de Material</h3>
-        <button class="modal-close" onclick="cerrarModalSolicitud()"><i class="fas fa-times"></i></button>
+    <div class="modal modal-xl modal-industrial">
+      <div class="modal-industrial-header">
+        <div>
+          <h3><i class="fas fa-bolt"></i> SOLICITUD DE MATERIAL</h3>
+          <span>Registro de postes, transformadores y materiales de distribución</span>
+        </div>
+        <button class="modal-close industrial-close" onclick="cerrarModalSolicitud()">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body modal-industrial-body">
         <input type="hidden" id="modoSolicitud" value="NUEVO">
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label>ITEM</label>
-            <input id="item" type="text" disabled>
+        <section class="industrial-section">
+          <div class="industrial-grid fila-superior">
+            <div class="form-group campo-item">
+              <label>ITEM</label>
+              <input id="item" type="text" disabled>
+            </div>
+
+            <div class="form-group campo-fecha">
+              <label>Fecha Cambio</label>
+              <input id="fechaCambio" type="date">
+            </div>
+
+            <div class="form-group campo-estado">
+              <label>Estado</label>
+              <select id="estado">
+                <option value="SOLICITADO">SOLICITADO</option>
+                <option value="REQUISADO">REQUISADO</option>
+                <option value="CONSUMIDO">CONSUMIDO</option>
+              </select>
+            </div>
+
+            <div class="form-group campo-gestionado">
+              <label>Gestionado por</label>
+              <select id="gestionadoPor" disabled></select>
+            </div>
+
+            <input id="fechaSolicitud" type="hidden">
+          </div>
+        </section>
+
+        <section class="industrial-section">
+          <div class="section-title ubicacion">
+            <i class="fas fa-location-dot"></i> UBICACIÓN
+          </div>
+
+          <div class="industrial-grid ubicacion-grid">
+            <div class="form-group">
+              <label>Circuito</label>
+              <select id="circuito"></select>
+            </div>
+
+            <div class="form-group campo-direccion">
+              <label>Dirección</label>
+              <input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS">
+            </div>
+
+            <div class="form-group">
+              <label>Reporte</label>
+              <input id="reporte" class="input-destacado" type="number">
+            </div>
+          </div>
+
+          <div class="industrial-grid ubicacion-grid-2">
+            <div class="form-group">
+              <label>Pintado Apoyo</label>
+              <input id="pintadoApoyo" type="number">
+            </div>
+
+            <div class="form-group">
+              <label>GPS / UTM</label>
+              <input id="utm" type="text" placeholder="618878 - 1639784">
+            </div>
+
+            <div class="form-group">
+              <label>Estructura</label>
+              <input id="estructura" type="text" placeholder="B-II-4">
+            </div>
+          </div>
+        </section>
+
+        <section class="industrial-section">
+          <div class="section-title material">
+            <i class="fas fa-boxes-stacked"></i> MATERIAL SOLICITADO
+          </div>
+
+          <div class="industrial-grid material-grid">
+            <div class="form-group">
+              <label>Código SAP</label>
+              <input id="codigoSolicitado" class="input-destacado" type="number" placeholder="130005">
+            </div>
+
+            <div class="form-group campo-material">
+              <label>Material Solicitado</label>
+              <select id="nombreSolicitado"></select>
+            </div>
+
+            <div class="form-group">
+              <label>Cantidad</label>
+              <input id="cantidadSolicitada" class="input-destacado" type="number" min="1" max="999" value="1">
+            </div>
+
+            <div class="form-group campo-material-danado">
+              <label>Material Dañado</label>
+              <select id="materialDanado"></select>
+            </div>
+          </div>
+        </section>
+
+        <section class="industrial-section">
+          <div class="section-title observacion">
+            <i class="fas fa-clipboard-list"></i> OBSERVACIONES
           </div>
 
           <div class="form-group">
-            <label>Gestionado por</label>
-            <select id="gestionadoPor"></select>
+            <textarea id="observaciones" rows="3" placeholder="CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA..."></textarea>
+          </div>
+        </section>
+
+        <section class="industrial-section">
+          <div class="section-title evento">
+            <i class="fas fa-bolt"></i> EVENTO
           </div>
 
-          <div class="form-group">
-            <label>Estado</label>
-            <select id="estado">
-              <option value="SOLICITADO">SOLICITADO</option>
-              <option value="REQUISADO">REQUISADO</option>
-              <option value="CONSUMIDO">CONSUMIDO</option>
-            </select>
-          </div>
+          <div class="industrial-grid evento-grid">
+            <div class="form-group">
+              <label>Tipo Evento</label>
+              <select id="tipoEvento">
+                <option value="INCIDENCIA">INCIDENCIA</option>
+                <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                <option value="OPERACIÓN">OPERACIÓN</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label>Fecha Solicitud</label>
-            <input id="fechaSolicitud" type="text" disabled>
-          </div>
+            <div class="form-group">
+              <label>Evento</label>
+              <input id="evento" class="input-destacado" type="number">
+            </div>
 
-          <div class="form-group">
-            <label>Fecha Cambio</label>
-            <input id="fechaCambio" type="date">
-          </div>
+            <div class="form-group">
+              <label>Serie</label>
+              <input id="serie" type="text">
+            </div>
 
-          <div class="form-group">
-            <label>Reporte</label>
-            <input id="reporte" type="number">
-          </div>
+            <div class="form-group">
+              <label>Requisa</label>
+              <input id="requisa" class="input-destacado" type="number">
+            </div>
 
-          <div class="form-group">
-            <label>Circuito</label>
-            <select id="circuito"></select>
+            <div class="form-group">
+              <label>Cuadrilla</label>
+              <select id="cuadrilla"></select>
+            </div>
           </div>
-
-          <div class="form-group span-2">
-            <label>Sitio / Dirección</label>
-            <input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS">
-          </div>
-
-          <div class="form-group">
-            <label>Código Solicitado</label>
-            <input id="codigoSolicitado" type="number" placeholder="Código SAP">
-          </div>
-
-          <div class="form-group span-2">
-            <label>Nombre Solicitado</label>
-            <select id="nombreSolicitado"></select>
-          </div>
-
-          <div class="form-group">
-            <label>Cantidad Solicitada</label>
-            <input id="cantidadSolicitada" type="number" min="1" max="999">
-          </div>
-
-          <div class="form-group span-2">
-            <label>Material Dañado</label>
-            <select id="materialDanado"></select>
-          </div>
-
-          <div class="form-group">
-            <label>Pintado Apoyo</label>
-            <input id="pintadoApoyo" type="number">
-          </div>
-
-          <div class="form-group">
-            <label>Estructura</label>
-            <input id="estructura" type="text" placeholder="B-II-4">
-          </div>
-
-          <div class="form-group">
-            <label>UTM X,Y</label>
-            <input id="utm" type="text" disabled>
-          </div>
-
-          <div class="form-group span-3">
-            <label>Observaciones</label>
-            <textarea id="observaciones" rows="3" placeholder="CAMBIO DE POSTE..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Tipo de Evento</label>
-            <select id="tipoEvento">
-              <option value="INCIDENCIA">INCIDENCIA</option>
-              <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-              <option value="OPERACIÓN">OPERACIÓN</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Evento</label>
-            <input id="evento" type="number">
-          </div>
-
-          <div class="form-group">
-            <label>Serie</label>
-            <input id="serie" type="text">
-          </div>
-
-          <div class="form-group">
-            <label>Requisa</label>
-            <input id="requisa" type="number">
-          </div>
-
-          <div class="form-group">
-            <label>Cuadrilla</label>
-            <select id="cuadrilla"></select>
-          </div>
-        </div>
+        </section>
       </div>
 
-      <div class="modal-footer">
-        <button class="btn-cancelar" onclick="cerrarModalSolicitud()">Cancelar</button>
+      <div class="modal-footer industrial-footer">
+        <button class="btn-cancelar" onclick="cerrarModalSolicitud()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
         <button class="btn-guardar" onclick="guardarSolicitud()">
           <i class="fas fa-save"></i> Guardar
         </button>
@@ -319,25 +356,11 @@
         <div class="audit-box" id="boxObservacionesAuditoria">
           <label class="check-title">Observaciones</label>
 
-          <label class="check-item">
-            <input type="checkbox" value="MÓDULO" class="obs-auditoria"> MÓDULO
-          </label>
-
-          <label class="check-item">
-            <input type="checkbox" value="REQUISA" class="obs-auditoria"> REQUISA
-          </label>
-
-          <label class="check-item">
-            <input type="checkbox" value="GPS" class="obs-auditoria"> GPS
-          </label>
-
-          <label class="check-item">
-            <input type="checkbox" value="ESTADO" class="obs-auditoria"> ESTADO
-          </label>
-
-          <label class="check-item">
-            <input type="checkbox" value="ENERGIS" class="obs-auditoria"> ENERGIS
-          </label>
+          <label class="check-item"><input type="checkbox" value="MÓDULO" class="obs-auditoria"> MÓDULO</label>
+          <label class="check-item"><input type="checkbox" value="REQUISA" class="obs-auditoria"> REQUISA</label>
+          <label class="check-item"><input type="checkbox" value="GPS" class="obs-auditoria"> GPS</label>
+          <label class="check-item"><input type="checkbox" value="ESTADO" class="obs-auditoria"> ESTADO</label>
+          <label class="check-item"><input type="checkbox" value="ENERGIS" class="obs-auditoria"> ENERGIS</label>
         </div>
       </div>
 
@@ -350,7 +373,7 @@
     </div>
   </div>
 
-  <!-- MODAL DASHBOARD SIN GRÁFICOS -->
+  <!-- MODAL DASHBOARD -->
   <div id="modalDashboard" class="modal-overlay">
     <div class="modal modal-dashboard">
       <div class="modal-header">
