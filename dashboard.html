@@ -56,7 +56,7 @@
 
     <section class="filters-card">
       <div class="filters-row">
-        <div class="filter-group">
+        <div class="filter-group filtro-mini">
           <label>Mostrar</label>
           <select id="filtroMostrar" onchange="renderizarTabla()">
             <option value="10">10</option>
@@ -66,14 +66,14 @@
           </select>
         </div>
 
-        <div class="filter-group">
+        <div class="filter-group filtro-num">
           <label>ITEM</label>
-          <input id="filtroItem" type="number" placeholder="20260617001" oninput="renderizarTabla()">
+          <input id="filtroItem" class="input-destacado" type="number" placeholder="20260617001" oninput="renderizarTabla()">
         </div>
 
-        <div class="filter-group">
+        <div class="filter-group filtro-num">
           <label>Reporte</label>
-          <input id="filtroReporte" type="number" placeholder="3917965" oninput="renderizarTabla()">
+          <input id="filtroReporte" class="input-destacado" type="number" placeholder="3917965" oninput="renderizarTabla()">
         </div>
 
         <div class="filter-group">
@@ -83,9 +83,9 @@
           </select>
         </div>
 
-        <div class="filter-group">
+        <div class="filter-group filtro-num">
           <label>Evento</label>
-          <input id="filtroEvento" type="number" placeholder="14243" oninput="renderizarTabla()">
+          <input id="filtroEvento" class="input-destacado" type="number" placeholder="14243" oninput="renderizarTabla()">
         </div>
 
         <div class="filter-group">
@@ -98,9 +98,9 @@
           </select>
         </div>
 
-        <div class="filter-group">
+        <div class="filter-group filtro-num">
           <label>Requisa</label>
-          <input id="filtroRequisa" type="number" placeholder="2865" oninput="renderizarTabla()">
+          <input id="filtroRequisa" class="input-destacado" type="number" placeholder="2865" oninput="renderizarTabla()">
         </div>
       </div>
 
@@ -122,9 +122,14 @@
           </select>
         </div>
 
-        <div class="filter-group search-wide">
-          <label>Buscar Dirección / Observaciones</label>
-          <input id="filtroBuscar" type="text" placeholder="PALMIRA, CATACAMAS, POSTE..." oninput="renderizarTabla()">
+        <div class="filter-group filtro-fecha">
+          <label>Fecha Cambio</label>
+          <input id="filtroFechaCambio" type="date" onchange="renderizarTabla()">
+        </div>
+
+        <div class="filter-group filtro-buscar">
+          <label>Dirección / Observaciones</label>
+          <input id="filtroBuscar" type="text" placeholder="PALMIRA, POSTE..." oninput="renderizarTabla()">
         </div>
 
         <button class="btn-limpiar" onclick="limpiarFiltros()">
