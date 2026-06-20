@@ -1,6 +1,6 @@
 /************************************************************
  * APP SOLICITUD DE MATERIALES - dashboard.js
- * Versión 1: datos simulados, sin gráficos
+ * Versión actualizada: datos simulados, sin gráficos
  ************************************************************/
 
 /* =========================
@@ -86,6 +86,7 @@ function cargarDatosPrueba() {
       ITEM: "20260618003",
       GESTIONADO_POR: "ALLAN.ZELAYA",
       ESTADO: "CONSUMIDO",
+      FECHA_SOLICITUD: "18/06/2026 08:00",
       FECHA_CAMBIO: "2026-06-18",
       REPORTE: "3917965",
       CIRCUITO: "CAT-L375",
@@ -112,6 +113,7 @@ function cargarDatosPrueba() {
       ITEM: "20260618002",
       GESTIONADO_POR: "OSMAN.LAGOS",
       ESTADO: "REQUISADO",
+      FECHA_SOLICITUD: "18/06/2026 08:20",
       FECHA_CAMBIO: "2026-06-18",
       REPORTE: "3917998",
       CIRCUITO: "CAT-L376",
@@ -138,6 +140,7 @@ function cargarDatosPrueba() {
       ITEM: "20260618001",
       GESTIONADO_POR: "ALLAN.ZELAYA",
       ESTADO: "SOLICITADO",
+      FECHA_SOLICITUD: "18/06/2026 08:40",
       FECHA_CAMBIO: "2026-06-18",
       REPORTE: "3918005",
       CIRCUITO: "JUT-L379",
@@ -181,6 +184,7 @@ function cargarCombos() {
   document.getElementById("nombreSolicitado").addEventListener("change", seleccionarMaterialPorNombre);
   document.getElementById("codigoSolicitado").addEventListener("input", seleccionarMaterialPorCodigo);
   document.getElementById("pintadoApoyo").addEventListener("input", buscarUTMSimulado);
+  document.getElementById("estado").addEventListener("change", pintarEstadoSelect);
 }
 
 function llenarSelect(id, lista, incluirTodos) {
@@ -235,6 +239,9 @@ function obtenerDatosFiltrados() {
   const estado = document.getElementById("filtroEstado").value;
   const gestionado = document.getElementById("filtroGestionado").value;
   const buscar = normalizar(document.getElementById("filtroBuscar").value);
+  const fechaCambio = document.getElementById("filtroFechaCambio")
+    ? document.getElementById("filtroFechaCambio").value
+    : "";
 
   let lista = datos.filter(r => {
     const cumpleItem = !item || normalizar(r.ITEM) === item;
@@ -245,6 +252,7 @@ function obtenerDatosFiltrados() {
     const cumpleRequisa = !requisa || normalizar(r.REQUISA) === requisa;
     const cumpleEstado = estado === "ALL" || r.ESTADO === estado;
     const cumpleGestionado = gestionado === "ALL" || r.GESTIONADO_POR === gestionado;
+    const cumpleFechaCambio = !fechaCambio || r.FECHA_CAMBIO === fechaCambio;
 
     const textoBuscar = `${r.SITIO || ""} ${r.OBSERVACIONES || ""}`;
     const cumpleBuscar = !buscar || normalizar(textoBuscar).includes(buscar);
@@ -258,6 +266,7 @@ function obtenerDatosFiltrados() {
       cumpleRequisa &&
       cumpleEstado &&
       cumpleGestionado &&
+      cumpleFechaCambio &&
       cumpleBuscar
     );
   });
@@ -306,20 +315,20 @@ function renderizarTabla() {
           <button class="btn-accion btn-editar ${consumido ? "btn-disabled" : ""}"
             onclick="editarSolicitud('${r.ITEM}')"
             title="Editar">
-            <i class="fas fa-pen"></i>
+            <i class="fas fa-pen"></i> Editar
           </button>
 
           ${puedeAuditar ? `
           <button class="btn-accion btn-auditar"
             onclick="abrirModalAuditoria('${r.ITEM}')"
             title="Auditar">
-            <i class="fas fa-magnifying-glass"></i>
+            <i class="fas fa-magnifying-glass"></i> Auditar
           </button>` : ""}
 
           <button class="btn-accion btn-eliminar ${consumido ? "btn-disabled" : ""}"
             onclick="eliminarSolicitud('${r.ITEM}')"
             title="Eliminar">
-            <i class="fas fa-trash"></i>
+            <i class="fas fa-trash"></i> Eliminar
           </button>
         </div>
       </td>
@@ -351,6 +360,11 @@ function limpiarFiltros() {
   document.getElementById("filtroEstado").value = "ALL";
   document.getElementById("filtroGestionado").value = "ALL";
   document.getElementById("filtroBuscar").value = "";
+
+  if (document.getElementById("filtroFechaCambio")) {
+    document.getElementById("filtroFechaCambio").value = "";
+  }
+
   renderizarTabla();
 }
 
@@ -370,6 +384,9 @@ function abrirModalSolicitud() {
   document.getElementById("fechaSolicitud").value = obtenerFechaHoraActual();
   document.getElementById("fechaCambio").value = obtenerFechaActual();
   document.getElementById("gestionadoPor").value = usuarioActual;
+  document.getElementById("cantidadSolicitada").value = 1;
+
+  pintarEstadoSelect();
 
   document.getElementById("modalSolicitud").classList.add("abierto");
 }
@@ -395,6 +412,8 @@ function limpiarModalSolicitud() {
 
   if (document.getElementById("nombreSolicitado")) document.getElementById("nombreSolicitado").value = "";
   if (document.getElementById("materialDanado")) document.getElementById("materialDanado").value = "";
+
+  pintarEstadoSelect();
 }
 
 function editarSolicitud(item) {
@@ -402,14 +421,31 @@ function editarSolicitud(item) {
   if (!r) return;
 
   if (r.ESTADO === "CONSUMIDO") {
-    alert("No se puede editar una solicitud en estado CONSUMIDO.");
+    alert("Esta solicitud está en estado CONSUMIDO. Solo se permite visualización.");
+    abrirSolicitudSoloLectura(r);
     return;
   }
 
   itemEditando = item;
   estadoAnteriorEditando = r.ESTADO;
 
-  document.getElementById("modoSolicitud").value = "EDITAR";
+  cargarRegistroEnModal(r, false);
+
+  document.getElementById("modalSolicitud").classList.add("abierto");
+}
+
+function abrirSolicitudSoloLectura(r) {
+  itemEditando = r.ITEM;
+  estadoAnteriorEditando = r.ESTADO;
+
+  cargarRegistroEnModal(r, true);
+
+  document.getElementById("modalSolicitud").classList.add("abierto");
+}
+
+function cargarRegistroEnModal(r, soloLectura) {
+  document.getElementById("modoSolicitud").value = soloLectura ? "VER" : "EDITAR";
+
   document.getElementById("item").value = r.ITEM;
   document.getElementById("gestionadoPor").value = r.GESTIONADO_POR;
   document.getElementById("estado").value = r.ESTADO;
@@ -420,7 +456,7 @@ function editarSolicitud(item) {
   document.getElementById("sitio").value = r.SITIO || "";
   document.getElementById("codigoSolicitado").value = r.CODIGO_SOLICITADO || "";
   document.getElementById("nombreSolicitado").value = r.NOMBRE_SOLICITADO || "";
-  document.getElementById("cantidadSolicitada").value = r.CANTIDAD_SOLICITADA || "";
+  document.getElementById("cantidadSolicitada").value = r.CANTIDAD_SOLICITADA || 1;
   document.getElementById("materialDanado").value = r.MATERIAL_DANADO || "";
   document.getElementById("pintadoApoyo").value = r.PINTADO_APOYO || "";
   document.getElementById("estructura").value = r.ESTRUCTURA || "";
@@ -432,18 +468,58 @@ function editarSolicitud(item) {
   document.getElementById("requisa").value = r.REQUISA || "";
   document.getElementById("cuadrilla").value = r.CUADRILLA || "";
 
-  document.getElementById("modalSolicitud").classList.add("abierto");
+  pintarEstadoSelect();
+  bloquearModalSolicitud(soloLectura);
+}
+
+function bloquearModalSolicitud(bloquear) {
+  const campos = [
+    "gestionadoPor", "estado", "fechaCambio", "reporte", "circuito", "sitio",
+    "codigoSolicitado", "nombreSolicitado", "cantidadSolicitada", "materialDanado",
+    "pintadoApoyo", "estructura", "utm", "observaciones", "tipoEvento",
+    "evento", "serie", "requisa", "cuadrilla"
+  ];
+
+  campos.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = bloquear;
+  });
+
+  const btnGuardar = document.querySelector("#modalSolicitud .btn-guardar");
+  if (btnGuardar) {
+    btnGuardar.style.display = bloquear ? "none" : "inline-flex";
+  }
 }
 
 function guardarSolicitud() {
+  const btnGuardar = document.querySelector("#modalSolicitud .btn-guardar");
   const modo = document.getElementById("modoSolicitud").value;
+
+  if (modo === "VER") {
+    cerrarModalSolicitud();
+    return;
+  }
+
   const item = document.getElementById("item").value;
   const nuevoEstado = document.getElementById("estado").value;
 
   if (modo === "EDITAR" && estadoAnteriorEditando && nuevoEstado !== estadoAnteriorEditando) {
-    if (!confirm(`¿Desea cambiar el estado a ${nuevoEstado}?`)) {
-      document.getElementById("estado").value = estadoAnteriorEditando;
-      return;
+    if (nuevoEstado === "CONSUMIDO") {
+      const ok = confirm(
+        "¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse, solo visualizarse."
+      );
+
+      if (!ok) {
+        document.getElementById("estado").value = estadoAnteriorEditando;
+        pintarEstadoSelect();
+        return;
+      }
+    } else {
+      if (!confirm(`¿Desea cambiar el estado a ${nuevoEstado}?`)) {
+        document.getElementById("estado").value = estadoAnteriorEditando;
+        pintarEstadoSelect();
+        return;
+      }
     }
   }
 
@@ -458,7 +534,7 @@ function guardarSolicitud() {
     SITIO: mayus(document.getElementById("sitio").value),
     CODIGO_SOLICITADO: Number(document.getElementById("codigoSolicitado").value || 0),
     NOMBRE_SOLICITADO: document.getElementById("nombreSolicitado").value,
-    CANTIDAD_SOLICITADA: Number(document.getElementById("cantidadSolicitada").value || 0),
+    CANTIDAD_SOLICITADA: Number(document.getElementById("cantidadSolicitada").value || 1),
     MATERIAL_DANADO: document.getElementById("materialDanado").value,
     PINTADO_APOYO: document.getElementById("pintadoApoyo").value,
     ESTRUCTURA: mayus(document.getElementById("estructura").value),
@@ -481,19 +557,38 @@ function guardarSolicitud() {
     return;
   }
 
-  if (modo === "NUEVO") {
-    datos.push(registro);
-  } else {
-    const idx = datos.findIndex(x => x.ITEM === itemEditando);
-    if (idx >= 0) {
-      registro.AUDITADO = datos[idx].AUDITADO || "";
-      registro.OBSERVACIONES_AUDITORIA = datos[idx].OBSERVACIONES_AUDITORIA || "";
-      datos[idx] = registro;
-    }
+  const mat = obtenerMaterialPorCodigo(registro.CODIGO_SOLICITADO);
+  if (!mat || mat.descripcion !== registro.NOMBRE_SOLICITADO) {
+    alert("El Código SAP y el Material Solicitado no coinciden con la hoja materiales.");
+    return;
   }
 
-  cerrarModalSolicitud();
-  renderizarTabla();
+  if (btnGuardar) {
+    btnGuardar.disabled = true;
+    btnGuardar.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Guardando...`;
+  }
+
+  try {
+    if (modo === "NUEVO") {
+      datos.push(registro);
+    } else {
+      const idx = datos.findIndex(x => x.ITEM === itemEditando);
+      if (idx >= 0) {
+        registro.AUDITADO = datos[idx].AUDITADO || "";
+        registro.OBSERVACIONES_AUDITORIA = datos[idx].OBSERVACIONES_AUDITORIA || "";
+        datos[idx] = registro;
+      }
+    }
+
+    cerrarModalSolicitud();
+    renderizarTabla();
+
+  } finally {
+    if (btnGuardar) {
+      btnGuardar.disabled = false;
+      btnGuardar.innerHTML = `<i class="fas fa-save"></i> Guardar`;
+    }
+  }
 }
 
 function validarSolicitud(r) {
@@ -502,9 +597,11 @@ function validarSolicitud(r) {
   if (!r.REPORTE || String(r.REPORTE).length !== 7) return "El reporte debe tener 7 dígitos.";
   if (!r.CIRCUITO) return "Seleccione Circuito.";
   if (!r.SITIO) return "Ingrese Dirección / Sitio.";
-  if (!r.CODIGO_SOLICITADO) return "Ingrese Código Solicitado.";
-  if (!r.NOMBRE_SOLICITADO) return "Seleccione Nombre Solicitado.";
-  if (!r.CANTIDAD_SOLICITADA || r.CANTIDAD_SOLICITADA < 1 || r.CANTIDAD_SOLICITADA > 999) return "Cantidad solicitada debe ser entre 1 y 999.";
+  if (!r.CODIGO_SOLICITADO) return "Ingrese Código SAP.";
+  if (!r.NOMBRE_SOLICITADO) return "Seleccione Material Solicitado.";
+  if (!r.CANTIDAD_SOLICITADA || r.CANTIDAD_SOLICITADA < 1 || r.CANTIDAD_SOLICITADA > 999) {
+    return "Cantidad solicitada debe ser entre 1 y 999.";
+  }
   if (!r.PINTADO_APOYO) return "Ingrese Pintado Apoyo.";
   if (!r.TIPO_EVENTO) return "Seleccione Tipo de Evento.";
   return "";
@@ -658,7 +755,11 @@ function mostrarDashboard(tipo) {
   }
 
   document.getElementById("dashboardTitulo").textContent = titulo;
-  document.getElementById("dashboardTotal").textContent = resumen.reduce((a, b) => a + b.cantidad, 0);
+
+  if (document.getElementById("dashboardTotal")) {
+    document.getElementById("dashboardTotal").textContent =
+      resumen.reduce((a, b) => a + b.cantidad, 0);
+  }
 
   renderizarTablaDashboard(resumen);
 }
@@ -811,6 +912,17 @@ function badgeEstado(estado) {
   }
 
   return `<span class="badge">${e}</span>`;
+}
+
+function pintarEstadoSelect() {
+  const estado = document.getElementById("estado");
+  if (!estado) return;
+
+  estado.classList.remove("estado-solicitado", "estado-requisado", "estado-consumido");
+
+  if (estado.value === "SOLICITADO") estado.classList.add("estado-solicitado");
+  if (estado.value === "REQUISADO") estado.classList.add("estado-requisado");
+  if (estado.value === "CONSUMIDO") estado.classList.add("estado-consumido");
 }
 
 function normalizar(valor) {
