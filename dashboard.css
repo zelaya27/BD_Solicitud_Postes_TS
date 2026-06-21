@@ -854,3 +854,245 @@ th:last-child,td:last-child{border-right:none !important;}
 .compacto-body{padding:10px !important;}
 
 .compacto-section{padding:9px !important;margin-bottom:8px !important;}
+
+/* =========================================================
+  INICIO MODAL SOLICITUD MODERNO FULL SCREEN
+========================================================= */
+
+.modal-solicitud-full{
+  width:96vw;
+  max-width:1850px;
+  max-height:92vh;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.solicitud-header{
+  height:68px;
+  padding:0 28px;
+  background:linear-gradient(135deg,#0755c9,#003b95);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.solicitud-title{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.solicitud-icon{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+}
+
+.solicitud-title h3{
+  margin:0;
+  font-size:26px;
+  font-weight:1000;
+  letter-spacing:.3px;
+}
+
+.solicitud-close{
+  background:transparent !important;
+  border:none !important;
+  color:white !important;
+  font-size:26px;
+}
+
+.solicitud-body{
+  padding:24px 26px 10px !important;
+  overflow:visible !important;
+}
+
+.solicitud-info-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+  padding-bottom:18px;
+  margin-bottom:20px;
+  border-bottom:1.8px solid #cbd5e1;
+}
+
+.solicitud-info-card{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  min-height:74px;
+}
+
+.solicitud-info-card i{
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  background:#f1f5f9;
+  border:1px solid #cbd5e1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#003b95;
+  font-size:25px;
+}
+
+.solicitud-info-card span{
+  display:block;
+  font-size:14px;
+  font-weight:900;
+  color:#334155;
+  margin-bottom:5px;
+}
+
+.solicitud-info-card strong{
+  display:block;
+  font-size:22px;
+  font-weight:1000;
+  color:#001b4d;
+}
+
+.solicitud-form-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:18px 24px;
+}
+
+.sol-field{
+  grid-column:span 4;
+}
+
+.sol-field.span-4{grid-column:span 4}
+.sol-field.span-5{grid-column:span 5}
+.sol-field.span-7{grid-column:span 7}
+.sol-field.span-8{grid-column:span 8}
+.sol-field.span-12{grid-column:span 12}
+
+.sol-field label{
+  display:block;
+  margin-bottom:7px;
+  font-size:14px;
+  font-weight:1000;
+  color:#003b95;
+  letter-spacing:.3px;
+}
+
+.sol-input-icon{
+  height:48px;
+  border:1.7px solid #b8c7dc;
+  border-radius:9px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(15,23,42,.04);
+}
+
+.sol-input-icon i{
+  width:54px;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#003b95;
+  font-size:20px;
+  background:#f8fafc;
+  border-right:1px solid #dbe3ef;
+}
+
+.sol-input-icon input,
+.sol-input-icon select{
+  width:100%;
+  height:100%;
+  border:none !important;
+  outline:none !important;
+  font-size:18px;
+  font-weight:800;
+  color:#0f172a;
+  padding:0 14px;
+  background:white;
+}
+
+.textarea-icon{
+  height:86px;
+  align-items:stretch;
+}
+
+.textarea-icon i{
+  height:auto;
+  align-items:flex-start;
+  padding-top:18px;
+}
+
+.textarea-icon textarea{
+  width:100%;
+  height:100%;
+  border:none !important;
+  outline:none !important;
+  resize:none;
+  font-size:18px;
+  font-weight:800;
+  color:#0f172a;
+  padding:16px 14px;
+  background:white;
+}
+
+.solicitud-footer{
+  padding:18px 28px !important;
+  background:#ffffff !important;
+  border-top:none !important;
+  gap:22px !important;
+}
+
+.solicitud-btn-cancelar,
+.solicitud-btn-guardar{
+  height:48px !important;
+  min-width:210px;
+  font-size:16px !important;
+  border-radius:9px !important;
+}
+
+.solicitud-btn-guardar{
+  background:linear-gradient(135deg,#16a34a,#00a63e) !important;
+}
+
+.oculto{
+  display:none !important;
+}
+
+@media(max-width:1000px){
+  .solicitud-info-row{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .solicitud-form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .sol-field,
+  .sol-field.span-4,
+  .sol-field.span-5,
+  .sol-field.span-7,
+  .sol-field.span-8,
+  .sol-field.span-12{
+    grid-column:span 1;
+  }
+
+  .modal-solicitud-full{
+    width:96vw;
+    max-height:92vh;
+  }
+
+  .solicitud-body{
+    overflow-y:auto !important;
+  }
+}
+/* =========================================================
+  FINAL MODAL SOLICITUD MODERNO FULL SCREEN
+========================================================= */
