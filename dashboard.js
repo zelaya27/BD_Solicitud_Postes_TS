@@ -658,92 +658,142 @@ function actualizarInfoModalSolicitud() {
   setText("infoSolicitudUsuario", getValue("gestionadoPor") || usuarioActual || "-");
 }
 
-function exportarSolicitudIndividual(item) {
-  const r = datos.find(x => x.ITEM === item);
-  if (!r) return;
-  exportarRegistrosExcel([r], `Solicitud_${r.ITEM}.xls`, "SOLICITUD DE MATERIAL INDIVIDUAL");
+function exportarExcelIndividual(item) {
+  const r = datos.find(x => String(x.ITEM) === String(item));
+  if (!r) {
+    alert("No se encontró la solicitud.");
+    return;
+  }
+
+  generarExcelSolicitudes([r], `Solicitud_${r.ITEM}.xlsx`);
 }
 
 function exportarExcelFiltrado() {
   const lista = obtenerDatosFiltrados();
+
   if (!lista.length) {
-    alert("No hay solicitudes visibles para exportar.");
+    alert("No hay solicitudes para exportar.");
     return;
   }
-  exportarRegistrosExcel(lista, `Solicitudes_Materiales_${obtenerFechaActual().replace(/-/g, "")}.xls`, "SOLICITUDES DE MATERIAL FILTRADAS");
+
+  generarExcelSolicitudes(lista, "Solicitudes_Materiales.xlsx");
 }
 
-function exportarRegistrosExcel(lista, nombreArchivo, titulo) {
-  const filtros = obtenerTextoFiltros();
-  const filas = lista.map((r, idx) => filaExcelSolicitud(r, idx + 1));
-  const encabezados = ["ITEM", "", "CODIGO SAP", "DESCRIPCION DEL MATERIAL", "SERIE", "UNIDAD DE MEDIDA", "CANTIDAD SOLICITADA", "CANTIDAD APROBADA", "BODEGA", "", "REPORTE", "SITIO", "APOYO/PINTADO", "UBICACIÓN GPS (UTM)", "FECHA", "OBSERVACIONES"];
-
-  let html = `
-  <html><head><meta charset="UTF-8"></head><body>
-    <table border="1">
-      <tr><th colspan="16" style="font-size:18px;background:#1f4e78;color:white;">${escaparHtml(titulo)}</th></tr>
-      <tr><td colspan="16"><strong>Fecha exportación:</strong> ${escaparHtml(obtenerFechaHoraActual())}</td></tr>
-      <tr><td colspan="16"><strong>Usuario:</strong> ${escaparHtml(usuarioActual)} &nbsp;&nbsp; <strong>Sector:</strong> ${escaparHtml(sectorActual)}</td></tr>
-      <tr><td colspan="16"><strong>Filtros:</strong> ${escaparHtml(filtros)}</td></tr>
-      <tr><td colspan="16"><strong>Total registros:</strong> ${lista.length}</td></tr>
-      <tr>${encabezados.map(h => `<th style="background:#d9eaf7;">${escaparHtml(h)}</th>`).join("")}</tr>
-      ${filas.map(fila => `<tr>${fila.map(c => `<td>${escaparHtml(c)}</td>`).join("")}</tr>`).join("")}
-    </table>
-  </body></html>`;
-
-  const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = nombreArchivo;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-function filaExcelSolicitud(r, consecutivo) {
-  const mat = obtenerMaterialPorCodigo(r.CODIGO_SOLICITADO) || {};
-  return [
-    consecutivo,
+function generarExcelSolicitudes(lista, nombreArchivo) {
+  const encabezados = [
+    "ITEM",
     "",
-    r.CODIGO_SOLICITADO || "",
-    r.NOMBRE_SOLICITADO || "",
-    r.SERIE || "",
-    mat.unidad || "UND",
-    r.CANTIDAD_SOLICITADA || "",
+    "CODIGO SAP",
+    "DESCRIPCION DEL MATERIAL",
+    "SERIE",
+    "UNIDAD DE\nMEDIDA",
+    "CANTIDAD\nSOLICITADA",
+    "CANTIDAD\nAPROBADA",
+    "BODEGA",
     "",
-    "",
-    "",
-    r.REPORTE || "",
-    r.SITIO || "",
-    r.PINTADO_APOYO || "",
-    r.UTM || "",
-    formatearFecha(r.FECHA_CAMBIO),
-    r.OBSERVACIONES || ""
+    "REPORTE",
+    "SITIO",
+    "APOYO/PINTADO",
+    "UBICACIÓN GPS (UTM)",
+    "FECHA",
+    "OBSERVACIONES"
   ];
+
+  const filas = lista.map((r, index) => {
+    const mat = obtenerMaterialPorCodigo(r.CODIGO_SOLICITADO);
+    return [
+      index + 1,
+      "",
+      r.CODIGO_SOLICITADO || "",
+      r.NOMBRE_SOLICITADO || "",
+      r.SERIE || "",
+      mat?.unidad || "UND",
+      r.CANTIDAD_SOLICITADA || "",
+      "",
+      "",
+      "",
+      r.REPORTE || "",
+      r.SITIO || "",
+      r.PINTADO_APOYO || "",
+      r.UTM || "",
+      formatearFechaExcel(r.FECHA_CAMBIO),
+      r.OBSERVACIONES || ""
+    ];
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet([encabezados, ...filas]);
+
+  ws["!cols"] = [
+    { wch: 8 },   // ITEM
+    { wch: 3 },   // VACÍA
+    { wch: 14 },  // CODIGO SAP
+    { wch: 36 },  // DESCRIPCION
+    { wch: 20 },  // SERIE
+    { wch: 10 },  // UNIDAD
+    { wch: 12 },  // CANT SOLICITADA
+    { wch: 12 },  // CANT APROBADA
+    { wch: 24 },  // BODEGA
+    { wch: 3 },   // VACÍA
+    { wch: 14 },  // REPORTE
+    { wch: 32 },  // SITIO
+    { wch: 18 },  // APOYO
+    { wch: 24 },  // UTM
+    { wch: 14 },  // FECHA
+    { wch: 48 }   // OBSERVACIONES
+  ];
+
+  ws["!rows"] = [
+    { hpt: 32 },
+    ...filas.map(() => ({ hpt: 27 }))
+  ];
+
+  const range = XLSX.utils.decode_range(ws["!ref"]);
+
+  for (let R = range.s.r; R <= range.e.r; R++) {
+    for (let C = range.s.c; C <= range.e.c; C++) {
+      const ref = XLSX.utils.encode_cell({ r: R, c: C });
+      if (!ws[ref]) ws[ref] = { t: "s", v: "" };
+
+      const esColumnaVacia = C === 1 || C === 9;
+
+      ws[ref].s = {
+        font: {
+          name: "Arial",
+          sz: R === 0 ? 9 : 8,
+          bold: R === 0,
+          color: { rgb: "000000" }
+        },
+        alignment: {
+          horizontal: "center",
+          vertical: "center",
+          wrapText: true
+        },
+        fill: R === 0 && !esColumnaVacia
+          ? { fgColor: { rgb: "D9EAF7" } }
+          : { fgColor: { rgb: "FFFFFF" } },
+        border: esColumnaVacia
+          ? {}
+          : {
+              top: { style: "thin", color: { rgb: "000000" } },
+              bottom: { style: "thin", color: { rgb: "000000" } },
+              left: { style: "thin", color: { rgb: "000000" } },
+              right: { style: "thin", color: { rgb: "000000" } }
+            }
+      };
+    }
+  }
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Solicitud");
+
+  XLSX.writeFile(wb, nombreArchivo);
 }
 
-function obtenerTextoFiltros() {
-  const partes = [];
-  const mapa = {
-    filtroItem: "Item",
-    filtroReporte: "Reporte",
-    filtroCircuito: "Circuito",
-    filtroEvento: "Evento",
-    filtroTipoEvento: "Tipo evento",
-    filtroRequisa: "Requisa",
-    filtroEstado: "Estado",
-    filtroGestionado: "Gestionado",
-    filtroFechaDesde: "Fecha desde",
-    filtroFechaHasta: "Fecha hasta",
-    filtroDireccion: "Búsqueda"
-  };
-  Object.keys(mapa).forEach(id => {
-    const v = getValue(id);
-    if (v && v !== "ALL") partes.push(`${mapa[id]}: ${v}`);
-  });
-  return partes.length ? partes.join(" | ") : "Sin filtros";
+function formatearFechaExcel(fecha) {
+  if (!fecha) return "";
+  const partes = fecha.split("-");
+  if (partes.length !== 3) return fecha;
+  return `${Number(partes[2])}/${Number(partes[1])}/${partes[0]}`;
 }
 
 function generarNuevoItem() {
