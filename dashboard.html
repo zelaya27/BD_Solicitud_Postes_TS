@@ -113,162 +113,193 @@
     </section>
   </main>
 
-<!-- INICIO MODAL SOLICITUD MODERNO -->
-<div id="modalSolicitud" class="modal-overlay">
-  <div class="modal modal-solicitud-full">
-    <div class="solicitud-header">
-      <div class="solicitud-title">
-        <div class="solicitud-icon"><i class="fas fa-cube"></i></div>
-        <h3>SOLICITUD DE MATERIAL</h3>
-      </div>
-      <button class="modal-close solicitud-close" onclick="cerrarModalSolicitud()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <div class="modal-body solicitud-body">
-      <input type="hidden" id="modoSolicitud" value="NUEVO">
-      <input type="hidden" id="item">
-      <input type="hidden" id="estado" value="SOLICITADO">
-      <input type="hidden" id="fechaSolicitud">
-      <input type="hidden" id="gestionadoPor">
-      <input type="hidden" id="codigoSolicitado">
-      <input type="hidden" id="requisa">
-      <input type="hidden" id="cuadrilla">
-
-      <div class="solicitud-info-row">
-        <div class="solicitud-info-card">
-          <i class="fas fa-receipt"></i>
-          <div>
-            <span>SOLICITUD</span>
-            <strong id="infoSolicitudItem">20260618002</strong>
-          </div>
+  <!-- MODAL SOLICITUD MODERNO -->
+  <div id="modalSolicitud" class="modal-overlay">
+    <div class="modal modal-solicitud-full">
+      <div class="solicitud-header">
+        <div class="solicitud-title">
+          <div class="solicitud-icon"><i class="fas fa-cube"></i></div>
+          <h3>SOLICITUD DE MATERIAL</h3>
         </div>
-
-        <div class="solicitud-info-card">
-          <i class="fas fa-user"></i>
-          <div>
-            <span>GESTIONADO POR</span>
-            <strong id="infoSolicitudUsuario">OSMA.LAGOS</strong>
-          </div>
-        </div>
-
-        <div class="solicitud-info-card">
-          <i class="fas fa-calendar-days"></i>
-          <div>
-            <span>FECHA</span>
-            <strong id="infoSolicitudFecha">18/06/2026</strong>
-          </div>
-        </div>
+        <button class="modal-close solicitud-close" onclick="cerrarModalSolicitud()">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
-      <div class="solicitud-form-grid">
-        <div class="sol-field">
-          <label>TIPO EVENTO</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-tag"></i>
-            <select id="tipoEvento">
-              <option value="INCIDENCIA">INCIDENCIA</option>
-              <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-              <option value="OPERACIÓN">OPERACIÓN</option>
-            </select>
+      <div class="modal-body solicitud-body">
+        <input type="hidden" id="modoSolicitud" value="NUEVO">
+        <input type="hidden" id="item">
+        <input type="hidden" id="estado" value="SOLICITADO">
+        <input type="hidden" id="fechaSolicitud">
+        <input type="hidden" id="gestionadoPor">
+        <input type="hidden" id="codigoSolicitado">
+        <input type="hidden" id="requisa">
+        <input type="hidden" id="cuadrilla">
+
+        <div class="solicitud-info-row">
+          <div class="solicitud-info-card">
+            <i class="fas fa-receipt"></i>
+            <div>
+              <span>SOLICITUD</span>
+              <strong id="infoSolicitudItem">-</strong>
+            </div>
+          </div>
+
+          <div class="solicitud-info-card">
+            <i class="fas fa-user"></i>
+            <div>
+              <span>GESTIONADO POR</span>
+              <strong id="infoSolicitudUsuario">-</strong>
+            </div>
+          </div>
+
+          <div class="solicitud-info-card fecha-cambio-card">
+            <i class="fas fa-calendar-days"></i>
+            <div>
+              <span>FECHA CAMBIO</span>
+              <input id="fechaCambio" type="date" onchange="actualizarInfoModalSolicitud()">
+            </div>
           </div>
         </div>
 
-        <div class="sol-field">
-          <label>EVENTO</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-hashtag"></i>
-            <input id="evento" type="number">
+        <div class="solicitud-form-grid">
+          <div class="sol-field">
+            <label>TIPO EVENTO</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-tag"></i>
+              <select id="tipoEvento">
+                <option value="INCIDENCIA">INCIDENCIA</option>
+                <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                <option value="OPERACIÓN">OPERACIÓN</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field">
-          <label>REPORTE</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-file-lines"></i>
-            <input id="reporte" type="number">
+          <div class="sol-field">
+            <label>EVENTO</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-hashtag"></i>
+              <input id="evento" type="number">
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-5">
-          <label>CIRCUITO</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-code-branch"></i>
-            <select id="circuito"></select>
+          <div class="sol-field">
+            <label>REPORTE</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-file-lines"></i>
+              <input id="reporte" type="number">
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-7">
-          <label>DIRECCIÓN</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-location-dot"></i>
-            <input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS">
+          <div class="sol-field span-5">
+            <label>CIRCUITO</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-code-branch"></i>
+              <select id="circuito"></select>
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-5">
-          <label>APOYO (PINTADO)</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-tower-cell"></i>
-            <input id="pintadoApoyo" type="number">
+          <div class="sol-field span-7">
+            <label>DIRECCIÓN</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-location-dot"></i>
+              <input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS">
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-7">
-          <label>COORDENADAS UTM</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-crosshairs"></i>
-            <input id="utm" type="text" placeholder="618878 - 1639784">
+          <div class="sol-field span-5">
+            <label>APOYO</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-tower-observation"></i>
+              <input id="pintadoApoyo" type="number">
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-8">
-          <label>MATERIAL SOLICITADO</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-box"></i>
-            <select id="nombreSolicitado"></select>
+          <div class="sol-field span-7">
+            <label>COORDENADAS UTM</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-crosshairs"></i>
+              <input id="utm" type="text" placeholder="618878 - 1639784">
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-4">
-          <label>CANTIDAD</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-clipboard-list"></i>
-            <input id="cantidadSolicitada" type="number" min="1" max="999" value="1">
+          <div class="sol-field span-8">
+            <label>MATERIAL SOLICITADO</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-box"></i>
+              <select id="nombreSolicitado"></select>
+            </div>
           </div>
-        </div>
 
-        <div id="serieBox" class="sol-field span-8 oculto">
-          <label>SERIE (SOLO PARA TRANSFORMADORES)</label>
-          <div class="sol-input-icon">
-            <i class="fas fa-barcode"></i>
-            <input id="serie" type="text" placeholder="Ingrese la serie del transformador">
+          <div class="sol-field span-4">
+            <label>CANTIDAD</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-clipboard-list"></i>
+              <input id="cantidadSolicitada" type="number" min="1" max="999" value="1">
+            </div>
           </div>
-        </div>
 
-        <div class="sol-field span-12">
-          <label>OBSERVACIONES</label>
-          <div class="sol-input-icon textarea-icon">
-            <i class="fas fa-comment"></i>
-            <textarea id="observaciones" placeholder="CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA"></textarea>
+          <div id="serieBox" class="sol-field span-8 oculto">
+            <label>SERIE</label>
+            <div class="sol-input-icon">
+              <i class="fas fa-barcode"></i>
+              <input id="serie" type="text" placeholder="Ingrese la serie del transformador">
+            </div>
+          </div>
+
+          <div class="sol-field span-12">
+            <label>OBSERVACIONES</label>
+            <div class="sol-input-icon textarea-icon">
+              <i class="fas fa-comment"></i>
+              <textarea id="observaciones" placeholder="CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA"></textarea>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="modal-footer solicitud-footer">
-      <button class="btn-cancelar solicitud-btn-cancelar" onclick="cerrarModalSolicitud()">
-        <i class="fas fa-times"></i> CANCELAR
-      </button>
-      <button class="btn-guardar solicitud-btn-guardar" onclick="guardarSolicitud()">
-        <i class="fas fa-save"></i> GUARDAR SOLICITUD
-      </button>
+      <div class="modal-footer solicitud-footer">
+        <button class="btn-cancelar solicitud-btn-cancelar" onclick="cerrarModalSolicitud()">
+          <i class="fas fa-xmark"></i> CANCELAR
+        </button>
+        <button class="btn-guardar solicitud-btn-guardar" onclick="guardarSolicitud()">
+          <i class="fas fa-floppy-disk"></i> GUARDAR SOLICITUD
+        </button>
+      </div>
     </div>
   </div>
-</div>
-  <!-- FIN MODAL SOLICITUD MODERNO -->
-  
+
+  <!-- MODAL AUDITORÍA -->
+  <div id="modalAuditoria" class="modal-overlay">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h3><i class="fas fa-magnifying-glass-chart"></i> Auditoría</h3>
+        <button class="modal-close" onclick="cerrarModalAuditoria()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="auditoriaItem">
+        <div class="form-group">
+          <label>RESULTADO AUDITORÍA</label>
+          <select id="auditado" onchange="controlarObservacionesAuditoria()">
+            <option value="SIN ERRORES">SIN ERRORES</option>
+            <option value="CON ERRORES">CON ERRORES</option>
+          </select>
+        </div>
+        <div class="audit-box" id="boxObservacionesAuditoria">
+          <label class="check-title">OBSERVACIONES</label>
+          <label class="check-item"><input type="checkbox" value="MÓDULO" class="obs-auditoria"> MÓDULO</label>
+          <label class="check-item"><input type="checkbox" value="REQUISA" class="obs-auditoria"> REQUISA</label>
+          <label class="check-item"><input type="checkbox" value="GPS" class="obs-auditoria"> GPS</label>
+          <label class="check-item"><input type="checkbox" value="ESTADO" class="obs-auditoria"> ESTADO</label>
+          <label class="check-item"><input type="checkbox" value="ENERGIS" class="obs-auditoria"> ENERGIS</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" onclick="cerrarModalAuditoria()">Cancelar</button>
+        <button class="btn-guardar" onclick="guardarAuditoria()"><i class="fas fa-save"></i> Guardar Auditoría</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL DASHBOARD -->
   <div id="modalDashboard" class="modal-overlay">
     <div class="modal modal-dashboard">

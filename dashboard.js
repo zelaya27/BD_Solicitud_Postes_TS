@@ -1,6 +1,6 @@
 /************************************************************
  * APP SOLICITUD DE MATERIALES - dashboard.js
- * Modal moderno amplio + datos simulados
+ * Versión compacta: panel + modal industrial, datos simulados
  ************************************************************/
 
 let usuarioActual = "";
@@ -55,79 +55,31 @@ function cargarDatosPrueba() {
 
   datos = [
     {
-      ITEM: "20260618003",
-      GESTIONADO_POR: "ALLAN.ZELAYA",
-      ESTADO: "CONSUMIDO",
-      FECHA_SOLICITUD: "18/06/2026 08:00",
-      FECHA_CAMBIO: "2026-06-18",
-      REPORTE: "3917965",
-      CIRCUITO: "CAT-L375",
-      SITIO: "COL. PALMIRA, CATACAMAS",
-      CODIGO_SOLICITADO: 130005,
-      NOMBRE_SOLICITADO: "POSTE MADERA CLASE 5 30ft",
-      CANTIDAD_SOLICITADA: 1,
-      PINTADO_APOYO: "7157711",
-      UTM: "618878 - 1639784",
-      OBSERVACIONES: "CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA",
-      TIPO_EVENTO: "INCIDENCIA",
-      EVENTO: "14243",
-      SERIE: "",
-      REQUISA: "2865",
-      CUADRILLA: "CUADRILLA 48",
-      AUDITADO: "CON ERRORES",
-      OBSERVACIONES_AUDITORIA: "REQUISA, GPS",
-      USUARIO: "ALLAN.ZELAYA",
-      SECTOR: "JUTICALPA"
+      ITEM: "20260618003", GESTIONADO_POR: "ALLAN.ZELAYA", ESTADO: "CONSUMIDO",
+      FECHA_SOLICITUD: "18/06/2026 08:00", FECHA_CAMBIO: "2026-06-18", REPORTE: "3917965",
+      CIRCUITO: "CAT-L375", SITIO: "COL. PALMIRA, CATACAMAS", CODIGO_SOLICITADO: 130005,
+      NOMBRE_SOLICITADO: "POSTE MADERA CLASE 5 30ft", CANTIDAD_SOLICITADA: 1,
+      PINTADO_APOYO: "7157711", UTM: "618878 - 1639784", OBSERVACIONES: "CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA",
+      TIPO_EVENTO: "INCIDENCIA", EVENTO: "14243", SERIE: "", REQUISA: "2865", CUADRILLA: "CUADRILLA 48",
+      AUDITADO: "CON ERRORES", OBSERVACIONES_AUDITORIA: "REQUISA, GPS", USUARIO: "ALLAN.ZELAYA", SECTOR: "JUTICALPA"
     },
     {
-      ITEM: "20260618002",
-      GESTIONADO_POR: "OSMAN.LAGOS",
-      ESTADO: "REQUISADO",
-      FECHA_SOLICITUD: "18/06/2026 08:20",
-      FECHA_CAMBIO: "2026-06-18",
-      REPORTE: "3917998",
-      CIRCUITO: "CAT-L376",
-      SITIO: "ALDEA EL AGUACATE, CATACAMAS",
-      CODIGO_SOLICITADO: 70022,
-      NOMBRE_SOLICITADO: "TRANSFORMADOR 25kVa19.9/34.5kV-120/240V",
-      CANTIDAD_SOLICITADA: 1,
-      PINTADO_APOYO: "7157722",
-      UTM: "618000 - 1639000",
-      OBSERVACIONES: "CAMBIO DE TRANSFORMADOR POR DAÑO",
-      TIPO_EVENTO: "MANTENIMIENTO",
-      EVENTO: "14244",
-      SERIE: "ABC123",
-      REQUISA: "2866",
-      CUADRILLA: "CUADRILLA 49",
-      AUDITADO: "",
-      OBSERVACIONES_AUDITORIA: "",
-      USUARIO: "OSMAN.LAGOS",
-      SECTOR: "JUTICALPA"
+      ITEM: "20260618002", GESTIONADO_POR: "OSMAN.LAGOS", ESTADO: "REQUISADO",
+      FECHA_SOLICITUD: "18/06/2026 08:20", FECHA_CAMBIO: "2026-06-18", REPORTE: "3917998",
+      CIRCUITO: "CAT-L376", SITIO: "ALDEA EL AGUACATE, CATACAMAS", CODIGO_SOLICITADO: 70022,
+      NOMBRE_SOLICITADO: "TRANSFORMADOR 25kVa19.9/34.5kV-120/240V", CANTIDAD_SOLICITADA: 1,
+      PINTADO_APOYO: "7157722", UTM: "618000 - 1639000", OBSERVACIONES: "CAMBIO DE TRANSFORMADOR POR DAÑO",
+      TIPO_EVENTO: "MANTENIMIENTO", EVENTO: "14244", SERIE: "ABC123", REQUISA: "2866", CUADRILLA: "CUADRILLA 49",
+      AUDITADO: "", OBSERVACIONES_AUDITORIA: "", USUARIO: "OSMAN.LAGOS", SECTOR: "JUTICALPA"
     },
     {
-      ITEM: "20260618001",
-      GESTIONADO_POR: "ALLAN.ZELAYA",
-      ESTADO: "SOLICITADO",
-      FECHA_SOLICITUD: "18/06/2026 08:40",
-      FECHA_CAMBIO: "2026-06-18",
-      REPORTE: "3918005",
-      CIRCUITO: "JUT-L379",
-      SITIO: "BARRIO EL CENTRO, JUTICALPA",
-      CODIGO_SOLICITADO: 130004,
-      NOMBRE_SOLICITADO: "POSTE CONCRETO VIB/CFU 30ft - 9m x450kg",
-      CANTIDAD_SOLICITADA: 2,
-      PINTADO_APOYO: "7157755",
-      UTM: "619000 - 1639500",
-      OBSERVACIONES: "CAMBIO DE DOS POSTES DE CONCRETO",
-      TIPO_EVENTO: "OPERACIÓN",
-      EVENTO: "14245",
-      SERIE: "",
-      REQUISA: "",
-      CUADRILLA: "CUADRILLA 50",
-      AUDITADO: "SIN ERRORES",
-      OBSERVACIONES_AUDITORIA: "",
-      USUARIO: "ALLAN.ZELAYA",
-      SECTOR: "JUTICALPA"
+      ITEM: "20260618001", GESTIONADO_POR: "ALLAN.ZELAYA", ESTADO: "SOLICITADO",
+      FECHA_SOLICITUD: "18/06/2026 08:40", FECHA_CAMBIO: "2026-06-18", REPORTE: "3918005",
+      CIRCUITO: "JUT-L379", SITIO: "BARRIO EL CENTRO, JUTICALPA", CODIGO_SOLICITADO: 130004,
+      NOMBRE_SOLICITADO: "POSTE CONCRETO VIB/CFU 30ft - 9m x450kg", CANTIDAD_SOLICITADA: 2,
+      PINTADO_APOYO: "7157755", UTM: "619000 - 1639500", OBSERVACIONES: "CAMBIO DE DOS POSTES DE CONCRETO",
+      TIPO_EVENTO: "OPERACIÓN", EVENTO: "14245", SERIE: "", REQUISA: "", CUADRILLA: "CUADRILLA 50",
+      AUDITADO: "SIN ERRORES", OBSERVACIONES_AUDITORIA: "", USUARIO: "ALLAN.ZELAYA", SECTOR: "JUTICALPA"
     }
   ];
 }
@@ -136,19 +88,23 @@ function cargarCombos() {
   llenarSelect("filtroCircuito", circuitos, true);
   llenarSelect("filtroGestionado", ingenieros, true);
 
+  llenarSelect("gestionadoPor", ingenieros, false);
   llenarSelect("circuito", circuitos, false);
+  llenarSelect("cuadrilla", cuadrillas, false);
+
   cargarComboMateriales("nombreSolicitado");
 
   addListener("nombreSolicitado", "change", seleccionarMaterialPorNombre);
   addListener("nombreSolicitado", "change", mostrarSerieSegunMaterial);
+  addListener("codigoSolicitado", "input", seleccionarMaterialPorCodigo);
   addListener("pintadoApoyo", "input", buscarUTMSimulado);
+  addListener("estado", "change", pintarEstadoSelect);
   addListener("fechaCambio", "change", actualizarInfoModalSolicitud);
 }
 
 function llenarSelect(id, lista, incluirTodos) {
   const select = document.getElementById(id);
   if (!select) return;
-
   select.innerHTML = "";
 
   if (incluirTodos) {
@@ -169,7 +125,6 @@ function llenarSelect(id, lista, incluirTodos) {
 function cargarComboMateriales(id) {
   const select = document.getElementById(id);
   if (!select) return;
-
   select.innerHTML = `<option value="">Seleccione material...</option>`;
 
   materiales.forEach(m => {
@@ -209,9 +164,8 @@ function obtenerDatosFiltrados() {
     const cumpleFechaDesde = !fechaDesde || (r.FECHA_CAMBIO || "") >= fechaDesde;
     const cumpleFechaHasta = !fechaHasta || (r.FECHA_CAMBIO || "") <= fechaHasta;
 
-    return cumpleItem && cumpleReporte && cumpleCircuito && cumpleEvento &&
-      cumpleTipoEvento && cumpleRequisa && cumpleEstado && cumpleGestionado &&
-      cumpleDireccion && cumpleFechaDesde && cumpleFechaHasta;
+    return cumpleItem && cumpleReporte && cumpleCircuito && cumpleEvento && cumpleTipoEvento &&
+      cumpleRequisa && cumpleEstado && cumpleGestionado && cumpleDireccion && cumpleFechaDesde && cumpleFechaHasta;
   });
 
   lista.sort((a, b) => Number(b.ITEM) - Number(a.ITEM));
@@ -224,7 +178,6 @@ function obtenerDatosFiltrados() {
 function renderizarTabla() {
   const tbody = document.getElementById("tablaBody");
   const lista = obtenerDatosFiltrados();
-
   tbody.innerHTML = "";
 
   if (lista.length === 0) {
@@ -265,7 +218,6 @@ function renderizarTabla() {
           </button>
         </div>
       </td>`;
-
     tbody.appendChild(tr);
   });
 }
@@ -273,7 +225,6 @@ function renderizarTabla() {
 function selectEstadoPanel(r) {
   const cls = claseEstadoPanel(r.ESTADO);
   const disabled = r.ESTADO === "CONSUMIDO" ? "disabled" : "";
-
   return `
     <select class="estado-panel-select ${cls}" ${disabled} onchange="cambiarEstadoPanel('${r.ITEM}', this.value)">
       <option value="SOLICITADO" ${r.ESTADO === "SOLICITADO" ? "selected" : ""}>SOLICITADO</option>
@@ -284,15 +235,22 @@ function selectEstadoPanel(r) {
 
 function cambiarEstadoPanel(item, nuevoEstado) {
   const r = datos.find(x => x.ITEM === item);
-  if (!r || r.ESTADO === nuevoEstado) return;
+  if (!r) return;
 
-  const msg = nuevoEstado === "CONSUMIDO"
-    ? "¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse."
-    : `¿Desea cambiar el estado a ${nuevoEstado}?`;
+  if (r.ESTADO === nuevoEstado) return;
 
-  if (!confirm(msg)) {
-    renderizarTabla();
-    return;
+  if (nuevoEstado === "CONSUMIDO") {
+    const ok = confirm("¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse, solo visualizarse.");
+    if (!ok) {
+      renderizarTabla();
+      return;
+    }
+  } else {
+    const ok = confirm(`¿Desea cambiar el estado a ${nuevoEstado}?`);
+    if (!ok) {
+      renderizarTabla();
+      return;
+    }
   }
 
   r.ESTADO = nuevoEstado;
@@ -324,11 +282,9 @@ function limpiarFiltros() {
 function abrirModalSolicitud() {
   itemEditando = null;
   estadoAnteriorEditando = null;
-
   limpiarModalSolicitud();
 
   const nuevoItem = generarNuevoItem();
-
   setValue("modoSolicitud", "NUEVO");
   setValue("item", nuevoItem);
   setValue("estado", "SOLICITADO");
@@ -339,6 +295,7 @@ function abrirModalSolicitud() {
   setValue("tipoEvento", "INCIDENCIA");
 
   actualizarInfoModalSolicitud();
+  pintarEstadoSelect();
   mostrarSerieSegunMaterial();
   bloquearModalSolicitud(false);
 
@@ -350,16 +307,14 @@ function cerrarModalSolicitud() {
 }
 
 function limpiarModalSolicitud() {
-  [
-    "item", "fechaSolicitud", "fechaCambio", "reporte", "sitio",
-    "codigoSolicitado", "cantidadSolicitada", "pintadoApoyo",
-    "utm", "observaciones", "evento", "serie", "requisa", "cuadrilla"
-  ].forEach(id => setValue(id, ""));
+  ["item", "fechaSolicitud", "fechaCambio", "reporte", "sitio", "codigoSolicitado",
+   "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "evento", "serie",
+   "requisa", "cuadrilla"].forEach(id => setValue(id, ""));
 
   setValue("estado", "SOLICITADO");
   setValue("tipoEvento", "INCIDENCIA");
   setValue("nombreSolicitado", "");
-
+  pintarEstadoSelect();
   mostrarSerieSegunMaterial();
 }
 
@@ -409,16 +364,14 @@ function cargarRegistroEnModal(r, soloLectura) {
   setValue("cuadrilla", r.CUADRILLA || "");
 
   actualizarInfoModalSolicitud();
+  pintarEstadoSelect();
   mostrarSerieSegunMaterial();
   bloquearModalSolicitud(soloLectura);
 }
 
 function bloquearModalSolicitud(bloquear) {
-  const campos = [
-    "fechaCambio", "reporte", "circuito", "sitio", "nombreSolicitado",
-    "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones",
-    "tipoEvento", "evento", "serie"
-  ];
+  const campos = ["estado", "fechaCambio", "reporte", "circuito", "sitio", "nombreSolicitado",
+    "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "tipoEvento", "evento", "serie"];
 
   campos.forEach(id => {
     const el = document.getElementById(id);
@@ -439,15 +392,19 @@ function guardarSolicitud() {
   }
 
   const item = getValue("item");
-  const nuevoEstado = getValue("estado", "SOLICITADO");
+  const nuevoEstado = getValue("estado");
 
   if (modo === "EDITAR" && estadoAnteriorEditando && nuevoEstado !== estadoAnteriorEditando) {
-    const msg = nuevoEstado === "CONSUMIDO"
-      ? "¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse."
-      : `¿Desea cambiar el estado a ${nuevoEstado}?`;
-
-    if (!confirm(msg)) {
+    if (nuevoEstado === "CONSUMIDO") {
+      const ok = confirm("¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse, solo visualizarse.");
+      if (!ok) {
+        setValue("estado", estadoAnteriorEditando);
+        pintarEstadoSelect();
+        return;
+      }
+    } else if (!confirm(`¿Desea cambiar el estado a ${nuevoEstado}?`)) {
       setValue("estado", estadoAnteriorEditando);
+      pintarEstadoSelect();
       return;
     }
   }
@@ -487,9 +444,8 @@ function guardarSolicitud() {
   }
 
   const mat = obtenerMaterialPorCodigo(registro.CODIGO_SOLICITADO);
-
   if (!mat || mat.descripcion !== registro.NOMBRE_SOLICITADO) {
-    alert("El material solicitado no coincide con la base de materiales.");
+    alert("El material solicitado no coincide con la hoja materiales.");
     return;
   }
 
@@ -514,32 +470,26 @@ function guardarSolicitud() {
         datos[idx] = registro;
       }
     }
-
     cerrarModalSolicitud();
     renderizarTabla();
-
   } finally {
     if (btnGuardar) {
       btnGuardar.disabled = false;
-      btnGuardar.innerHTML = `<i class="fas fa-save"></i> GUARDAR SOLICITUD`;
+      btnGuardar.innerHTML = `<i class="fas fa-save"></i> Guardar`;
     }
   }
 }
 
 function validarSolicitud(r) {
-  if (!r.FECHA_CAMBIO) return "Seleccione Fecha.";
-  if (!r.TIPO_EVENTO) return "Seleccione Tipo de Evento.";
-  if (!r.EVENTO) return "Ingrese Evento.";
+  if (!r.FECHA_CAMBIO) return "Seleccione Fecha Cambio.";
   if (!r.REPORTE || String(r.REPORTE).length !== 7) return "El reporte debe tener 7 dígitos.";
   if (!r.CIRCUITO) return "Seleccione Circuito.";
   if (!r.SITIO) return "Ingrese Dirección.";
-  if (!r.PINTADO_APOYO) return "Ingrese Apoyo.";
-  if (!r.UTM) return "Ingrese Coordenadas UTM.";
   if (!r.CODIGO_SOLICITADO) return "Seleccione Material Solicitado.";
   if (!r.NOMBRE_SOLICITADO) return "Seleccione Material Solicitado.";
-  if (!r.CANTIDAD_SOLICITADA || r.CANTIDAD_SOLICITADA < 1 || r.CANTIDAD_SOLICITADA > 999) {
-    return "Cantidad solicitada debe ser entre 1 y 999.";
-  }
+  if (!r.CANTIDAD_SOLICITADA || r.CANTIDAD_SOLICITADA < 1 || r.CANTIDAD_SOLICITADA > 999) return "Cantidad solicitada debe ser entre 1 y 999.";
+  if (!r.PINTADO_APOYO) return "Ingrese Pintado Apoyo.";
+  if (!r.TIPO_EVENTO) return "Seleccione Tipo de Evento.";
   return "";
 }
 
@@ -555,7 +505,6 @@ function eliminarSolicitud(item) {
   if (!confirm("¿Desea eliminar esta solicitud?")) return;
 
   const confirmacion = prompt("Para eliminar escriba ELIMINAR");
-
   if (!confirmacion || confirmacion.toUpperCase().trim() !== "ELIMINAR") {
     alert("Eliminación cancelada.");
     return;
@@ -578,12 +527,8 @@ function abrirModalAuditoria(item) {
   setValue("auditado", r.AUDITADO || "SIN ERRORES");
 
   document.querySelectorAll(".obs-auditoria").forEach(chk => chk.checked = false);
-
   const obs = (r.OBSERVACIONES_AUDITORIA || "").split(",").map(x => x.trim());
-
-  document.querySelectorAll(".obs-auditoria").forEach(chk => {
-    chk.checked = obs.includes(chk.value);
-  });
+  document.querySelectorAll(".obs-auditoria").forEach(chk => chk.checked = obs.includes(chk.value));
 
   controlarObservacionesAuditoria();
   document.getElementById("modalAuditoria").classList.add("abierto");
@@ -637,15 +582,7 @@ function cerrarModalDashboard() {
 
 function mostrarDashboard(tipo) {
   document.querySelectorAll(".dash-tab").forEach(btn => btn.classList.remove("active"));
-
-  const tabs = {
-    postes: 0,
-    transformadores: 1,
-    postesCircuito: 2,
-    transformadoresCircuito: 3,
-    gestionado: 4
-  };
-
+  const tabs = { postes: 0, transformadores: 1, postesCircuito: 2, transformadoresCircuito: 3, gestionado: 4 };
   const index = tabs[tipo] || 0;
   const tab = document.querySelectorAll(".dash-tab")[index];
   if (tab) tab.classList.add("active");
@@ -653,37 +590,16 @@ function mostrarDashboard(tipo) {
   let titulo = "";
   let resumen = [];
 
-  if (tipo === "postes") {
-    titulo = "Postes consumidos por material";
-    resumen = agruparPorMaterial("POSTE");
-  }
-
-  if (tipo === "transformadores") {
-    titulo = "Transformadores consumidos por material";
-    resumen = agruparPorMaterial("TRANSFORMADOR");
-  }
-
-  if (tipo === "postesCircuito") {
-    titulo = "Postes consumidos por circuito";
-    resumen = agruparPorCircuito("POSTE");
-  }
-
-  if (tipo === "transformadoresCircuito") {
-    titulo = "Transformadores consumidos por circuito";
-    resumen = agruparPorCircuito("TRANSFORMADOR");
-  }
-
-  if (tipo === "gestionado") {
-    titulo = "Conteo de solicitudes por gestionado por";
-    resumen = agruparPorCampo(datos, "GESTIONADO_POR");
-  }
+  if (tipo === "postes") { titulo = "Postes consumidos por material"; resumen = agruparPorMaterial("POSTE"); }
+  if (tipo === "transformadores") { titulo = "Transformadores consumidos por material"; resumen = agruparPorMaterial("TRANSFORMADOR"); }
+  if (tipo === "postesCircuito") { titulo = "Postes consumidos por circuito"; resumen = agruparPorCircuito("POSTE"); }
+  if (tipo === "transformadoresCircuito") { titulo = "Transformadores consumidos por circuito"; resumen = agruparPorCircuito("TRANSFORMADOR"); }
+  if (tipo === "gestionado") { titulo = "Conteo de solicitudes por gestionado por"; resumen = agruparPorCampo(datos, "GESTIONADO_POR"); }
 
   setText("dashboardTitulo", titulo);
-
   if (document.getElementById("dashboardTotal")) {
     setText("dashboardTotal", resumen.reduce((a, b) => a + b.cantidad, 0));
   }
-
   renderizarTablaDashboard(resumen);
 }
 
@@ -692,7 +608,6 @@ function agruparPorMaterial(categoria) {
     const mat = obtenerMaterialPorCodigo(r.CODIGO_SOLICITADO);
     return r.ESTADO === "CONSUMIDO" && mat && mat.categoria === categoria;
   });
-
   return agruparPorCampo(lista, "NOMBRE_SOLICITADO");
 }
 
@@ -701,18 +616,15 @@ function agruparPorCircuito(categoria) {
     const mat = obtenerMaterialPorCodigo(r.CODIGO_SOLICITADO);
     return r.ESTADO === "CONSUMIDO" && mat && mat.categoria === categoria;
   });
-
   return agruparPorCampo(lista, "CIRCUITO");
 }
 
 function agruparPorCampo(lista, campo) {
   const mapa = {};
-
   lista.forEach(r => {
     const key = r[campo] || "SIN DATO";
     mapa[key] = (mapa[key] || 0) + 1;
   });
-
   return Object.keys(mapa)
     .map(k => ({ descripcion: k, cantidad: mapa[k] }))
     .sort((a, b) => b.cantidad - a.cantidad || a.descripcion.localeCompare(b.descripcion));
@@ -738,14 +650,20 @@ function renderizarTablaDashboard(resumen) {
 function seleccionarMaterialPorNombre() {
   const nombre = getValue("nombreSolicitado");
   const mat = materiales.find(m => m.descripcion === nombre);
-
   if (!mat) {
     setValue("codigoSolicitado", "");
     mostrarSerieSegunMaterial();
     return;
   }
-
   setValue("codigoSolicitado", mat.codigo);
+  mostrarSerieSegunMaterial();
+}
+
+function seleccionarMaterialPorCodigo() {
+  const codigo = Number(getValue("codigoSolicitado"));
+  const mat = materiales.find(m => Number(m.codigo) === codigo);
+  if (!mat) return;
+  setValue("nombreSolicitado", mat.descripcion);
   mostrarSerieSegunMaterial();
 }
 
@@ -768,29 +686,16 @@ function obtenerMaterialPorCodigo(codigo) {
 
 function buscarUTMSimulado() {
   const apoyo = getValue("pintadoApoyo");
-
   if (!apoyo) {
     setValue("utm", "");
     return;
   }
-
   const ultimos = String(apoyo).slice(-3);
   setValue("utm", `618${ultimos} - 1639${ultimos}`);
 }
 
-function actualizarInfoModalSolicitud() {
-  const item = getValue("item");
-  const gestionado = getValue("gestionadoPor") || usuarioActual;
-  const fecha = getValue("fechaCambio");
-
-  setText("infoSolicitudItem", item || "-");
-  setText("infoSolicitudUsuario", gestionado || "-");
-  setText("infoSolicitudFecha", fecha ? formatearFecha(fecha) : "-");
-}
-
 function generarNuevoItem() {
   const hoy = new Date();
-
   const fecha = hoy.getFullYear().toString() +
     String(hoy.getMonth() + 1).padStart(2, "0") +
     String(hoy.getDate()).padStart(2, "0");
@@ -800,7 +705,6 @@ function generarNuevoItem() {
     .map(x => Number(String(x.ITEM).slice(-3)));
 
   const consecutivo = itemsHoy.length === 0 ? 1 : Math.max(...itemsHoy) + 1;
-
   return fecha + String(consecutivo).padStart(3, "0");
 }
 
@@ -810,33 +714,34 @@ function obtenerFechaActual() {
 
 function obtenerFechaHoraActual() {
   const f = new Date();
-
   return f.toLocaleString("es-HN", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
+    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"
   });
 }
 
 function formatearFecha(fecha) {
   if (!fecha) return "-";
-
   const partes = fecha.split("-");
   if (partes.length !== 3) return fecha;
-
   return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
 function badgeEstado(estado) {
   const e = estado || "SOLICITADO";
-
   if (e === "SOLICITADO") return `<span class="badge badge-solicitado">SOLICITADO</span>`;
   if (e === "REQUISADO") return `<span class="badge badge-requisado">REQUISADO</span>`;
   if (e === "CONSUMIDO") return `<span class="badge badge-consumido">CONSUMIDO</span>`;
-
   return `<span class="badge">${e}</span>`;
+}
+
+function pintarEstadoSelect() {
+  const estado = document.getElementById("estado");
+  if (!estado) return;
+
+  estado.classList.remove("estado-solicitado", "estado-requisado", "estado-consumido");
+  if (estado.value === "SOLICITADO") estado.classList.add("estado-solicitado");
+  if (estado.value === "REQUISADO") estado.classList.add("estado-requisado");
+  if (estado.value === "CONSUMIDO") estado.classList.add("estado-consumido");
 }
 
 function claseEstadoPanel(estado) {
@@ -844,6 +749,15 @@ function claseEstadoPanel(estado) {
   if (estado === "REQUISADO") return "requisado";
   if (estado === "CONSUMIDO") return "consumido";
   return "";
+}
+
+function actualizarInfoModalSolicitud() {
+  const item = getValue("item");
+  const gestionado = getValue("gestionadoPor") || usuarioActual;
+  const fecha = getValue("fechaCambio");
+
+  setText("infoSolicitudItem", item || "-");
+  setText("infoSolicitudUsuario", gestionado || "-");
 }
 
 function normalizar(valor) {
