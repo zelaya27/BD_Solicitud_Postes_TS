@@ -181,7 +181,7 @@ function renderizarTabla() {
   tbody.innerHTML = "";
 
   if (lista.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" class="text-center">No hay registros para mostrar.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" class="text-center">No hay registros para mostrar.</td></tr>`;
     return;
   }
 
@@ -200,19 +200,20 @@ function renderizarTabla() {
       <td class="col-requisa"><strong>${r.REQUISA || "-"}</strong></td>
       <td class="col-fecha">${formatearFecha(r.FECHA_CAMBIO)}</td>
       <td class="col-circuito"><strong>${r.CIRCUITO || "-"}</strong></td>
-      <td class="col-material">${r.NOMBRE_SOLICITADO || "-"}</td>
-      <td class="col-direccion">${r.SITIO || "-"}</td>
+      <td class="col-material celda-ellipsis" title="${escaparAtributo(r.NOMBRE_SOLICITADO || "-")}">${r.NOMBRE_SOLICITADO || "-"}</td>
+      <td class="col-direccion celda-ellipsis" title="${escaparAtributo(r.SITIO || "-")}">${r.SITIO || "-"}</td>
+      <td class="col-evento"><strong>${r.EVENTO || "-"}</strong></td>
       <td class="col-acciones">
         <div class="acciones-td">
-          <button class="btn-accion btn-editar ${consumido ? "btn-disabled" : ""}"
-            onclick="editarSolicitud('${r.ITEM}')" title="Editar">
-            <i class="fas fa-pen"></i> Editar
+          <button class="btn-accion btn-solicitud"
+            onclick="editarSolicitud('${r.ITEM}')" title="${consumido ? "Ver solicitud" : "Editar solicitud"}">
+            <i class="fas fa-file-signature"></i> Solicitud
           </button>
           ${puedeAuditar ? `
-          <button class="btn-accion btn-auditar" onclick="abrirModalAuditoria('${r.ITEM}')" title="Auditar">
-            <i class="fas fa-magnifying-glass"></i> Auditar
+          <button class="btn-accion btn-auditar btn-icon-only" onclick="abrirModalAuditoria('${r.ITEM}')" title="Auditar">
+            <i class="fas fa-magnifying-glass"></i>
           </button>` : ""}
-          <button class="btn-accion btn-eliminar ${consumido ? "btn-disabled" : ""}"
+          <button class="btn-accion btn-eliminar btn-icon-only ${consumido ? "btn-disabled" : ""}"
             onclick="eliminarSolicitud('${r.ITEM}')" title="Eliminar">
             <i class="fas fa-trash"></i>
           </button>
