@@ -1,6 +1,6 @@
 /************************************************************
  * APP SOLICITUD DE MATERIALES - dashboard.js
- * Versión compacta: panel + modal industrial, datos simulados
+ * Panel principal editable + exportacion Excel + modal moderno
  ************************************************************/
 
 let usuarioActual = "";
@@ -41,45 +41,54 @@ function cargarDatosPrueba() {
   cuadrillas = ["CUADRILLA 48", "CUADRILLA 49", "CUADRILLA 50"];
 
   materiales = [
-    { codigo: 130005, descripcion: "POSTE MADERA CLASE 5 30ft", unidad: "UN", categoria: "POSTE", tipo: "MADERA" },
-    { codigo: 130006, descripcion: "POSTE MADERA CLASE 5 35ft", unidad: "UN", categoria: "POSTE", tipo: "MADERA" },
-    { codigo: 130007, descripcion: "POSTE MADERA CLASE 4 40ft", unidad: "UN", categoria: "POSTE", tipo: "MADERA" },
-    { codigo: 130012, descripcion: "POSTE METALICO SECCIONADO 35FT X500LB/F", unidad: "UN", categoria: "POSTE", tipo: "METALICO" },
-    { codigo: 130004, descripcion: "POSTE CONCRETO VIB/CFU 30ft - 9m x450kg", unidad: "UN", categoria: "POSTE", tipo: "CONCRETO" },
-    { codigo: 130028, descripcion: "POSTE DE FIBRA DE VIDRIO 35 PIES", unidad: "UN", categoria: "POSTE", tipo: "FIBRA" },
-    { codigo: 70021, descripcion: "TRANSFORMADOR 15kVa 19.9/34.5kV-120/240V", unidad: "UN", categoria: "TRANSFORMADOR", tipo: "TS NUEVO 34.5KV" },
-    { codigo: 70022, descripcion: "TRANSFORMADOR 25kVa19.9/34.5kV-120/240V", unidad: "UN", categoria: "TRANSFORMADOR", tipo: "TS NUEVO 34.5KV" },
-    { codigo: 70024, descripcion: "TRANSFORMADOR 50kVa 19.9/34.5kV-120/240V", unidad: "UN", categoria: "TRANSFORMADOR", tipo: "TS NUEVO 34.5KV" },
-    { codigo: 99000018, descripcion: "TRAFO URE 25kVA 19,9/34.5kV 120/240V", unidad: "UN", categoria: "TRANSFORMADOR", tipo: "TS URE 34.5KV" }
+    { codigo: 130005, descripcion: "POSTE MADERA CLASE 5 30ft", unidad: "UND", categoria: "POSTE", tipo: "MADERA" },
+    { codigo: 130006, descripcion: "POSTE MADERA CLASE 5 35ft", unidad: "UND", categoria: "POSTE", tipo: "MADERA" },
+    { codigo: 130007, descripcion: "POSTE MADERA CLASE 4 40ft", unidad: "UND", categoria: "POSTE", tipo: "MADERA" },
+    { codigo: 130012, descripcion: "POSTE METALICO SECCIONADO 35FT X500LB/F", unidad: "UND", categoria: "POSTE", tipo: "METALICO" },
+    { codigo: 130004, descripcion: "POSTE CONCRETO VIB/CFU 30ft - 9m x450kg", unidad: "UND", categoria: "POSTE", tipo: "CONCRETO" },
+    { codigo: 130028, descripcion: "POSTE DE FIBRA DE VIDRIO 35 PIES", unidad: "UND", categoria: "POSTE", tipo: "FIBRA" },
+    { codigo: 70021, descripcion: "TRANSFORMADOR 15kVa 19.9/34.5kV-120/240V", unidad: "UND", categoria: "TRANSFORMADOR", tipo: "TS NUEVO 34.5KV" },
+    { codigo: 70022, descripcion: "TRANSFORMADOR 25kVa19.9/34.5kV-120/240V", unidad: "UND", categoria: "TRANSFORMADOR", tipo: "TS NUEVO 34.5KV" },
+    { codigo: 70024, descripcion: "TRANSFORMADOR 50kVa 19.9/34.5kV-120/240V", unidad: "UND", categoria: "TRANSFORMADOR", tipo: "TS NUEVO 34.5KV" },
+    { codigo: 99000018, descripcion: "TRAFO URE 25kVA 19,9/34.5kV 120/240V", unidad: "UND", categoria: "TRANSFORMADOR", tipo: "TS URE 34.5KV" }
   ];
 
   datos = [
     {
-      ITEM: "20260618003", GESTIONADO_POR: "ALLAN.ZELAYA", ESTADO: "CONSUMIDO",
-      FECHA_SOLICITUD: "18/06/2026 08:00", FECHA_CAMBIO: "2026-06-18", REPORTE: "3917965",
-      CIRCUITO: "CAT-L375", SITIO: "COL. PALMIRA, CATACAMAS", CODIGO_SOLICITADO: 130005,
-      NOMBRE_SOLICITADO: "POSTE MADERA CLASE 5 30ft", CANTIDAD_SOLICITADA: 1,
-      PINTADO_APOYO: "7157711", UTM: "618878 - 1639784", OBSERVACIONES: "CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA",
-      TIPO_EVENTO: "INCIDENCIA", EVENTO: "14243", SERIE: "", REQUISA: "2865", CUADRILLA: "CUADRILLA 48",
-      AUDITADO: "CON ERRORES", OBSERVACIONES_AUDITORIA: "REQUISA, GPS", USUARIO: "ALLAN.ZELAYA", SECTOR: "JUTICALPA"
+      ITEM: "20260618003", ESTADO: "CONSUMIDO", FECHA_CAMBIO: "2026-06-18",
+      TIPO_EVENTO: "INCIDENCIA", EVENTO: "14243", REPORTE: "3917965",
+      CIRCUITO: "CAT-L375", SITIO: "COL. PALMIRA, CATACAMAS",
+      PINTADO_APOYO: "7157711", UTM: "618878 - 1639784",
+      CODIGO_SOLICITADO: 130005, NOMBRE_SOLICITADO: "POSTE MADERA CLASE 5 30ft", CANTIDAD_SOLICITADA: 1,
+      SERIE: "", OBSERVACIONES: "CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA",
+      SOLICITADO_POR: "ALLAN.ZELAYA", FECHA_SOLICITUD: "18/06/2026 08:00",
+      REQUISADO_POR: "OSMAN.LAGOS", CONSUMIDO_POR: "ALLAN.ZELAYA",
+      AUDITADO: "CON ERRORES", OBSERVACIONES_AUDITORIA: "REQUISA, GPS", FECHA_AUDITADO: "18/06/2026 10:00",
+      REQUISA: "2865", CUADRILLA: "CUADRILLA 48", USUARIO: "ALLAN.ZELAYA", SECTOR: "JUTICALPA"
     },
     {
-      ITEM: "20260618002", GESTIONADO_POR: "OSMAN.LAGOS", ESTADO: "REQUISADO",
-      FECHA_SOLICITUD: "18/06/2026 08:20", FECHA_CAMBIO: "2026-06-18", REPORTE: "3917998",
-      CIRCUITO: "CAT-L376", SITIO: "ALDEA EL AGUACATE, CATACAMAS", CODIGO_SOLICITADO: 70022,
-      NOMBRE_SOLICITADO: "TRANSFORMADOR 25kVa19.9/34.5kV-120/240V", CANTIDAD_SOLICITADA: 1,
-      PINTADO_APOYO: "7157722", UTM: "618000 - 1639000", OBSERVACIONES: "CAMBIO DE TRANSFORMADOR POR DAÑO",
-      TIPO_EVENTO: "MANTENIMIENTO", EVENTO: "14244", SERIE: "ABC123", REQUISA: "2866", CUADRILLA: "CUADRILLA 49",
-      AUDITADO: "", OBSERVACIONES_AUDITORIA: "", USUARIO: "OSMAN.LAGOS", SECTOR: "JUTICALPA"
+      ITEM: "20260618002", ESTADO: "REQUISADO", FECHA_CAMBIO: "2026-06-18",
+      TIPO_EVENTO: "MANTENIMIENTO", EVENTO: "14244", REPORTE: "3917998",
+      CIRCUITO: "CAT-L376", SITIO: "ALDEA EL AGUACATE, CATACAMAS",
+      PINTADO_APOYO: "7157722", UTM: "618000 - 1639000",
+      CODIGO_SOLICITADO: 70022, NOMBRE_SOLICITADO: "TRANSFORMADOR 25kVa19.9/34.5kV-120/240V", CANTIDAD_SOLICITADA: 1,
+      SERIE: "ABC123", OBSERVACIONES: "CAMBIO DE TRANSFORMADOR POR DAÑO",
+      SOLICITADO_POR: "OSMAN.LAGOS", FECHA_SOLICITUD: "18/06/2026 08:20",
+      REQUISADO_POR: "OSMAN.LAGOS", CONSUMIDO_POR: "",
+      AUDITADO: "", OBSERVACIONES_AUDITORIA: "", FECHA_AUDITADO: "",
+      REQUISA: "2866", CUADRILLA: "CUADRILLA 49", USUARIO: "OSMAN.LAGOS", SECTOR: "JUTICALPA"
     },
     {
-      ITEM: "20260618001", GESTIONADO_POR: "ALLAN.ZELAYA", ESTADO: "SOLICITADO",
-      FECHA_SOLICITUD: "18/06/2026 08:40", FECHA_CAMBIO: "2026-06-18", REPORTE: "3918005",
-      CIRCUITO: "JUT-L379", SITIO: "BARRIO EL CENTRO, JUTICALPA", CODIGO_SOLICITADO: 130004,
-      NOMBRE_SOLICITADO: "POSTE CONCRETO VIB/CFU 30ft - 9m x450kg", CANTIDAD_SOLICITADA: 2,
-      PINTADO_APOYO: "7157755", UTM: "619000 - 1639500", OBSERVACIONES: "CAMBIO DE DOS POSTES DE CONCRETO",
-      TIPO_EVENTO: "OPERACIÓN", EVENTO: "14245", SERIE: "", REQUISA: "", CUADRILLA: "CUADRILLA 50",
-      AUDITADO: "SIN ERRORES", OBSERVACIONES_AUDITORIA: "", USUARIO: "ALLAN.ZELAYA", SECTOR: "JUTICALPA"
+      ITEM: "20260618001", ESTADO: "SOLICITADO", FECHA_CAMBIO: "2026-06-18",
+      TIPO_EVENTO: "OPERACIÓN", EVENTO: "14245", REPORTE: "3918005",
+      CIRCUITO: "JUT-L379", SITIO: "BARRIO EL CENTRO, JUTICALPA",
+      PINTADO_APOYO: "7157755", UTM: "619000 - 1639500",
+      CODIGO_SOLICITADO: 130004, NOMBRE_SOLICITADO: "POSTE CONCRETO VIB/CFU 30ft - 9m x450kg", CANTIDAD_SOLICITADA: 2,
+      SERIE: "", OBSERVACIONES: "CAMBIO DE DOS POSTES DE CONCRETO",
+      SOLICITADO_POR: "ALLAN.ZELAYA", FECHA_SOLICITUD: "18/06/2026 08:40",
+      REQUISADO_POR: "", CONSUMIDO_POR: "",
+      AUDITADO: "SIN ERRORES", OBSERVACIONES_AUDITORIA: "", FECHA_AUDITADO: "18/06/2026 09:10",
+      REQUISA: "", CUADRILLA: "CUADRILLA 50", USUARIO: "ALLAN.ZELAYA", SECTOR: "JUTICALPA"
     }
   ];
 }
@@ -87,18 +96,12 @@ function cargarDatosPrueba() {
 function cargarCombos() {
   llenarSelect("filtroCircuito", circuitos, true);
   llenarSelect("filtroGestionado", ingenieros, true);
-
-  llenarSelect("gestionadoPor", ingenieros, false);
   llenarSelect("circuito", circuitos, false);
-  llenarSelect("cuadrilla", cuadrillas, false);
-
   cargarComboMateriales("nombreSolicitado");
 
   addListener("nombreSolicitado", "change", seleccionarMaterialPorNombre);
   addListener("nombreSolicitado", "change", mostrarSerieSegunMaterial);
-  addListener("codigoSolicitado", "input", seleccionarMaterialPorCodigo);
   addListener("pintadoApoyo", "input", buscarUTMSimulado);
-  addListener("estado", "change", pintarEstadoSelect);
   addListener("fechaCambio", "change", actualizarInfoModalSolicitud);
 }
 
@@ -106,14 +109,12 @@ function llenarSelect(id, lista, incluirTodos) {
   const select = document.getElementById(id);
   if (!select) return;
   select.innerHTML = "";
-
   if (incluirTodos) {
     const opt = document.createElement("option");
     opt.value = "ALL";
     opt.textContent = "Todos";
     select.appendChild(opt);
   }
-
   lista.forEach(valor => {
     const opt = document.createElement("option");
     opt.value = valor;
@@ -126,7 +127,6 @@ function cargarComboMateriales(id) {
   const select = document.getElementById(id);
   if (!select) return;
   select.innerHTML = `<option value="">Seleccione material...</option>`;
-
   materiales.forEach(m => {
     const opt = document.createElement("option");
     opt.value = m.descripcion;
@@ -159,18 +159,15 @@ function obtenerDatosFiltrados() {
     const cumpleTipoEvento = tipoEvento === "ALL" || r.TIPO_EVENTO === tipoEvento;
     const cumpleRequisa = !requisa || normalizar(r.REQUISA) === requisa;
     const cumpleEstado = estado === "ALL" || r.ESTADO === estado;
-    const cumpleGestionado = gestionado === "ALL" || r.GESTIONADO_POR === gestionado;
-    const cumpleDireccion = !direccion || normalizar(r.SITIO).includes(direccion);
+    const cumpleGestionado = gestionado === "ALL" || r.SOLICITADO_POR === gestionado || r.USUARIO === gestionado;
+    const cumpleDireccion = !direccion || normalizar(r.SITIO).includes(direccion) || normalizar(r.OBSERVACIONES).includes(direccion) || normalizar(r.NOMBRE_SOLICITADO).includes(direccion);
     const cumpleFechaDesde = !fechaDesde || (r.FECHA_CAMBIO || "") >= fechaDesde;
     const cumpleFechaHasta = !fechaHasta || (r.FECHA_CAMBIO || "") <= fechaHasta;
-
-    return cumpleItem && cumpleReporte && cumpleCircuito && cumpleEvento && cumpleTipoEvento &&
-      cumpleRequisa && cumpleEstado && cumpleGestionado && cumpleDireccion && cumpleFechaDesde && cumpleFechaHasta;
+    return cumpleItem && cumpleReporte && cumpleCircuito && cumpleEvento && cumpleTipoEvento && cumpleRequisa && cumpleEstado && cumpleGestionado && cumpleDireccion && cumpleFechaDesde && cumpleFechaHasta;
   });
 
   lista.sort((a, b) => Number(b.ITEM) - Number(a.ITEM));
   actualizarContadores(lista);
-
   if (mostrar !== "ALL") lista = lista.slice(0, Number(mostrar));
   return lista;
 }
@@ -189,34 +186,25 @@ function renderizarTabla() {
     const consumido = r.ESTADO === "CONSUMIDO";
     const puedeAuditar = idTipoUsuario === 1;
     const tr = document.createElement("tr");
-
     const advertencia = r.AUDITADO === "CON ERRORES"
       ? `<i class="fas fa-triangle-exclamation audit-warning" title="${escaparAtributo(r.OBSERVACIONES_AUDITORIA)}"></i>`
       : "";
 
     tr.innerHTML = `
-      <td class="col-item"><strong>${r.ITEM}</strong>${advertencia}</td>
-      <td class="col-estado">${selectEstadoPanel(r)}</td>
-      <td class="col-requisa"><strong>${r.REQUISA || "-"}</strong></td>
-      <td class="col-fecha">${formatearFecha(r.FECHA_CAMBIO)}</td>
-      <td class="col-circuito"><strong>${r.CIRCUITO || "-"}</strong></td>
-      <td class="col-material celda-ellipsis" title="${escaparAtributo(r.NOMBRE_SOLICITADO || "-")}">${r.NOMBRE_SOLICITADO || "-"}</td>
-      <td class="col-direccion celda-ellipsis" title="${escaparAtributo(r.SITIO || "-")}">${r.SITIO || "-"}</td>
-      <td class="col-evento"><strong>${r.EVENTO || "-"}</strong></td>
-      <td class="col-acciones">
+      <td title="${escaparAtributo(r.ITEM)}"><strong>${r.ITEM}</strong>${advertencia}</td>
+      <td>${selectEstadoPanel(r)}</td>
+      <td><input class="cell-input" type="number" value="${escaparAtributo(r.REQUISA || "")}" onchange="actualizarCampoTabla('${r.ITEM}','REQUISA',this.value)" title="Requisa"></td>
+      <td><input class="cell-date" type="date" value="${escaparAtributo(r.FECHA_CAMBIO || "")}" onchange="actualizarCampoTabla('${r.ITEM}','FECHA_CAMBIO',this.value)"></td>
+      <td title="${escaparAtributo(r.CIRCUITO || "")}"><strong>${r.CIRCUITO || "-"}</strong></td>
+      <td title="${escaparAtributo(r.NOMBRE_SOLICITADO || "")}">${r.NOMBRE_SOLICITADO || "-"}</td>
+      <td title="${escaparAtributo(r.SITIO || "")}">${r.SITIO || "-"}</td>
+      <td><input class="cell-input" type="number" value="${escaparAtributo(r.EVENTO || "")}" onchange="actualizarCampoTabla('${r.ITEM}','EVENTO',this.value)" title="Evento"></td>
+      <td>
         <div class="acciones-td">
-          <button class="btn-accion btn-solicitud"
-            onclick="editarSolicitud('${r.ITEM}')" title="${consumido ? "Ver solicitud" : "Editar solicitud"}">
-            <i class="fas fa-file-signature"></i> Solicitud
-          </button>
-          ${puedeAuditar ? `
-          <button class="btn-accion btn-auditar btn-icon-only" onclick="abrirModalAuditoria('${r.ITEM}')" title="Auditar">
-            <i class="fas fa-magnifying-glass"></i>
-          </button>` : ""}
-          <button class="btn-accion btn-eliminar btn-icon-only ${consumido ? "btn-disabled" : ""}"
-            onclick="eliminarSolicitud('${r.ITEM}')" title="Eliminar">
-            <i class="fas fa-trash"></i>
-          </button>
+          <button class="btn-solicitud" onclick="editarSolicitud('${r.ITEM}')" title="Editar / Ver Solicitud"><i class="fas fa-clipboard-list"></i> Solicitud</button>
+          <button class="btn-icon-tabla btn-excel-row" onclick="exportarSolicitudIndividual('${r.ITEM}')" title="Exportar solicitud individual"><i class="fas fa-file-excel"></i></button>
+          ${puedeAuditar ? `<button class="btn-icon-tabla btn-auditar" onclick="abrirModalAuditoria('${r.ITEM}')" title="Auditar"><i class="fas fa-magnifying-glass"></i></button>` : ""}
+          <button class="btn-icon-tabla btn-eliminar ${consumido ? "btn-disabled" : ""}" onclick="eliminarSolicitud('${r.ITEM}')" title="Eliminar"><i class="fas fa-trash"></i></button>
         </div>
       </td>`;
     tbody.appendChild(tr);
@@ -225,9 +213,8 @@ function renderizarTabla() {
 
 function selectEstadoPanel(r) {
   const cls = claseEstadoPanel(r.ESTADO);
-  const disabled = r.ESTADO === "CONSUMIDO" ? "disabled" : "";
   return `
-    <select class="estado-panel-select ${cls}" ${disabled} onchange="cambiarEstadoPanel('${r.ITEM}', this.value)">
+    <select class="estado-panel-select ${cls}" onchange="cambiarEstadoPanel('${r.ITEM}', this.value)">
       <option value="SOLICITADO" ${r.ESTADO === "SOLICITADO" ? "selected" : ""}>SOLICITADO</option>
       <option value="REQUISADO" ${r.ESTADO === "REQUISADO" ? "selected" : ""}>REQUISADO</option>
       <option value="CONSUMIDO" ${r.ESTADO === "CONSUMIDO" ? "selected" : ""}>CONSUMIDO</option>
@@ -236,25 +223,62 @@ function selectEstadoPanel(r) {
 
 function cambiarEstadoPanel(item, nuevoEstado) {
   const r = datos.find(x => x.ITEM === item);
+  if (!r || r.ESTADO === nuevoEstado) return;
+
+  if (nuevoEstado === "REQUISADO" && !String(r.REQUISA || "").trim()) {
+    alert("Para cambiar a REQUISADO debe llenar primero el campo REQUISA.");
+    renderizarTabla();
+    return;
+  }
+
+  const msg = nuevoEstado === "CONSUMIDO"
+    ? "¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de confirmar, la solicitud quedará cerrada para eliminación."
+    : `¿Desea cambiar el estado a ${nuevoEstado}?`;
+
+  if (!confirm(msg)) {
+    renderizarTabla();
+    return;
+  }
+
+  r.ESTADO = nuevoEstado;
+  if (nuevoEstado === "REQUISADO") r.REQUISADO_POR = usuarioActual;
+  if (nuevoEstado === "CONSUMIDO") r.CONSUMIDO_POR = usuarioActual;
+  renderizarTabla();
+}
+
+function actualizarCampoTabla(item, campo, valor) {
+  const r = datos.find(x => x.ITEM === item);
   if (!r) return;
 
-  if (r.ESTADO === nuevoEstado) return;
+  let nuevo = String(valor || "").trim();
+  if (campo === "EVENTO" || campo === "REQUISA") {
+    nuevo = nuevo.replace(/\D/g, "").slice(0, campo === "REQUISA" ? 10 : 12);
+  }
 
-  if (nuevoEstado === "CONSUMIDO") {
-    const ok = confirm("¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse, solo visualizarse.");
-    if (!ok) {
+  if (campo === "FECHA_CAMBIO") {
+    if (!nuevo) {
+      alert("La fecha de cambio no puede quedar vacía.");
       renderizarTabla();
       return;
     }
-  } else {
-    const ok = confirm(`¿Desea cambiar el estado a ${nuevoEstado}?`);
-    if (!ok) {
+    if (!confirm("¿Desea modificar la fecha de cambio?")) {
       renderizarTabla();
       return;
     }
   }
 
-  r.ESTADO = nuevoEstado;
+  if (campo === "EVENTO" && !confirm("¿Desea modificar el evento?")) {
+    renderizarTabla();
+    return;
+  }
+
+  if (campo === "REQUISA" && r.ESTADO === "REQUISADO" && !nuevo) {
+    alert("No puede borrar la requisa si la solicitud está en estado REQUISADO.");
+    renderizarTabla();
+    return;
+  }
+
+  r[campo] = nuevo;
   renderizarTabla();
 }
 
@@ -296,10 +320,8 @@ function abrirModalSolicitud() {
   setValue("tipoEvento", "INCIDENCIA");
 
   actualizarInfoModalSolicitud();
-  pintarEstadoSelect();
   mostrarSerieSegunMaterial();
   bloquearModalSolicitud(false);
-
   document.getElementById("modalSolicitud").classList.add("abierto");
 }
 
@@ -308,44 +330,26 @@ function cerrarModalSolicitud() {
 }
 
 function limpiarModalSolicitud() {
-  ["item", "fechaSolicitud", "fechaCambio", "reporte", "sitio", "codigoSolicitado",
-   "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "evento", "serie",
-   "requisa", "cuadrilla"].forEach(id => setValue(id, ""));
-
+  ["item", "fechaSolicitud", "fechaCambio", "reporte", "sitio", "codigoSolicitado", "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "evento", "serie", "requisa", "cuadrilla"].forEach(id => setValue(id, ""));
   setValue("estado", "SOLICITADO");
   setValue("tipoEvento", "INCIDENCIA");
   setValue("nombreSolicitado", "");
-  pintarEstadoSelect();
   mostrarSerieSegunMaterial();
 }
 
 function editarSolicitud(item) {
   const r = datos.find(x => x.ITEM === item);
   if (!r) return;
-
-  if (r.ESTADO === "CONSUMIDO") {
-    alert("Esta solicitud está en estado CONSUMIDO. Solo se permite visualización.");
-    abrirSolicitudSoloLectura(r);
-    return;
-  }
-
   itemEditando = item;
   estadoAnteriorEditando = r.ESTADO;
-  cargarRegistroEnModal(r, false);
-  document.getElementById("modalSolicitud").classList.add("abierto");
-}
-
-function abrirSolicitudSoloLectura(r) {
-  itemEditando = r.ITEM;
-  estadoAnteriorEditando = r.ESTADO;
-  cargarRegistroEnModal(r, true);
+  cargarRegistroEnModal(r, r.ESTADO === "CONSUMIDO");
   document.getElementById("modalSolicitud").classList.add("abierto");
 }
 
 function cargarRegistroEnModal(r, soloLectura) {
   setValue("modoSolicitud", soloLectura ? "VER" : "EDITAR");
   setValue("item", r.ITEM);
-  setValue("gestionadoPor", r.GESTIONADO_POR || usuarioActual);
+  setValue("gestionadoPor", r.SOLICITADO_POR || r.USUARIO || usuarioActual);
   setValue("estado", r.ESTADO || "SOLICITADO");
   setValue("fechaSolicitud", r.FECHA_SOLICITUD || "");
   setValue("fechaCambio", r.FECHA_CAMBIO || "");
@@ -365,20 +369,16 @@ function cargarRegistroEnModal(r, soloLectura) {
   setValue("cuadrilla", r.CUADRILLA || "");
 
   actualizarInfoModalSolicitud();
-  pintarEstadoSelect();
   mostrarSerieSegunMaterial();
   bloquearModalSolicitud(soloLectura);
 }
 
 function bloquearModalSolicitud(bloquear) {
-  const campos = ["estado", "fechaCambio", "reporte", "circuito", "sitio", "nombreSolicitado",
-    "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "tipoEvento", "evento", "serie"];
-
+  const campos = ["fechaCambio", "reporte", "circuito", "sitio", "nombreSolicitado", "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "tipoEvento", "evento", "serie"];
   campos.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.disabled = bloquear;
   });
-
   const btnGuardar = document.querySelector("#modalSolicitud .btn-guardar");
   if (btnGuardar) btnGuardar.style.display = bloquear ? "none" : "inline-flex";
 }
@@ -386,54 +386,40 @@ function bloquearModalSolicitud(bloquear) {
 function guardarSolicitud() {
   const btnGuardar = document.querySelector("#modalSolicitud .btn-guardar");
   const modo = getValue("modoSolicitud");
-
   if (modo === "VER") {
     cerrarModalSolicitud();
     return;
   }
 
-  const item = getValue("item");
-  const nuevoEstado = getValue("estado");
-
-  if (modo === "EDITAR" && estadoAnteriorEditando && nuevoEstado !== estadoAnteriorEditando) {
-    if (nuevoEstado === "CONSUMIDO") {
-      const ok = confirm("¿Desea cambiar esta solicitud a CONSUMIDO?\n\nDespués de guardar como CONSUMIDO ya no podrá editarse ni eliminarse, solo visualizarse.");
-      if (!ok) {
-        setValue("estado", estadoAnteriorEditando);
-        pintarEstadoSelect();
-        return;
-      }
-    } else if (!confirm(`¿Desea cambiar el estado a ${nuevoEstado}?`)) {
-      setValue("estado", estadoAnteriorEditando);
-      pintarEstadoSelect();
-      return;
-    }
-  }
-
   seleccionarMaterialPorNombre();
 
+  const item = getValue("item");
+  const nuevoEstado = getValue("estado", "SOLICITADO");
   const registro = {
     ITEM: item,
-    GESTIONADO_POR: getValue("gestionadoPor") || usuarioActual,
     ESTADO: nuevoEstado,
-    FECHA_SOLICITUD: getValue("fechaSolicitud"),
     FECHA_CAMBIO: getValue("fechaCambio"),
+    TIPO_EVENTO: getValue("tipoEvento"),
+    EVENTO: getValue("evento"),
     REPORTE: getValue("reporte"),
     CIRCUITO: getValue("circuito"),
     SITIO: mayus(getValue("sitio")),
+    PINTADO_APOYO: getValue("pintadoApoyo"),
+    UTM: getValue("utm"),
     CODIGO_SOLICITADO: Number(getValue("codigoSolicitado") || 0),
     NOMBRE_SOLICITADO: getValue("nombreSolicitado"),
     CANTIDAD_SOLICITADA: Number(getValue("cantidadSolicitada") || 1),
-    PINTADO_APOYO: getValue("pintadoApoyo"),
-    UTM: getValue("utm"),
-    OBSERVACIONES: mayus(getValue("observaciones")),
-    TIPO_EVENTO: getValue("tipoEvento"),
-    EVENTO: getValue("evento"),
     SERIE: mayus(getValue("serie")),
-    REQUISA: getValue("requisa"),
-    CUADRILLA: getValue("cuadrilla"),
+    OBSERVACIONES: mayus(getValue("observaciones")),
+    SOLICITADO_POR: getValue("gestionadoPor") || usuarioActual,
+    FECHA_SOLICITUD: getValue("fechaSolicitud") || obtenerFechaHoraActual(),
+    REQUISADO_POR: "",
+    CONSUMIDO_POR: "",
     AUDITADO: "",
     OBSERVACIONES_AUDITORIA: "",
+    FECHA_AUDITADO: "",
+    REQUISA: getValue("requisa"),
+    CUADRILLA: getValue("cuadrilla"),
     USUARIO: usuarioActual,
     SECTOR: sectorActual
   };
@@ -446,10 +432,9 @@ function guardarSolicitud() {
 
   const mat = obtenerMaterialPorCodigo(registro.CODIGO_SOLICITADO);
   if (!mat || mat.descripcion !== registro.NOMBRE_SOLICITADO) {
-    alert("El material solicitado no coincide con la hoja materiales.");
+    alert("El material solicitado no coincide con la base de materiales.");
     return;
   }
-
   if (mat.categoria === "TRANSFORMADOR" && !registro.SERIE) {
     alert("Ingrese la serie del transformador.");
     return;
@@ -466,8 +451,13 @@ function guardarSolicitud() {
     } else {
       const idx = datos.findIndex(x => x.ITEM === itemEditando);
       if (idx >= 0) {
+        registro.ESTADO = datos[idx].ESTADO || registro.ESTADO;
+        registro.REQUISA = datos[idx].REQUISA || registro.REQUISA;
+        registro.REQUISADO_POR = datos[idx].REQUISADO_POR || "";
+        registro.CONSUMIDO_POR = datos[idx].CONSUMIDO_POR || "";
         registro.AUDITADO = datos[idx].AUDITADO || "";
         registro.OBSERVACIONES_AUDITORIA = datos[idx].OBSERVACIONES_AUDITORIA || "";
+        registro.FECHA_AUDITADO = datos[idx].FECHA_AUDITADO || "";
         datos[idx] = registro;
       }
     }
@@ -476,41 +466,39 @@ function guardarSolicitud() {
   } finally {
     if (btnGuardar) {
       btnGuardar.disabled = false;
-      btnGuardar.innerHTML = `<i class="fas fa-save"></i> Guardar`;
+      btnGuardar.innerHTML = `<i class="fas fa-save"></i> GUARDAR SOLICITUD`;
     }
   }
 }
 
 function validarSolicitud(r) {
   if (!r.FECHA_CAMBIO) return "Seleccione Fecha Cambio.";
+  if (!r.TIPO_EVENTO) return "Seleccione Tipo de Evento.";
+  if (!r.EVENTO) return "Ingrese Evento.";
   if (!r.REPORTE || String(r.REPORTE).length !== 7) return "El reporte debe tener 7 dígitos.";
   if (!r.CIRCUITO) return "Seleccione Circuito.";
   if (!r.SITIO) return "Ingrese Dirección.";
+  if (!r.PINTADO_APOYO) return "Ingrese Apoyo.";
+  if (!r.UTM) return "Ingrese Coordenadas UTM.";
   if (!r.CODIGO_SOLICITADO) return "Seleccione Material Solicitado.";
   if (!r.NOMBRE_SOLICITADO) return "Seleccione Material Solicitado.";
   if (!r.CANTIDAD_SOLICITADA || r.CANTIDAD_SOLICITADA < 1 || r.CANTIDAD_SOLICITADA > 999) return "Cantidad solicitada debe ser entre 1 y 999.";
-  if (!r.PINTADO_APOYO) return "Ingrese Pintado Apoyo.";
-  if (!r.TIPO_EVENTO) return "Seleccione Tipo de Evento.";
   return "";
 }
 
 function eliminarSolicitud(item) {
   const r = datos.find(x => x.ITEM === item);
   if (!r) return;
-
   if (r.ESTADO === "CONSUMIDO") {
     alert("No se puede eliminar una solicitud en estado CONSUMIDO.");
     return;
   }
-
   if (!confirm("¿Desea eliminar esta solicitud?")) return;
-
   const confirmacion = prompt("Para eliminar escriba ELIMINAR");
   if (!confirmacion || confirmacion.toUpperCase().trim() !== "ELIMINAR") {
     alert("Eliminación cancelada.");
     return;
   }
-
   datos = datos.filter(x => x.ITEM !== item);
   renderizarTabla();
 }
@@ -520,17 +508,13 @@ function abrirModalAuditoria(item) {
     alert("No tiene permiso para auditar.");
     return;
   }
-
   const r = datos.find(x => x.ITEM === item);
   if (!r) return;
-
   setValue("auditoriaItem", item);
   setValue("auditado", r.AUDITADO || "SIN ERRORES");
-
   document.querySelectorAll(".obs-auditoria").forEach(chk => chk.checked = false);
   const obs = (r.OBSERVACIONES_AUDITORIA || "").split(",").map(x => x.trim());
   document.querySelectorAll(".obs-auditoria").forEach(chk => chk.checked = obs.includes(chk.value));
-
   controlarObservacionesAuditoria();
   document.getElementById("modalAuditoria").classList.add("abierto");
 }
@@ -543,7 +527,6 @@ function controlarObservacionesAuditoria() {
   const resultado = getValue("auditado");
   const box = document.getElementById("boxObservacionesAuditoria");
   if (!box) return;
-
   if (resultado === "CON ERRORES") {
     box.classList.remove("disabled");
   } else {
@@ -556,18 +539,15 @@ function guardarAuditoria() {
   const item = getValue("auditoriaItem");
   const resultado = getValue("auditado");
   const seleccionadas = [...document.querySelectorAll(".obs-auditoria:checked")].map(x => x.value);
-
   if (resultado === "CON ERRORES" && seleccionadas.length === 0) {
     alert("Debe seleccionar al menos una observación de auditoría.");
     return;
   }
-
   const r = datos.find(x => x.ITEM === item);
   if (!r) return;
-
-  r.AUDITADO = resultado;
-  r.OBSERVACIONES_AUDITORIA = resultado === "CON ERRORES" ? seleccionadas.join(", ") : "";
-
+  r.AUDITADO = usuarioActual;
+  r.OBSERVACIONES_AUDITORIA = resultado === "CON ERRORES" ? seleccionadas.join(", ") : "SIN ERRORES";
+  r.FECHA_AUDITADO = obtenerFechaHoraActual();
   cerrarModalAuditoria();
   renderizarTabla();
 }
@@ -590,17 +570,13 @@ function mostrarDashboard(tipo) {
 
   let titulo = "";
   let resumen = [];
-
   if (tipo === "postes") { titulo = "Postes consumidos por material"; resumen = agruparPorMaterial("POSTE"); }
   if (tipo === "transformadores") { titulo = "Transformadores consumidos por material"; resumen = agruparPorMaterial("TRANSFORMADOR"); }
   if (tipo === "postesCircuito") { titulo = "Postes consumidos por circuito"; resumen = agruparPorCircuito("POSTE"); }
   if (tipo === "transformadoresCircuito") { titulo = "Transformadores consumidos por circuito"; resumen = agruparPorCircuito("TRANSFORMADOR"); }
-  if (tipo === "gestionado") { titulo = "Conteo de solicitudes por gestionado por"; resumen = agruparPorCampo(datos, "GESTIONADO_POR"); }
-
+  if (tipo === "gestionado") { titulo = "Conteo de solicitudes por solicitado por"; resumen = agruparPorCampo(datos, "SOLICITADO_POR"); }
   setText("dashboardTitulo", titulo);
-  if (document.getElementById("dashboardTotal")) {
-    setText("dashboardTotal", resumen.reduce((a, b) => a + b.cantidad, 0));
-  }
+  setText("dashboardTotal", resumen.reduce((a, b) => a + b.cantidad, 0));
   renderizarTablaDashboard(resumen);
 }
 
@@ -626,26 +602,17 @@ function agruparPorCampo(lista, campo) {
     const key = r[campo] || "SIN DATO";
     mapa[key] = (mapa[key] || 0) + 1;
   });
-  return Object.keys(mapa)
-    .map(k => ({ descripcion: k, cantidad: mapa[k] }))
-    .sort((a, b) => b.cantidad - a.cantidad || a.descripcion.localeCompare(b.descripcion));
+  return Object.keys(mapa).map(k => ({ descripcion: k, cantidad: mapa[k] })).sort((a, b) => b.cantidad - a.cantidad || a.descripcion.localeCompare(b.descripcion));
 }
 
 function renderizarTablaDashboard(resumen) {
   const tbody = document.getElementById("dashboardContenido");
   if (!tbody) return;
-
   if (!resumen.length) {
     tbody.innerHTML = `<tr><td colspan="2" class="text-center">Sin datos para mostrar.</td></tr>`;
     return;
   }
-
-  tbody.innerHTML = resumen.map(r => `
-    <tr>
-      <td><strong>${r.descripcion}</strong></td>
-      <td class="num">${r.cantidad}</td>
-    </tr>
-  `).join("");
+  tbody.innerHTML = resumen.map(r => `<tr><td><strong>${r.descripcion}</strong></td><td class="num">${r.cantidad}</td></tr>`).join("");
 }
 
 function seleccionarMaterialPorNombre() {
@@ -660,19 +627,10 @@ function seleccionarMaterialPorNombre() {
   mostrarSerieSegunMaterial();
 }
 
-function seleccionarMaterialPorCodigo() {
-  const codigo = Number(getValue("codigoSolicitado"));
-  const mat = materiales.find(m => Number(m.codigo) === codigo);
-  if (!mat) return;
-  setValue("nombreSolicitado", mat.descripcion);
-  mostrarSerieSegunMaterial();
-}
-
 function mostrarSerieSegunMaterial() {
   const mat = obtenerMaterialPorCodigo(getValue("codigoSolicitado"));
   const serieBox = document.getElementById("serieBox");
   if (!serieBox) return;
-
   if (mat && mat.categoria === "TRANSFORMADOR") {
     serieBox.classList.remove("oculto");
   } else {
@@ -695,16 +653,103 @@ function buscarUTMSimulado() {
   setValue("utm", `618${ultimos} - 1639${ultimos}`);
 }
 
+function actualizarInfoModalSolicitud() {
+  setText("infoSolicitudItem", getValue("item") || "-");
+  setText("infoSolicitudUsuario", getValue("gestionadoPor") || usuarioActual || "-");
+}
+
+function exportarSolicitudIndividual(item) {
+  const r = datos.find(x => x.ITEM === item);
+  if (!r) return;
+  exportarRegistrosExcel([r], `Solicitud_${r.ITEM}.xls`, "SOLICITUD DE MATERIAL INDIVIDUAL");
+}
+
+function exportarExcelFiltrado() {
+  const lista = obtenerDatosFiltrados();
+  if (!lista.length) {
+    alert("No hay solicitudes visibles para exportar.");
+    return;
+  }
+  exportarRegistrosExcel(lista, `Solicitudes_Materiales_${obtenerFechaActual().replace(/-/g, "")}.xls`, "SOLICITUDES DE MATERIAL FILTRADAS");
+}
+
+function exportarRegistrosExcel(lista, nombreArchivo, titulo) {
+  const filtros = obtenerTextoFiltros();
+  const filas = lista.map((r, idx) => filaExcelSolicitud(r, idx + 1));
+  const encabezados = ["ITEM", "", "CODIGO SAP", "DESCRIPCION DEL MATERIAL", "SERIE", "UNIDAD DE MEDIDA", "CANTIDAD SOLICITADA", "CANTIDAD APROBADA", "BODEGA", "", "REPORTE", "SITIO", "APOYO/PINTADO", "UBICACIÓN GPS (UTM)", "FECHA", "OBSERVACIONES"];
+
+  let html = `
+  <html><head><meta charset="UTF-8"></head><body>
+    <table border="1">
+      <tr><th colspan="16" style="font-size:18px;background:#1f4e78;color:white;">${escaparHtml(titulo)}</th></tr>
+      <tr><td colspan="16"><strong>Fecha exportación:</strong> ${escaparHtml(obtenerFechaHoraActual())}</td></tr>
+      <tr><td colspan="16"><strong>Usuario:</strong> ${escaparHtml(usuarioActual)} &nbsp;&nbsp; <strong>Sector:</strong> ${escaparHtml(sectorActual)}</td></tr>
+      <tr><td colspan="16"><strong>Filtros:</strong> ${escaparHtml(filtros)}</td></tr>
+      <tr><td colspan="16"><strong>Total registros:</strong> ${lista.length}</td></tr>
+      <tr>${encabezados.map(h => `<th style="background:#d9eaf7;">${escaparHtml(h)}</th>`).join("")}</tr>
+      ${filas.map(fila => `<tr>${fila.map(c => `<td>${escaparHtml(c)}</td>`).join("")}</tr>`).join("")}
+    </table>
+  </body></html>`;
+
+  const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = nombreArchivo;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function filaExcelSolicitud(r, consecutivo) {
+  const mat = obtenerMaterialPorCodigo(r.CODIGO_SOLICITADO) || {};
+  return [
+    consecutivo,
+    "",
+    r.CODIGO_SOLICITADO || "",
+    r.NOMBRE_SOLICITADO || "",
+    r.SERIE || "",
+    mat.unidad || "UND",
+    r.CANTIDAD_SOLICITADA || "",
+    "",
+    "",
+    "",
+    r.REPORTE || "",
+    r.SITIO || "",
+    r.PINTADO_APOYO || "",
+    r.UTM || "",
+    formatearFecha(r.FECHA_CAMBIO),
+    r.OBSERVACIONES || ""
+  ];
+}
+
+function obtenerTextoFiltros() {
+  const partes = [];
+  const mapa = {
+    filtroItem: "Item",
+    filtroReporte: "Reporte",
+    filtroCircuito: "Circuito",
+    filtroEvento: "Evento",
+    filtroTipoEvento: "Tipo evento",
+    filtroRequisa: "Requisa",
+    filtroEstado: "Estado",
+    filtroGestionado: "Gestionado",
+    filtroFechaDesde: "Fecha desde",
+    filtroFechaHasta: "Fecha hasta",
+    filtroDireccion: "Búsqueda"
+  };
+  Object.keys(mapa).forEach(id => {
+    const v = getValue(id);
+    if (v && v !== "ALL") partes.push(`${mapa[id]}: ${v}`);
+  });
+  return partes.length ? partes.join(" | ") : "Sin filtros";
+}
+
 function generarNuevoItem() {
   const hoy = new Date();
-  const fecha = hoy.getFullYear().toString() +
-    String(hoy.getMonth() + 1).padStart(2, "0") +
-    String(hoy.getDate()).padStart(2, "0");
-
-  const itemsHoy = datos
-    .filter(x => String(x.ITEM).startsWith(fecha))
-    .map(x => Number(String(x.ITEM).slice(-3)));
-
+  const fecha = hoy.getFullYear().toString() + String(hoy.getMonth() + 1).padStart(2, "0") + String(hoy.getDate()).padStart(2, "0");
+  const itemsHoy = datos.filter(x => String(x.ITEM).startsWith(fecha)).map(x => Number(String(x.ITEM).slice(-3)));
   const consecutivo = itemsHoy.length === 0 ? 1 : Math.max(...itemsHoy) + 1;
   return fecha + String(consecutivo).padStart(3, "0");
 }
@@ -715,34 +760,14 @@ function obtenerFechaActual() {
 
 function obtenerFechaHoraActual() {
   const f = new Date();
-  return f.toLocaleString("es-HN", {
-    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"
-  });
+  return f.toLocaleString("es-HN", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 function formatearFecha(fecha) {
-  if (!fecha) return "-";
+  if (!fecha) return "";
   const partes = fecha.split("-");
   if (partes.length !== 3) return fecha;
   return `${partes[2]}/${partes[1]}/${partes[0]}`;
-}
-
-function badgeEstado(estado) {
-  const e = estado || "SOLICITADO";
-  if (e === "SOLICITADO") return `<span class="badge badge-solicitado">SOLICITADO</span>`;
-  if (e === "REQUISADO") return `<span class="badge badge-requisado">REQUISADO</span>`;
-  if (e === "CONSUMIDO") return `<span class="badge badge-consumido">CONSUMIDO</span>`;
-  return `<span class="badge">${e}</span>`;
-}
-
-function pintarEstadoSelect() {
-  const estado = document.getElementById("estado");
-  if (!estado) return;
-
-  estado.classList.remove("estado-solicitado", "estado-requisado", "estado-consumido");
-  if (estado.value === "SOLICITADO") estado.classList.add("estado-solicitado");
-  if (estado.value === "REQUISADO") estado.classList.add("estado-requisado");
-  if (estado.value === "CONSUMIDO") estado.classList.add("estado-consumido");
 }
 
 function claseEstadoPanel(estado) {
@@ -750,15 +775,6 @@ function claseEstadoPanel(estado) {
   if (estado === "REQUISADO") return "requisado";
   if (estado === "CONSUMIDO") return "consumido";
   return "";
-}
-
-function actualizarInfoModalSolicitud() {
-  const item = getValue("item");
-  const gestionado = getValue("gestionadoPor") || usuarioActual;
-  const fecha = getValue("fechaCambio");
-
-  setText("infoSolicitudItem", item || "-");
-  setText("infoSolicitudUsuario", gestionado || "-");
 }
 
 function normalizar(valor) {
@@ -771,6 +787,15 @@ function mayus(valor) {
 
 function escaparAtributo(valor) {
   return (valor || "").toString().replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function escaparHtml(valor) {
+  return (valor || "").toString()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function getValue(id, def = "") {

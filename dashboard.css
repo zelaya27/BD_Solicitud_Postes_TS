@@ -856,13 +856,144 @@ th:last-child,td:last-child{border-right:none !important;}
 .compacto-section{padding:9px !important;margin-bottom:8px !important;}
 
 /* =========================================================
-   MODAL SOLICITUD MODERNO - AJUSTADO
+   ACTUALIZACION PANEL PRINCIPAL + MODAL MODERNO
+========================================================= */
+.btn-excel{
+  background:linear-gradient(135deg,#15803d,#22c55e);
+  color:white;
+  border-color:#15803d;
+}
+
+.tabla-principal{
+  table-layout:fixed;
+}
+
+.tabla-principal th,
+.tabla-principal td{
+  vertical-align:middle;
+}
+
+.tabla-principal td:nth-child(6),
+.tabla-principal td:nth-child(7){
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.cell-input,
+.cell-date,
+.cell-select{
+  width:100%;
+  height:30px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  padding:3px 6px;
+  font-size:12px;
+  font-weight:900;
+  color:#0f172a;
+  background:#ffffff;
+  outline:none;
+}
+
+.cell-input:focus,
+.cell-date:focus,
+.cell-select:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.13);
+}
+
+.estado-panel-select{
+  width:100%;
+  height:30px;
+  border-radius:999px;
+  padding:3px 6px;
+  font-size:10px;
+  font-weight:1000;
+  text-align:center;
+  border:1px solid transparent;
+  outline:none;
+}
+
+.estado-panel-select.solicitado{
+  background:#fee2e2;
+  color:#991b1b;
+  border-color:#fecaca;
+}
+
+.estado-panel-select.requisado{
+  background:#fef3c7;
+  color:#92400e;
+  border-color:#fde68a;
+}
+
+.estado-panel-select.consumido{
+  background:#dcfce7;
+  color:#166534;
+  border-color:#86efac;
+}
+
+.acciones-td{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  white-space:nowrap;
+}
+
+.btn-solicitud{
+  height:30px;
+  min-width:92px;
+  padding:0 9px;
+  border:none;
+  border-radius:9px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:1000;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+}
+
+.btn-icon-tabla{
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:9px;
+  color:white;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+}
+
+.btn-excel-row{background:#16a34a;}
+.btn-auditar{background:#7c3aed;}
+.btn-eliminar{background:#ef4444;}
+
+.btn-solicitud:hover,
+.btn-icon-tabla:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(15,23,42,.18);
+}
+
+.btn-disabled{
+  opacity:.35;
+  pointer-events:none;
+  filter:grayscale(1);
+}
+
+/* =========================================================
+   MODAL SOLICITUD MODERNO
 ========================================================= */
 .modal-solicitud-full{
   width:76vw;
   max-width:1480px;
   max-height:92vh;
-  border-radius:16px;
+  border-radius:14px;
   overflow:hidden;
 }
 
@@ -895,7 +1026,7 @@ th:last-child,td:last-child{border-right:none !important;}
 
 .solicitud-title h3{
   margin:0;
-  font-size:25px;
+  font-size:26px;
   font-weight:1000;
   letter-spacing:.3px;
 }
@@ -908,29 +1039,29 @@ th:last-child,td:last-child{border-right:none !important;}
 }
 
 .solicitud-body{
-  padding:22px 24px 8px !important;
+  padding:24px 26px 10px !important;
   overflow:visible !important;
 }
 
 .solicitud-info-row{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  padding-bottom:16px;
-  margin-bottom:18px;
+  gap:22px;
+  padding-bottom:18px;
+  margin-bottom:20px;
   border-bottom:1.8px solid #cbd5e1;
 }
 
 .solicitud-info-card{
   display:flex;
   align-items:center;
-  gap:16px;
-  min-height:70px;
+  gap:18px;
+  min-height:74px;
 }
 
 .solicitud-info-card i{
-  width:54px;
-  height:54px;
+  width:56px;
+  height:56px;
   border-radius:14px;
   background:#f1f5f9;
   border:1px solid #cbd5e1;
@@ -938,20 +1069,20 @@ th:last-child,td:last-child{border-right:none !important;}
   align-items:center;
   justify-content:center;
   color:#003b95;
-  font-size:24px;
+  font-size:25px;
 }
 
 .solicitud-info-card span{
   display:block;
-  font-size:13px;
-  font-weight:1000;
+  font-size:14px;
+  font-weight:900;
   color:#334155;
   margin-bottom:5px;
 }
 
 .solicitud-info-card strong{
   display:block;
-  font-size:21px;
+  font-size:22px;
   font-weight:1000;
   color:#001b4d;
 }
@@ -962,7 +1093,7 @@ th:last-child,td:last-child{border-right:none !important;}
   border:1.7px solid #b8c7dc;
   border-radius:9px;
   padding:0 10px;
-  font-size:17px;
+  font-size:18px;
   font-weight:900;
   color:#001b4d;
   outline:none;
@@ -976,7 +1107,7 @@ th:last-child,td:last-child{border-right:none !important;}
 .solicitud-form-grid{
   display:grid;
   grid-template-columns:repeat(12,1fr);
-  gap:16px 20px;
+  gap:18px 24px;
 }
 
 .sol-field{grid-column:span 4;}
@@ -989,16 +1120,16 @@ th:last-child,td:last-child{border-right:none !important;}
 .sol-field label{
   display:block;
   margin-bottom:7px;
-  font-size:13px;
+  font-size:14px;
   font-weight:1000;
   color:#003b95;
   letter-spacing:.3px;
 }
 
 .sol-input-icon{
-  height:46px;
+  height:48px;
   border:1.7px solid #b8c7dc;
-  border-radius:10px;
+  border-radius:9px;
   background:#ffffff;
   display:flex;
   align-items:center;
@@ -1007,13 +1138,13 @@ th:last-child,td:last-child{border-right:none !important;}
 }
 
 .sol-input-icon i{
-  width:52px;
+  width:54px;
   height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#003b95;
-  font-size:19px;
+  font-size:20px;
   background:#f8fafc;
   border-right:1px solid #dbe3ef;
 }
@@ -1024,15 +1155,15 @@ th:last-child,td:last-child{border-right:none !important;}
   height:100%;
   border:none !important;
   outline:none !important;
-  font-size:17px;
+  font-size:18px;
   font-weight:800;
   color:#0f172a;
-  padding:0 13px;
+  padding:0 14px;
   background:white;
 }
 
 .textarea-icon{
-  height:84px;
+  height:86px;
   align-items:stretch;
 }
 
@@ -1048,10 +1179,10 @@ th:last-child,td:last-child{border-right:none !important;}
   border:none !important;
   outline:none !important;
   resize:none;
-  font-size:17px;
+  font-size:18px;
   font-weight:800;
   color:#0f172a;
-  padding:15px 13px;
+  padding:16px 14px;
   background:white;
 }
 
@@ -1111,107 +1242,7 @@ th:last-child,td:last-child{border-right:none !important;}
 @media(max-width:1000px){
   .solicitud-info-row{grid-template-columns:1fr;gap:8px;}
   .solicitud-form-grid{grid-template-columns:1fr;}
-  .sol-field,
-  .sol-field.span-4,
-  .sol-field.span-5,
-  .sol-field.span-7,
-  .sol-field.span-8,
-  .sol-field.span-12{grid-column:span 1;}
+  .sol-field,.sol-field.span-4,.sol-field.span-5,.sol-field.span-7,.sol-field.span-8,.sol-field.span-12{grid-column:span 1;}
   .modal-solicitud-full{width:96vw;max-height:92vh;}
   .solicitud-body{overflow-y:auto !important;}
-}
-
-/* =========================================================
-   AJUSTE TABLA PRINCIPAL - DISTRIBUCIÓN DE COLUMNAS
-========================================================= */
-table{
-  table-layout:fixed;
-}
-
-.col-item{width:8%;}
-.col-estado{width:8%;}
-.col-requisa{width:5%;}
-.col-fecha{width:6%;}
-.col-circuito{width:9%;}
-.col-material{width:24%;}
-.col-direccion{width:21%;}
-.col-evento{width:5%;}
-.col-acciones{width:14%;}
-
-.celda-ellipsis{
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.col-requisa,
-.col-fecha,
-.col-evento{
-  text-align:center;
-}
-
-.estado-panel-select{
-  width:100%;
-  height:30px;
-  border-radius:999px;
-  border:1px solid #cbd5e1;
-  font-size:10px;
-  font-weight:1000;
-  text-align:center;
-  outline:none;
-  cursor:pointer;
-}
-
-.estado-panel-select.solicitado{
-  background:#fee2e2;
-  color:#991b1b;
-  border-color:#fecaca;
-}
-
-.estado-panel-select.requisado{
-  background:#fef3c7;
-  color:#92400e;
-  border-color:#fde68a;
-}
-
-.estado-panel-select.consumido{
-  background:#dcfce7;
-  color:#166534;
-  border-color:#86efac;
-}
-
-.acciones-td{
-  justify-content:flex-start !important;
-  gap:6px !important;
-}
-
-.btn-solicitud{
-  width:auto !important;
-  min-width:105px;
-  padding:0 10px;
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  color:#fff;
-  font-size:11px !important;
-  font-weight:1000;
-  gap:6px;
-}
-
-.btn-icon-only{
-  width:30px !important;
-  min-width:30px;
-  padding:0 !important;
-}
-
-.btn-auditar{
-  background:#7c3aed !important;
-}
-
-.btn-eliminar{
-  background:#ef4444 !important;
-}
-
-@media(max-width:1200px){
-  table{table-layout:auto;}
-  .col-item,.col-estado,.col-requisa,.col-fecha,.col-circuito,
-  .col-material,.col-direccion,.col-evento,.col-acciones{width:auto;}
 }
