@@ -370,16 +370,20 @@
       icon.className = mostrar ? "fas fa-eye-slash" : "fas fa-eye";
     }
 
-    async function apiPost(payload) {
-      const res = await fetch(CONFIG.ENDPOINTS.API, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (!data.ok) throw new Error(data.error || "Error en API");
-      return data;
-    }
+   async function apiPost(payload) {
+  const res = await fetch(CONFIG.ENDPOINTS.API, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
 
+  const txt = await res.text();
+  console.log("RESPUESTA APPS SCRIPT:", txt);
+  alert(txt);
+
+  const data = JSON.parse(txt);
+  if (!data.ok) throw new Error(data.error || "Error en API");
+  return data;
+}
     async function cargarUsuariosLogin() {
       try {
         const data = await apiPost({ action: "obtenerUsuarios" });
