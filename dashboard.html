@@ -26,6 +26,7 @@
     <section class="top-panel">
       <button class="btn-top btn-nueva" onclick="abrirModalSolicitud()"><i class="fas fa-plus"></i> Nueva Solicitud</button>
       <button class="btn-top btn-dashboard" onclick="abrirModalDashboard()"><i class="fas fa-table"></i> Dashboards</button>
+      <button class="btn-top btn-excel" onclick="exportarExcelFiltrado()"><i class="fas fa-file-excel"></i> Exportar Excel</button>
       <div class="estado-card solicitado"><span><i class="fas fa-circle"></i> Solicitado:</span><strong id="countSolicitado">0</strong></div>
       <div class="estado-card requisado"><span><i class="fas fa-circle"></i> Requisado:</span><strong id="countRequisado">0</strong></div>
       <div class="estado-card consumido"><span><i class="fas fa-circle"></i> Consumido:</span><strong id="countConsumido">0</strong></div>
@@ -95,128 +96,90 @@
     </section>
 
     <section class="table-responsive">
-      <table>
+      <table class="tabla-principal">
+        <colgroup>
+          <col style="width:6%"><col style="width:8%"><col style="width:5%"><col style="width:9%"><col style="width:6%"><col style="width:24%"><col style="width:22%"><col style="width:5%"><col style="width:15%">
+        </colgroup>
         <thead>
           <tr>
-            <th class="col-item">ITEM</th>
-            <th class="col-estado">ESTADO</th>
-            <th class="col-requisa">REQUISA</th>
-            <th class="col-fecha">FECHA CAMBIO</th>
-            <th class="col-circuito">CIRCUITO</th>
-            <th class="col-material">MATERIAL</th>
-            <th class="col-direccion">DIRECCIÓN</th>
-            <th class="col-acciones">ACCIONES</th>
+            <th>ITEM</th>
+            <th>ESTADO</th>
+            <th>REQUISA</th>
+            <th>FECHA CAMBIO</th>
+            <th>CIRCUITO</th>
+            <th>MATERIAL</th>
+            <th>DIRECCIÓN</th>
+            <th>EVENTO</th>
+            <th>ACCIONES</th>
           </tr>
         </thead>
-        <tbody id="tablaBody"><tr><td colspan="8" class="text-center">Cargando información...</td></tr></tbody>
+        <tbody id="tablaBody"><tr><td colspan="9" class="text-center">Cargando información...</td></tr></tbody>
       </table>
     </section>
   </main>
 
-  <!-- MODAL SOLICITUD COMPACTO INDUSTRIAL -->
+  <!-- MODAL SOLICITUD MODERNO -->
   <div id="modalSolicitud" class="modal-overlay">
-    <div class="modal modal-compacto">
-      <div class="modal-industrial-header compacto-header">
-        <div class="titulo-linea">
-          <span><i class="fas fa-bolt"></i> SOLICITUD DE MATERIAL</span>
-          <strong id="modalHeaderInfo">20260619001 | ALLAN.ZELAYA</strong>
+    <div class="modal modal-solicitud-full">
+      <div class="solicitud-header">
+        <div class="solicitud-title">
+          <div class="solicitud-icon"><i class="fas fa-cube"></i></div>
+          <h3>SOLICITUD DE MATERIAL</h3>
         </div>
-        <button class="modal-close industrial-close" onclick="cerrarModalSolicitud()"><i class="fas fa-times"></i></button>
+        <button class="modal-close solicitud-close" onclick="cerrarModalSolicitud()"><i class="fas fa-times"></i></button>
       </div>
 
-      <div class="modal-body modal-industrial-body compacto-body">
+      <div class="modal-body solicitud-body">
         <input type="hidden" id="modoSolicitud" value="NUEVO">
         <input type="hidden" id="item">
+        <input type="hidden" id="estado" value="SOLICITADO">
         <input type="hidden" id="fechaSolicitud">
         <input type="hidden" id="gestionadoPor">
         <input type="hidden" id="codigoSolicitado">
         <input type="hidden" id="requisa">
         <input type="hidden" id="cuadrilla">
 
-        <input type="hidden" id="estado" value="SOLICITADO">
+        <div class="solicitud-info-row">
+          <div class="solicitud-info-card">
+            <i class="fas fa-receipt"></i>
+            <div><span>SOLICITUD</span><strong id="infoSolicitudItem">-</strong></div>
+          </div>
+          <div class="solicitud-info-card">
+            <i class="fas fa-user"></i>
+            <div><span>GESTIONADO POR</span><strong id="infoSolicitudUsuario">-</strong></div>
+          </div>
+          <div class="solicitud-info-card fecha-cambio-card">
+            <i class="fas fa-calendar-days"></i>
+            <div>
+              <span>FECHA CAMBIO</span>
+              <input id="fechaCambio" type="date" onchange="actualizarInfoModalSolicitud()">
+            </div>
+          </div>
+        </div>
 
-        <section class="industrial-section compacto-section">
-          <div class="section-title"><i class="fas fa-circle-info"></i> DATOS GENERALES</div>
-          <div class="industrial-grid grid-general-final">
-            <div class="form-group">
-              <label>FECHA CAMBIO</label>
-              <input id="fechaCambio" type="date">
-            </div>
-            <div class="form-group">
-              <label>TIPO EVENTO</label>
-              <select id="tipoEvento">
-                <option value="INCIDENCIA">INCIDENCIA</option>
-                <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                <option value="OPERACIÓN">OPERACIÓN</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>EVENTO</label>
-              <input id="evento" class="input-destacado" type="number">
-            </div>
-          </div>
-        </section>
+        <div class="solicitud-form-grid">
+          <div class="sol-field"><label>TIPO EVENTO</label><div class="sol-input-icon"><i class="fas fa-tag"></i><select id="tipoEvento"><option value="INCIDENCIA">INCIDENCIA</option><option value="MANTENIMIENTO">MANTENIMIENTO</option><option value="OPERACIÓN">OPERACIÓN</option></select></div></div>
+          <div class="sol-field"><label>EVENTO</label><div class="sol-input-icon"><i class="fas fa-hashtag"></i><input id="evento" type="number"></div></div>
+          <div class="sol-field"><label>REPORTE</label><div class="sol-input-icon"><i class="fas fa-file-lines"></i><input id="reporte" type="number"></div></div>
 
-        <section class="industrial-section compacto-section">
-          <div class="section-title"><i class="fas fa-location-dot"></i> UBICACIÓN</div>
-          <div class="ubicacion-layout">
-            <div class="ubicacion-left">
-              <div class="industrial-grid grid-ubicacion-1">
-                <div class="form-group">
-                  <label>CIRCUITO</label>
-                  <select id="circuito"></select>
-                </div>
-                <div class="form-group campo-direccion">
-                  <label>DIRECCIÓN</label>
-                  <input id="sitio" type="text" placeholder="COL. PALMIRA">
-                </div>
-              </div>
-              <div class="industrial-grid grid-ubicacion-2">
-                <div class="form-group">
-                  <label>PINTADO APOYO</label>
-                  <input id="pintadoApoyo" type="number">
-                </div>
-                <div class="form-group">
-                  <label>GPS / UTM</label>
-                  <input id="utm" type="text" placeholder="618878 - 1639784">
-                </div>
-                <div class="form-group">
-                  <label>REPORTE</label>
-                  <input id="reporte" class="input-destacado" type="number">
-                </div>
-              </div>
-            </div>
-            <div class="form-group obs-derecha">
-              <label>OBSERVACIONES</label>
-              <textarea id="observaciones" rows="4" placeholder="CAMBIO DE POSTE MADERA 30 FT..."></textarea>
-            </div>
-          </div>
-        </section>
+          <div class="sol-field span-5"><label>CIRCUITO</label><div class="sol-input-icon"><i class="fas fa-code-branch"></i><select id="circuito"></select></div></div>
+          <div class="sol-field span-7"><label>DIRECCIÓN</label><div class="sol-input-icon"><i class="fas fa-location-dot"></i><input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS"></div></div>
 
-        <section class="industrial-section compacto-section">
-          <div class="section-title"><i class="fas fa-boxes-stacked"></i> MATERIAL SOLICITADO</div>
-          <div class="industrial-grid grid-material">
-            <div class="form-group campo-material">
-              <label>MATERIAL SOLICITADO</label>
-              <select id="nombreSolicitado"></select>
-            </div>
-            <div class="form-group campo-cantidad">
-              <label>CANTIDAD</label>
-              <input id="cantidadSolicitada" class="input-destacado" type="number" min="1" max="999" value="1">
-            </div>
-          </div>
-          <div id="serieBox" class="industrial-grid grid-serie oculto">
-            <div class="form-group">
-              <label>SERIE</label>
-              <input id="serie" type="text">
-            </div>
-          </div>
-        </section>
+          <div class="sol-field span-5"><label>APOYO (PINTADO)</label><div class="sol-input-icon"><i class="fas fa-map-pin"></i><input id="pintadoApoyo" type="number"></div></div>
+          <div class="sol-field span-7"><label>COORDENADAS UTM</label><div class="sol-input-icon"><i class="fas fa-crosshairs"></i><input id="utm" type="text" placeholder="618878 - 1639784"></div></div>
+
+          <div class="sol-field span-8"><label>MATERIAL SOLICITADO</label><div class="sol-input-icon"><i class="fas fa-box"></i><select id="nombreSolicitado"></select></div></div>
+          <div class="sol-field span-4"><label>CANTIDAD</label><div class="sol-input-icon"><i class="fas fa-clipboard-list"></i><input id="cantidadSolicitada" type="number" min="1" max="999" value="1"></div></div>
+
+          <div id="serieBox" class="sol-field span-8 oculto"><label>SERIE (SOLO PARA TRANSFORMADORES)</label><div class="sol-input-icon"><i class="fas fa-barcode"></i><input id="serie" type="text" placeholder="Ingrese la serie del transformador"></div></div>
+
+          <div class="sol-field span-12"><label>OBSERVACIONES</label><div class="sol-input-icon textarea-icon"><i class="fas fa-comment"></i><textarea id="observaciones" placeholder="CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA"></textarea></div></div>
+        </div>
       </div>
 
-      <div class="modal-footer industrial-footer">
-        <button class="btn-cancelar" onclick="cerrarModalSolicitud()"><i class="fas fa-times"></i> Cancelar</button>
-        <button class="btn-guardar" onclick="guardarSolicitud()"><i class="fas fa-save"></i> Guardar</button>
+      <div class="modal-footer solicitud-footer">
+        <button class="btn-cancelar solicitud-btn-cancelar" onclick="cerrarModalSolicitud()"><i class="fas fa-times"></i> CANCELAR</button>
+        <button class="btn-guardar solicitud-btn-guardar" onclick="guardarSolicitud()"><i class="fas fa-save"></i> GUARDAR SOLICITUD</button>
       </div>
     </div>
   </div>

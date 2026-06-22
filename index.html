@@ -375,17 +375,7 @@
         method: "POST",
         body: JSON.stringify(payload)
       });
-
-      const txt = await res.text();
-      let data;
-
-      try {
-        data = JSON.parse(txt);
-      } catch (err) {
-        console.error("Respuesta no JSON:", txt);
-        throw new Error("Apps Script no devolvió JSON. Revise la URL /exec y permisos de implementación.");
-      }
-
+      const data = await res.json();
       if (!data.ok) throw new Error(data.error || "Error en API");
       return data;
     }
@@ -405,11 +395,7 @@
     function poblarSectores() {
       const sectorSelect = document.getElementById("sectorSelect");
       sectorSelect.innerHTML = `<option value="">Seleccione sector...</option>`;
-
-      const sectores = [...new Set(
-        usuariosLogin.map(u => u.sector).filter(Boolean)
-      )].sort();
-
+      const sectores = [...new Set(usuariosLogin.map(u => u.sector).filter(Boolean))].sort();
       sectores.forEach(sector => {
         const opt = document.createElement("option");
         opt.value = sector;
@@ -429,19 +415,14 @@
         return;
       }
 
-      const usuarios = usuariosLogin.filter(u =>
-        normalizarTexto(u.sector) === normalizarTexto(sector)
-      );
-
+      const usuarios = usuariosLogin.filter(u => normalizarTexto(u.sector) === normalizarTexto(sector));
       userSelect.innerHTML = `<option value="">Seleccione usuario...</option>`;
-
       usuarios.forEach(u => {
         const opt = document.createElement("option");
         opt.value = u.usuario;
         opt.textContent = u.usuario;
         userSelect.appendChild(opt);
       });
-
       setEstado(`${usuarios.length} usuario(s) validado(s) para ${sector}.`, "success", "fa-check-circle");
     }
 
@@ -459,29 +440,22 @@
       btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>VALIDANDO</span>`;
 
       try {
-        const data = await apiPost({
-          action: "login",
-          usuario: usuario,
-          password: pass,
-          sector: sector
-        });
+        const data = await apiPost({ action: "login", usuario, password: pass, sector });
 
         if (!data.acceso) {
           setEstado("Usuario, contraseña o sector incorrecto.", "error", "fa-triangle-exclamation");
           return;
         }
 
-        const usuarioData = data.usuarioData || {};
-
-        sessionStorage.setItem("usuario", usuarioData.usuario || usuario);
-        sessionStorage.setItem("sector", usuarioData.sector || sector);
-        sessionStorage.setItem("tipo_usuario", usuarioData.tipo_usuario || "");
-        sessionStorage.setItem("id_tipous", usuarioData.id_tipous || "");
+        const usuarioData = data.usuarioData;
+        sessionStorage.setItem("usuario", usuarioData.usuario);
+        sessionStorage.setItem("sector", usuarioData.sector);
+        sessionStorage.setItem("tipo_usuario", usuarioData.tipo_usuario);
+        sessionStorage.setItem("id_tipous", usuarioData.id_tipous);
         sessionStorage.setItem("cuadrilla", usuarioData.cuadrilla || "");
 
         setEstado("Acceso validado. Entrando al panel...", "success", "fa-check-circle");
         window.location.href = "dashboard.html";
-
       } catch (error) {
         console.error(error);
         setEstado("Error de conexión con Apps Script.", "error", "fa-triangle-exclamation");
