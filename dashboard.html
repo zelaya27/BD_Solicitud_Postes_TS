@@ -26,7 +26,7 @@
     <section class="top-panel">
       <button class="btn-top btn-nueva" onclick="abrirModalSolicitud()"><i class="fas fa-plus"></i> Nueva Solicitud</button>
       <button class="btn-top btn-dashboard" onclick="abrirModalDashboard()"><i class="fas fa-table"></i> Dashboards</button>
-      <button class="btn-top btn-excel" onclick="exportarExcelFiltrado()"><i class="fas fa-file-excel"></i> Exportar Excel</button>
+      <button class="btn-top btn-excel" onclick="abrirVistaExcelFiltrado()"><i class="fas fa-file-excel"></i> Exportar Excel</button>
       <div class="estado-card solicitado"><span><i class="fas fa-circle"></i> Solicitado:</span><strong id="countSolicitado">0</strong></div>
       <div class="estado-card requisado"><span><i class="fas fa-circle"></i> Requisado:</span><strong id="countRequisado">0</strong></div>
       <div class="estado-card consumido"><span><i class="fas fa-circle"></i> Consumido:</span><strong id="countConsumido">0</strong></div>
@@ -166,7 +166,21 @@
           <div class="sol-field span-7"><label>DIRECCIÓN</label><div class="sol-input-icon"><i class="fas fa-location-dot"></i><input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS"></div></div>
 
           <div class="sol-field span-5"><label>APOYO (PINTADO)</label><div class="sol-input-icon"><i class="fas fa-map-pin"></i><input id="pintadoApoyo" type="number"></div></div>
-          <div class="sol-field span-7"><label>COORDENADAS UTM</label><div class="sol-input-icon"><i class="fas fa-crosshairs"></i><input id="utm" type="text" placeholder="618878 - 1639784"></div></div>
+          <div class="sol-field span-7">
+            <label>COORDENADAS UTM</label>
+            <div class="utm-busqueda-linea">
+              <div class="sol-input-icon utm-input">
+                <i class="fas fa-crosshairs"></i>
+                <input id="utmX" type="text" placeholder="UTM X">
+              </div>
+              <div class="sol-input-icon utm-input utm-input-y">
+                <input id="utmY" type="text" placeholder="UTM Y">
+              </div>
+              <button type="button" class="btn-gps-buscar" onclick="buscarCoordenadasApoyo()" title="Buscar coordenadas por apoyo">
+                <i class="fas fa-location-crosshairs"></i>
+              </button>
+            </div>
+          </div>
 
           <div class="sol-field span-8"><label>MATERIAL SOLICITADO</label><div class="sol-input-icon"><i class="fas fa-box"></i><select id="nombreSolicitado"></select></div></div>
           <div class="sol-field span-4"><label>CANTIDAD</label><div class="sol-input-icon"><i class="fas fa-clipboard-list"></i><input id="cantidadSolicitada" type="number" min="1" max="999" value="1"></div></div>
@@ -243,7 +257,6 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
   <script src="dashboard.js"></script>
 </body>
 </html>

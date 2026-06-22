@@ -366,36 +366,39 @@
       const input = document.getElementById("pass");
       const icon = document.getElementById("eyeIcon");
       const mostrar = input.type === "password";
+
       input.type = mostrar ? "text" : "password";
       icon.className = mostrar ? "fas fa-eye-slash" : "fas fa-eye";
     }
 
-    async function apiPost(payload) {
-      const res = await fetch(CONFIG.ENDPOINTS.API, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (!data.ok) throw new Error(data.error || "Error en API");
-      return data;
-    }
-
     async function cargarUsuariosLogin() {
       try {
-        const data = await apiPost({ action: "obtenerUsuarios" });
-        usuariosLogin = data.usuarios || [];
+        if (CONFIG.MODO_PRUEBA) {
+          usuariosLogin = CONFIG.USUARIOS_PRUEBA;
+        } else {
+          const res = await fetch(CONFIG.ENDPOINTS.USUARIOS);
+          const data = await res.json();
+          usuariosLogin = data.usuarios || [];
+        }
+
         poblarSectores();
         setEstado("Selecciona un sector validado para cargar usuarios.", "info", "fa-circle-info");
+
       } catch (error) {
         console.error(error);
-        setEstado("Error cargando usuarios desde Google Sheets.", "error", "fa-triangle-exclamation");
+        setEstado("Error cargando usuarios.", "error", "fa-triangle-exclamation");
       }
     }
 
     function poblarSectores() {
       const sectorSelect = document.getElementById("sectorSelect");
+
       sectorSelect.innerHTML = `<option value="">Seleccione sector...</option>`;
-      const sectores = [...new Set(usuariosLogin.map(u => u.sector).filter(Boolean))].sort();
+
+      const sectores = [...new Set(
+        usuariosLogin.map(u => u.sector).filter(Boolean)
+      )].sort();
+
       sectores.forEach(sector => {
         const opt = document.createElement("option");
         opt.value = sector;
@@ -407,6 +410,7 @@
     function filtrarUsuariosPorSector() {
       const sector = document.getElementById("sectorSelect").value;
       const userSelect = document.getElementById("userSelect");
+
       userSelect.innerHTML = "";
 
       if (!sector) {
@@ -415,14 +419,19 @@
         return;
       }
 
-      const usuarios = usuariosLogin.filter(u => normalizarTexto(u.sector) === normalizarTexto(sector));
+      const usuarios = usuariosLogin.filter(u =>
+        normalizarTexto(u.sector) === normalizarTexto(sector)
+      );
+
       userSelect.innerHTML = `<option value="">Seleccione usuario...</option>`;
+
       usuarios.forEach(u => {
         const opt = document.createElement("option");
         opt.value = u.usuario;
         opt.textContent = u.usuario;
         userSelect.appendChild(opt);
       });
+
       setEstado(`${usuarios.length} usuario(s) validado(s) para ${sector}.`, "success", "fa-check-circle");
     }
 
@@ -432,33 +441,66 @@
       const pass = document.getElementById("pass").value;
       const btn = document.getElementById("btnLogin");
 
-      if (!sector) return setEstado("Debes seleccionar un sector.", "warning", "fa-circle-exclamation");
-      if (!usuario) return setEstado("Debes seleccionar un usuario.", "warning", "fa-circle-exclamation");
-      if (!pass) return setEstado("Ingresa la contraseña.", "warning", "fa-circle-exclamation");
+      if (!sector) {
+        setEstado("Debes seleccionar un sector.", "warning", "fa-circle-exclamation");
+        return;
+      }
+
+      if (!usuario) {
+        setEstado("Debes seleccionar un usuario.", "warning", "fa-circle-exclamation");
+        return;
+      }
+
+      if (!pass) {
+        setEstado("Ingresa la contraseña.", "warning", "fa-circle-exclamation");
+        return;
+      }
 
       btn.disabled = true;
       btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>VALIDANDO</span>`;
 
       try {
-        const data = await apiPost({ action: "login", usuario, password: pass, sector });
+        let acceso = false;
+        let usuarioData = null;
 
-        if (!data.acceso) {
+        if (CONFIG.MODO_PRUEBA) {
+          usuarioData = usuariosLogin.find(u =>
+            normalizarTexto(u.usuario) === normalizarTexto(usuario) &&
+            normalizarTexto(u.password) === normalizarTexto(pass) &&
+            normalizarTexto(u.sector) === normalizarTexto(sector)
+          );
+
+          acceso = !!usuarioData;
+
+        } else {
+          const res = await fetch(CONFIG.ENDPOINTS.LOGIN, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ usuario, password: pass, sector })
+          });
+
+          const data = await res.json();
+          acceso = data.acceso;
+          usuarioData = data.usuarioData;
+        }
+
+        if (!acceso) {
           setEstado("Usuario, contraseña o sector incorrecto.", "error", "fa-triangle-exclamation");
           return;
         }
 
-        const usuarioData = data.usuarioData;
         sessionStorage.setItem("usuario", usuarioData.usuario);
         sessionStorage.setItem("sector", usuarioData.sector);
         sessionStorage.setItem("tipo_usuario", usuarioData.tipo_usuario);
         sessionStorage.setItem("id_tipous", usuarioData.id_tipous);
-        sessionStorage.setItem("cuadrilla", usuarioData.cuadrilla || "");
 
         setEstado("Acceso validado. Entrando al panel...", "success", "fa-check-circle");
+
         window.location.href = "dashboard.html";
+
       } catch (error) {
         console.error(error);
-        setEstado("Error de conexión con Apps Script.", "error", "fa-triangle-exclamation");
+        setEstado("Error de conexión.", "error", "fa-triangle-exclamation");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<i class="fas fa-right-to-bracket"></i><span>INICIAR SESIÓN</span>`;
