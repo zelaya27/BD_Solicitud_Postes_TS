@@ -75,7 +75,6 @@ function cargarCombos() {
 
   addListener("nombreSolicitado", "change", seleccionarMaterialPorNombre);
   addListener("nombreSolicitado", "change", mostrarSerieSegunMaterial);
-  addListener("pintadoApoyo", "change", buscarUTMPorApoyo);
   addListener("fechaCambio", "change", actualizarInfoModalSolicitud);
 }
 
@@ -334,7 +333,7 @@ function cerrarModalSolicitud() {
 }
 
 function limpiarModalSolicitud() {
-  ["item", "fechaSolicitud", "fechaCambio", "reporte", "sitio", "codigoSolicitado", "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "evento", "serie", "requisa", "cuadrilla"].forEach(id => setValue(id, ""));
+  ["item", "fechaSolicitud", "fechaCambio", "reporte", "sitio", "codigoSolicitado", "cantidadSolicitada", "pintadoApoyo", "utmX", "utmY", "observaciones", "evento", "serie", "requisa", "cuadrilla"].forEach(id => setValue(id, ""));
   setValue("estado", "SOLICITADO");
   setValue("tipoEvento", "INCIDENCIA");
   setValue("nombreSolicitado", "");
@@ -358,6 +357,8 @@ function abrirSolicitudSoloLectura(r) {
 }
 
 function cargarRegistroEnModal(r, soloLectura) {
+  const partesUTM = obtenerPartesUTM(r);
+
   setValue("modoSolicitud", soloLectura ? "VER" : "EDITAR");
   setValue("item", r.ITEM);
   setValue("gestionadoPor", r.SOLICITADO_POR || r.GESTIONADO_POR || usuarioActual);
@@ -371,7 +372,8 @@ function cargarRegistroEnModal(r, soloLectura) {
   setValue("nombreSolicitado", r.NOMBRE_SOLICITADO || "");
   setValue("cantidadSolicitada", r.CANTIDAD_SOLICITADA || 1);
   setValue("pintadoApoyo", r.PINTADO_APOYO || "");
-  setValue("utm", r.UTM || "");
+  setValue("utmX", partesUTM.x);
+  setValue("utmY", partesUTM.y);
   setValue("observaciones", r.OBSERVACIONES || "");
   setValue("tipoEvento", r.TIPO_EVENTO || "INCIDENCIA");
   setValue("evento", r.EVENTO || "");
@@ -384,10 +386,13 @@ function cargarRegistroEnModal(r, soloLectura) {
 }
 
 function bloquearModalSolicitud(bloquear) {
-  ["fechaCambio", "reporte", "circuito", "sitio", "nombreSolicitado", "cantidadSolicitada", "pintadoApoyo", "utm", "observaciones", "tipoEvento", "evento", "serie"].forEach(id => {
+  ["fechaCambio", "reporte", "circuito", "sitio", "nombreSolicitado", "cantidadSolicitada", "pintadoApoyo", "utmX", "utmY", "observaciones", "tipoEvento", "evento", "serie"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.disabled = bloquear;
   });
+
+  const btnGps = document.querySelector(".btn-gps");
+  if (btnGps) btnGps.disabled = bloquear;
 
   const btnGuardar = document.querySelector("#modalSolicitud .btn-guardar");
   if (btnGuardar) btnGuardar.style.display = bloquear ? "none" : "inline-flex";
@@ -414,7 +419,9 @@ async function guardarSolicitud() {
     CIRCUITO: getValue("circuito"),
     SITIO: mayus(getValue("sitio")),
     PINTADO_APOYO: getValue("pintadoApoyo"),
-    UTM: getValue("utm"),
+    UTM_X: getValue("utmX"),
+    UTM_Y: getValue("utmY"),
+    UTM: textoUTMDesdeXY(getValue("utmX"), getValue("utmY")),
     CODIGO_SOLICITADO: getValue("codigoSolicitado"),
     NOMBRE_SOLICITADO: getValue("nombreSolicitado"),
     CANTIDAD_SOLICITADA: getValue("cantidadSolicitada"),
@@ -471,7 +478,7 @@ function validarSolicitud(r) {
   if (!r.CIRCUITO) return "Seleccione Circuito.";
   if (!r.SITIO) return "Ingrese Dirección.";
   if (!r.PINTADO_APOYO) return "Ingrese Apoyo.";
-  if (!r.UTM) return "Ingrese Coordenadas UTM.";
+  if (!r.UTM_X || !r.UTM_Y) return "Ingrese Coordenadas UTM X y UTM Y.";
   if (!r.CODIGO_SOLICITADO) return "Seleccione Material Solicitado.";
   if (!r.NOMBRE_SOLICITADO) return "Seleccione Material Solicitado.";
   if (!r.CANTIDAD_SOLICITADA || Number(r.CANTIDAD_SOLICITADA) < 1 || Number(r.CANTIDAD_SOLICITADA) > 999) return "Cantidad solicitada debe ser entre 1 y 999.";
@@ -637,18 +644,86 @@ function obtenerMaterialPorCodigo(codigo) {
   return materiales.find(m => String(m.codigo) === String(codigo));
 }
 
-async function buscarUTMPorApoyo() {
+async function buscarUTMPorApoyoManual() {
   const apoyo = getValue("pintadoApoyo");
+
   if (!apoyo) {
-    setValue("utm", "");
+    alert("Ingrese el apoyo/pintado antes de buscar coordenadas.");
     return;
   }
+
+  const actualX = getValue("utmX");
+  const actualY = getValue("utmY");
+
+  if ((actualX || actualY) && !confirm("Ya existen coordenadas registradas.\n\n¿Desea reemplazarlas?")) {
+    return;
+  }
+
+  const btn = document.querySelector(".btn-gps");
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+  }
+
   try {
     const data = await apiPost({ action: "buscarUTMPorApoyo", apoyo });
-    if (data.ok && data.utm) setValue("utm", data.utm);
+
+    if (!data.ok || (!data.utm_x && !data.utm_y && !data.UTM_X && !data.UTM_Y)) {
+      alert(data.mensaje || "No se encontraron coordenadas para este apoyo.");
+      return;
+    }
+
+    setValue("utmX", data.utm_x || data.UTM_X || "");
+    setValue("utmY", data.utm_y || data.UTM_Y || "");
+
   } catch (err) {
-    console.warn(err);
+    alert("Error buscando coordenadas: " + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fas fa-location-crosshairs"></i>`;
+    }
   }
+}
+
+function obtenerPartesUTM(r) {
+  if (!r) return { x: "", y: "" };
+
+  if (r.UTM_X || r.UTM_Y) {
+    return {
+      x: String(r.UTM_X || ""),
+      y: String(r.UTM_Y || "")
+    };
+  }
+
+  const texto = String(r.UTM || "").trim();
+  if (!texto) return { x: "", y: "" };
+
+  const partes = texto
+    .replace(",", " - ")
+    .split("-")
+    .map(x => x.trim())
+    .filter(Boolean);
+
+  return {
+    x: partes[0] || "",
+    y: partes[1] || ""
+  };
+}
+
+function textoUTM(r) {
+  const p = obtenerPartesUTM(r);
+  return textoUTMDesdeXY(p.x, p.y);
+}
+
+function textoUTMDesdeXY(x, y) {
+  const ux = String(x || "").trim();
+  const uy = String(y || "").trim();
+
+  if (ux && uy) return `${ux} - ${uy}`;
+  if (ux) return ux;
+  if (uy) return uy;
+  return "";
 }
 
 function actualizarInfoModalSolicitud() {
@@ -678,9 +753,9 @@ function generarExcelSolicitudes(lista, nombreArchivo) {
   const filas = lista.map((r, index) => {
     const mat = obtenerMaterialPorCodigo(r.CODIGO_SOLICITADO);
     return [
-      index + 1, "", r.CODIGO_SOLICITADO || "", r.NOMBRE_SOLICITADO || "", r.SERIE || "",
+      r.ITEM || "", "", r.CODIGO_SOLICITADO || "", r.NOMBRE_SOLICITADO || "", r.SERIE || "",
       mat?.unidad || "UND", r.CANTIDAD_SOLICITADA || "", "", "", "", r.REPORTE || "", r.SITIO || "",
-      r.PINTADO_APOYO || "", r.UTM || "", formatearFechaExcel(r.FECHA_CAMBIO), r.OBSERVACIONES || ""
+      r.PINTADO_APOYO || "", textoUTM(r), formatearFechaExcel(r.FECHA_CAMBIO), r.OBSERVACIONES || ""
     ];
   });
 

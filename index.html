@@ -375,6 +375,7 @@
         method: "POST",
         body: JSON.stringify(payload)
       });
+
       const data = await res.json();
       if (!data.ok) throw new Error(data.error || "Error en API");
       return data;
@@ -395,7 +396,11 @@
     function poblarSectores() {
       const sectorSelect = document.getElementById("sectorSelect");
       sectorSelect.innerHTML = `<option value="">Seleccione sector...</option>`;
-      const sectores = [...new Set(usuariosLogin.map(u => u.sector).filter(Boolean))].sort();
+
+      const sectores = [...new Set(
+        usuariosLogin.map(u => u.sector).filter(Boolean)
+      )].sort();
+
       sectores.forEach(sector => {
         const opt = document.createElement("option");
         opt.value = sector;
@@ -415,14 +420,19 @@
         return;
       }
 
-      const usuarios = usuariosLogin.filter(u => normalizarTexto(u.sector) === normalizarTexto(sector));
+      const usuarios = usuariosLogin.filter(u =>
+        normalizarTexto(u.sector) === normalizarTexto(sector)
+      );
+
       userSelect.innerHTML = `<option value="">Seleccione usuario...</option>`;
+
       usuarios.forEach(u => {
         const opt = document.createElement("option");
         opt.value = u.usuario;
         opt.textContent = u.usuario;
         userSelect.appendChild(opt);
       });
+
       setEstado(`${usuarios.length} usuario(s) validado(s) para ${sector}.`, "success", "fa-check-circle");
     }
 
@@ -440,7 +450,12 @@
       btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>VALIDANDO</span>`;
 
       try {
-        const data = await apiPost({ action: "login", usuario, password: pass, sector });
+        const data = await apiPost({
+          action: "login",
+          usuario,
+          password: pass,
+          sector
+        });
 
         if (!data.acceso) {
           setEstado("Usuario, contraseña o sector incorrecto.", "error", "fa-triangle-exclamation");
