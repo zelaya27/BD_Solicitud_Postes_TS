@@ -453,7 +453,7 @@ async function guardarSolicitud() {
 
   const mat = obtenerMaterialPorCodigo(registro.CODIGO_SOLICITADO);
   if (!mat || mat.descripcion !== registro.NOMBRE_SOLICITADO) return alert("El material solicitado no coincide con la base de materiales.");
-  if (mat.categoria === "TRANSFORMADOR" && !registro.SERIE) return alert("Ingrese la serie del transformador.");
+
 
   if (btnGuardar) {
     btnGuardar.disabled = true;
