@@ -983,8 +983,6 @@ th:last-child,td:last-child{border-right:none !important;}
 
 .solicitud-form-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px 24px}
 .sol-field{grid-column:span 4}
-.sol-field.span-2{grid-column:span 2}
-.sol-field.span-3{grid-column:span 3}
 .sol-field.span-4{grid-column:span 4}
 .sol-field.span-5{grid-column:span 5}
 .sol-field.span-7{grid-column:span 7}
@@ -1024,25 +1022,6 @@ th:last-child,td:last-child{border-right:none !important;}
 .solicitud-btn-cancelar{background:white !important;color:#334155 !important;border:2px solid #cbd5e1 !important}
 .solicitud-btn-cancelar:hover{background:#fee2e2 !important;border-color:#ef4444 !important;color:#b91c1c !important;transform:translateY(-3px);box-shadow:0 16px 35px rgba(239,68,68,.20)}
 .oculto{display:none !important}
-
-.btn-gps{
-  width:100%;
-  height:48px;
-  border:none;
-  border-radius:9px;
-  background:linear-gradient(135deg,#0ea5e9,#2563eb);
-  color:#ffffff;
-  cursor:pointer;
-  font-size:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 12px rgba(37,99,235,.25);
-}
-
-.btn-gps:hover{
-  transform:translateY(-1px);
-}
 
 @media(max-width:1000px){
   .solicitud-info-row{grid-template-columns:1fr;gap:8px}
