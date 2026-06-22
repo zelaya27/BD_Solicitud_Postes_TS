@@ -474,7 +474,8 @@ function validarSolicitud(r) {
   if (!r.FECHA_CAMBIO) return "Seleccione Fecha Cambio.";
   if (!r.TIPO_EVENTO) return "Seleccione Tipo de Evento.";
   if (!r.EVENTO) return "Ingrese Evento.";
-  if (!r.REPORTE || String(r.REPORTE).length !== 7) return "El reporte debe tener 7 dígitos.";
+  if (!String(r.REPORTE || "").trim())
+  return "Ingrese el reporte.";
   if (!r.CIRCUITO) return "Seleccione Circuito.";
   if (!r.SITIO) return "Ingrese Dirección.";
   if (!r.PINTADO_APOYO) return "Ingrese Apoyo.";
