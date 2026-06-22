@@ -1,6 +1,6 @@
 const CONFIG = {
   APP_NAME: "SOLICITUD DE MATERIALES",
   ENDPOINTS: {
-    API: "https://script.google.com/macros/s/AKfycbz9xAWu8W3piiRERgYvzaAoJOUiAt7VBFLxzOk8-shZeHz7GS_J7gNie7jCrvdYsJkVfg/exec"
+    API: "https://script.google.com/macros/s/AKfycbw8G0k4jmtcZWCFkEDrFM-8ai1zRixChxA1aY20wFA8ImK7lwiRlaUbZLBVyyDvlha-7w/exec"
   }
 };
