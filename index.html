@@ -10,16 +10,16 @@
 
   <style>
     :root{
-      --primary:#6FED7F;
-      --primary-dark:#1d4ed8;
-      --text:#0f172a;
-      --muted:#64748b;
-      --border:#d7dee8;
-      --danger:#ef4444;
-      --success:#16a34a;
-      --card:rgba(255,255,255,.9);
-      --shadow:0 24px 70px rgba(15,23,42,.18);
-    }
+  --primary:#6FED7F;
+  --primary-dark:#16a34a;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#d7dee8;
+  --danger:#ef4444;
+  --success:#16a34a;
+  --card:rgba(255,255,255,.9);
+  --shadow:0 24px 70px rgba(15,23,42,.18);
+}
 
     *{box-sizing:border-box}
 
@@ -28,9 +28,9 @@
       min-height:100vh;
       font-family:'Segoe UI',Arial,sans-serif;
       background:
-        radial-gradient(circle at 18% 18%,rgba(37,99,235,.18),transparent 28%),
-        radial-gradient(circle at 82% 12%,rgba(14,165,233,.16),transparent 30%),
-        linear-gradient(135deg,#f7f9fc 0%,#e8eef5 100%);
+  radial-gradient(circle at 18% 18%,rgba(34,197,94,.18),transparent 28%),
+  radial-gradient(circle at 82% 12%,rgba(22,163,74,.16),transparent 30%),
+  linear-gradient(135deg,#f7f9fc 0%,#e8eef5 100%);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -49,9 +49,10 @@
       min-height:560px;
       border-radius:26px;
       padding:34px;
-      background:
-        linear-gradient(145deg,rgba(37,99,235,.94),rgba(15,23,42,.94)),
-        radial-gradient(circle at top right,rgba(255,255,255,.22),transparent 36%);
+      .hero-panel{
+  background:
+    linear-gradient(145deg,#22c55e,#14532d),
+    radial-gradient(circle at top right,rgba(255,255,255,.18),transparent 36%);
       color:white;
       box-shadow:var(--shadow);
       display:flex;
@@ -172,7 +173,7 @@
 
     select:focus,input:focus{
       border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(37,99,235,.13);
+      box-shadow:0 0 0 4px rgba(34,197,94,.15);
     }
 
     .eye-btn{
@@ -210,20 +211,20 @@
     .status-box.error{background:#fef2f2;border-color:#fecaca;color:#991b1b}
 
     .btn-login{
-      width:100%;
-      height:48px;
-      border:none;
-      border-radius:14px;
-      background:linear-gradient(135deg,var(--primary),#0ea5e9);
-      color:white;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:9px;
-      box-shadow:0 14px 28px rgba(37,99,235,.26);
-    }
+  width:100%;
+  height:48px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#6FED7F,#16a34a);
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  box-shadow:0 14px 28px rgba(34,197,94,.25);
+}
 
     .btn-login:hover{transform:translateY(-1px)}
     .btn-login:disabled{opacity:.7;cursor:not-allowed}
