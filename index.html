@@ -376,25 +376,14 @@
     body: JSON.stringify(payload)
   });
 
-  const txt = await res.text();
-  console.log("RESPUESTA APPS SCRIPT:", txt);
-  alert(txt);
+  const data = await res.json();
 
-  const data = JSON.parse(txt);
-  if (!data.ok) throw new Error(data.error || "Error en API");
+  if (!data.ok) {
+    throw new Error(data.error || "Error en API");
+  }
+
   return data;
 }
-    async function cargarUsuariosLogin() {
-      try {
-        const data = await apiPost({ action: "obtenerUsuarios" });
-        usuariosLogin = data.usuarios || [];
-        poblarSectores();
-        setEstado("Selecciona un sector validado para cargar usuarios.", "info", "fa-circle-info");
-      } catch (error) {
-        console.error(error);
-        setEstado("Error cargando usuarios desde Google Sheets.", "error", "fa-triangle-exclamation");
-      }
-    }
 
     function poblarSectores() {
       const sectorSelect = document.getElementById("sectorSelect");
