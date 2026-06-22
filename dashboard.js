@@ -78,19 +78,24 @@ function cargarCombos() {
   addListener("fechaCambio", "change", actualizarInfoModalSolicitud);
 }
 
-function llenarSelect(id, lista, incluirTodos) {
+  function llenarSelect(id, lista, incluirTodos) {
   const select = document.getElementById(id);
   if (!select) return;
 
   const valorAnterior = select.value;
   select.innerHTML = "";
 
+  const optInicial = document.createElement("option");
+
   if (incluirTodos) {
-    const opt = document.createElement("option");
-    opt.value = "ALL";
-    opt.textContent = "Todos";
-    select.appendChild(opt);
+    optInicial.value = "ALL";
+    optInicial.textContent = "Todos";
+  } else {
+    optInicial.value = "";
+    optInicial.textContent = "Seleccione...";
   }
+
+  select.appendChild(optInicial);
 
   lista.forEach(valor => {
     const opt = document.createElement("option");
@@ -99,9 +104,10 @@ function llenarSelect(id, lista, incluirTodos) {
     select.appendChild(opt);
   });
 
-  if (valorAnterior) select.value = valorAnterior;
+  if (valorAnterior) {
+    select.value = valorAnterior;
+  }
 }
-
 function cargarComboMateriales(id) {
   const select = document.getElementById(id);
   if (!select) return;
