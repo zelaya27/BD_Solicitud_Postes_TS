@@ -310,10 +310,10 @@ function abrirModalSolicitud() {
   setValue("item", nuevoItem);
   setValue("estado", "SOLICITADO");
   setValue("fechaSolicitud", obtenerFechaHoraActual());
-  setValue("fechaCambio", obtenerFechaActual());
+  setValue("fechaCambio", "");
   setValue("gestionadoPor", usuarioActual);
   setValue("cantidadSolicitada", 1);
-  setValue("tipoEvento", "INCIDENCIA");
+  setValue("tipoEvento", "");
 
   actualizarInfoModalSolicitud();
   mostrarSerieSegunMaterial();
