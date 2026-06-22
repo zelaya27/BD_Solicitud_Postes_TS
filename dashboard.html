@@ -163,17 +163,49 @@
           <div class="sol-field"><label>REPORTE</label><div class="sol-input-icon"><i class="fas fa-file-lines"></i><input id="reporte" type="number"></div></div>
 
           <div class="sol-field span-5"><label>CIRCUITO</label><div class="sol-input-icon"><i class="fas fa-code-branch"></i><select id="circuito"></select></div></div>
-          <div class="sol-field span-7"><label>DIRECCIÓN</label><div class="sol-input-icon"><i class="fas fa-location-dot"></i><input id="sitio" type="text" placeholder="COL. PALMIRA, CATACAMAS"></div></div>
+          <div class="sol-field span-7"><label>DIRECCIÓN</label><div class="sol-input-icon"><i class="fas fa-location-dot"></i><input id="sitio" type="text" placeholder="COLONIA / ALDEA, MUNICIPIO"></div></div>
 
-          <div class="sol-field span-5"><label>APOYO (PINTADO)</label><div class="sol-input-icon"><i class="fas fa-map-pin"></i><input id="pintadoApoyo" type="number"></div></div>
-          <div class="sol-field span-7"><label>COORDENADAS UTM</label><div class="sol-input-icon"><i class="fas fa-crosshairs"></i><input id="utm" type="text" placeholder="618878 - 1639784"></div></div>
+      <div class="sol-field span-4">
+  <label>APOYO (PINTADO)</label>
+  <div class="sol-input-icon">
+    <i class="fas fa-map-pin"></i>
+    <input id="pintadoApoyo" type="number">
+  </div>
+</div>
 
+<div class="sol-field span-3">
+  <label>UTM X</label>
+  <div class="sol-input-icon">
+    <i class="fas fa-location-arrow"></i>
+    <input id="utmX" type="text" placeholder="#X">
+  </div>
+</div>
+
+<div class="sol-field span-3">
+  <label>UTM Y</label>
+  <div class="sol-input-icon">
+    <i class="fas fa-location-arrow"></i>
+    <input id="utmY" type="text" placeholder="#Y">
+  </div>
+</div>
+
+<div class="sol-field span-2">
+  <label>GPS</label>
+  <button type="button"
+          class="btn-gps"
+          onclick="buscarUTMPorApoyoManual()">
+    <i class="fas fa-location-crosshairs"></i>
+  </button>
+</div>
+
+
+          
           <div class="sol-field span-8"><label>MATERIAL SOLICITADO</label><div class="sol-input-icon"><i class="fas fa-box"></i><select id="nombreSolicitado"></select></div></div>
           <div class="sol-field span-4"><label>CANTIDAD</label><div class="sol-input-icon"><i class="fas fa-clipboard-list"></i><input id="cantidadSolicitada" type="number" min="1" max="999" value="1"></div></div>
 
           <div id="serieBox" class="sol-field span-8 oculto"><label>SERIE (SOLO PARA TRANSFORMADORES)</label><div class="sol-input-icon"><i class="fas fa-barcode"></i><input id="serie" type="text" placeholder="Ingrese la serie del transformador"></div></div>
 
-          <div class="sol-field span-12"><label>OBSERVACIONES</label><div class="sol-input-icon textarea-icon"><i class="fas fa-comment"></i><textarea id="observaciones" placeholder="CAMBIO DE POSTE MADERA 30 FT EN COL. PALMIRA"></textarea></div></div>
+          <div class="sol-field span-12"><label>OBSERVACIONES</label><div class="sol-input-icon textarea-icon"><i class="fas fa-comment"></i><textarea id="observaciones" placeholder=""></textarea></div></div>
         </div>
       </div>
 
