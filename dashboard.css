@@ -937,6 +937,8 @@ th:last-child,td:last-child{border-right:none !important;}
   max-height:92vh;
   border-radius:14px;
   overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
 .solicitud-header{
@@ -957,7 +959,12 @@ th:last-child,td:last-child{border-right:none !important;}
 }
 .solicitud-title h3{margin:0;font-size:26px;font-weight:1000;letter-spacing:.3px}
 .solicitud-close{background:transparent !important;border:none !important;color:white !important;font-size:26px}
-.solicitud-body{padding:24px 26px 10px !important;overflow:visible !important}
+.solicitud-body{
+  padding:24px 26px 10px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  max-height:calc(92vh - 180px);
+}
 
 .solicitud-info-row{
   display:grid;
@@ -1051,4 +1058,16 @@ th:last-child,td:last-child{border-right:none !important;}
   .sol-field,.sol-field.span-1,.sol-field.span-2,.sol-field.span-3,.sol-field.span-4,.sol-field.span-5,.sol-field.span-7,.sol-field.span-8,.sol-field.span-12{grid-column:span 1}
   .modal-solicitud-full{width:96vw;max-height:92vh}
   .solicitud-body{overflow-y:auto !important}
+}
+.solicitud-body::-webkit-scrollbar{
+  width:8px;
+}
+
+.solicitud-body::-webkit-scrollbar-thumb{
+  background:#cbd5e1;
+  border-radius:20px;
+}
+
+.solicitud-body::-webkit-scrollbar-track{
+  background:#f8fafc;
 }
