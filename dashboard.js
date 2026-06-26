@@ -211,6 +211,7 @@ function selectEstadoPanel(r) {
       <option value="SOLICITADO" ${r.ESTADO === "SOLICITADO" ? "selected" : ""}>SOLICITADO</option>
       <option value="REQUISADO" ${r.ESTADO === "REQUISADO" ? "selected" : ""}>REQUISADO</option>
       <option value="CONSUMIDO" ${r.ESTADO === "CONSUMIDO" ? "selected" : ""}>CONSUMIDO</option>
+       <option value="NO APROBADO" ${r.ESTADO === "NO APROBADO" ? "selected" : ""}>NO APROBADO</option>
     </select>`;
 }
 
