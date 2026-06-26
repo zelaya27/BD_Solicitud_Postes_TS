@@ -203,7 +203,7 @@ header{
   border-color:#fecaca;
   color:#991b1b;
 }
-.estado-card.no aprobado{
+.estado-card.no-aprobado{
   background:#fef2f2;
   border-color:#fecaca;
   color:#991b1b;
@@ -373,7 +373,7 @@ tr:last-child td{border-bottom:none}
   color:#166534;
   border-color:#86efac;
 }
-.badge-no aprobrobado{
+.badge-no-aprobrobado{
   background:#fee2e2;
   color:#991b1b;
   border-color:#fecaca;
@@ -906,7 +906,7 @@ th:last-child,td:last-child{border-right:none !important;}
 }
 
 .estado-panel-select.solicitado{background:#fee2e2;color:#991b1b;border-color:#fecaca}
-.estado-panel-select.no aprobado{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.estado-panel-select.no-aprobado{background:#fee2e2;color:#991b1b;border-color:#fecaca}
 .estado-panel-select.requisado{background:#fef3c7;color:#92400e;border-color:#fde68a}
 .estado-panel-select.consumido{background:#dcfce7;color:#166534;border-color:#86efac}
 
