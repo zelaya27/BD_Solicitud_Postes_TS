@@ -283,6 +283,7 @@ function actualizarContadores(lista) {
   setText("countSolicitado", lista.filter(r => r.ESTADO === "SOLICITADO").length);
   setText("countRequisado", lista.filter(r => r.ESTADO === "REQUISADO").length);
   setText("countConsumido", lista.filter(r => r.ESTADO === "CONSUMIDO").length);
+  setText("countNoAprobado", lista.filter(r => r.ESTADO === "NO APROBADO").length);
 }
 
 function limpiarFiltros() {
@@ -831,6 +832,7 @@ function claseEstadoPanel(estado) {
   if (estado === "SOLICITADO") return "solicitado";
   if (estado === "REQUISADO") return "requisado";
   if (estado === "CONSUMIDO") return "consumido";
+  if (estado === "NO APROBADO") return "no-aprobado";
   return "";
 }
 
